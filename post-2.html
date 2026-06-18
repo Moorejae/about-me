@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IaC: Terraform & GCP Best Practices - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mastering Infrastructure as Code using Terraform to manage GCP environments with professional best practices." />
+    <meta name="keywords" content="Terraform, GCP, IaC, Infrastructure, DevOps, Cloud Engineering" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Infrastructure as Code: Terraform & GCP Best Practices</h1>
+        <p><em>Published: May 2026 | Category: DevOps & Cloud Infrastructure</em></p>
+
+        <p>In the early days of cloud computing, engineers managed infrastructure manually—a practice now rightfully referred to as "Click-Ops." You logged into the console, clicked "Create Instance," configured networking by hand, and hoped the environment was reproducible. Today, that approach is a liability. Infrastructure as Code (IaC) has become the industry standard for ensuring environment consistency, security, and velocity.</p>
+
+        <h2>The End of "Click-Ops"</h2>
+        <p>Using Terraform with Google Cloud Platform (GCP) transforms infrastructure from a static, fragile asset into dynamic, version-controlled software. By declaring your desired end-state in HCL (HashiCorp Configuration Language), you gain the ability to version, test, and peer-review your infrastructure just like application code.</p>
+
+        
+
+        <h2>1. The Modular Design Pattern</h2>
+        <p>One of the most common pitfalls for beginners is writing a monolithic <code>main.tf</code> file. As your infrastructure scales, this file becomes unreadable and dangerous to modify. The professional approach is <strong>Modularization</strong>. Break your code into logical, reusable units (e.g., a network module, a Kubernetes cluster module, a database module).</p>
+        
+        <pre>
+# Example of calling a reusable module
+module "vpc_network" {
+  source     = "./modules/network"
+  region     = "us-central1"
+  project_id = var.project_id
+}
+        </pre>
+        <p>Modules allow you to encapsulate complexity. Once the "network module" is tested and approved, any team member can deploy a secure, company-standard VPC without needing to understand the underlying firewall or subnet complexities.</p>
+
+        <h2>2. Managing State: The Heart of Terraform</h2>
+        <p>Terraform maintains a <code>terraform.tfstate</code> file to map your real-world resources to your configuration. In a team environment, storing this file locally is a catastrophic error. It leads to race conditions and inconsistent environments.</p>
+        <p><strong>Always use a Remote Backend.</strong> For GCP, utilize a Google Cloud Storage (GCS) bucket. This provides two critical benefits:</p>
+        <ul>
+            <li><strong>Persistence:</strong> The state file is stored in a centralized location accessible to your CI/CD pipeline.</li>
+            <li><strong>Locking:</strong> GCS state files support locking via Cloud Storage itself, preventing two engineers from running <code>terraform apply</code> simultaneously and corrupting the environment.</li>
+        </ul>
+
+        <h2>3. Drift Detection and Security</h2>
+        <p>Infrastructure "drift" occurs when someone makes a manual change via the console, causing the actual cloud environment to diverge from the code. Terraform’s <code>plan</code> command is your best defense against this. It acts as a diff viewer for your entire cloud footprint.</p>
+        <p>Furthermore, IaC enables <strong>Static Analysis</strong>. Before you deploy, you can run security tools (like <code>tfsec</code> or <code>checkov</code>) to scan your code for vulnerabilities—such as open S3 buckets or overly permissive firewall rules—before they ever hit production. This is "Shift-Left" security in action.</p>
+
+        <h2>4. Best Practices Checklist</h2>
+        <p>To operate at an enterprise level, adhere to these four pillars:</p>
+        <ol>
+            <li><strong>Version Control:</strong> Every change must originate in a Pull Request (PR) with mandatory peer review.</li>
+            <li><strong>Variable Management:</strong> Use <code>variables.tf</code> and <code>terraform.tfvars</code> to keep sensitive data and environment-specific configs separate from your core logic.</li>
+            <li><strong>Provider Versioning:</strong> Always pin your providers to specific versions. Cloud APIs change; you do not want your production build to break because an upstream API was updated unexpectedly.</li>
+            <li><strong>Immutable Infrastructure:</strong> Avoid "patching" servers in place. If an instance needs an update, use IaC to destroy the old instance and spin up a new, updated version.</li>
+        </ol>
+
+        <h2>Conclusion</h2>
+        <p>Terraform on GCP is about predictability. When you treat infrastructure as code, you reduce the "mean time to recovery" (MTTR) significantly. If an environment is deleted or compromised, you don't scramble to fix it manually; you simply re-apply your verified configurations. This is the hallmark of a resilient, modern engineering organization.</p>
+
+        <hr>
+        <h3>References</h3>
+        <ul>
+            <li><em>Terraform Documentation: Remote Backend Configuration (GCS)</em></li>
+            <li><em>Google Cloud Architecture Center: IaC Design Patterns</em></li>
+            <li><em>HashiCorp: The Terraform Lifecycle and State Management</em></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems Architect</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

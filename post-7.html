@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Securing Non-Custodial Web3 Portals - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Architectural deep dive into securing Web3 portals, transaction flows, and backend API protection." />
+    <meta name="keywords" content="Web3, Security, Cybersecurity, Blockchain, TLS, WAF, API Protection" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Securing Non-Custodial Web3 Portals</h1>
+        <p><em>Published: February 2026 | Category: Web3 & Application Security</em></p>
+
+        <p>The core ethos of Web3 is self-custody: "Not your keys, not your coins." However, non-custodial portals—web applications that allow users to interact with their wallets—are effectively the bridge between the user's private keys and the public blockchain. If the bridge is compromised, the assets are gone. Securing these portals requires a defense-in-depth approach that goes far beyond simple front-end validation.</p>
+
+        <h2>The Attack Vector: The Browser Environment</h2>
+        <p>In a non-custodial architecture, the critical vulnerability lies in the browser. Malicious browser extensions, Cross-Site Scripting (XSS), and Man-in-the-Middle (MitM) attacks can intercept transaction requests before they reach the user's wallet (like MetaMask or Rabby). Your infrastructure must ensure the integrity of the delivery of your application code.</p>
+        
+        
+
+        <h2>1. Hardening the Infrastructure (Nginx & TLS)</h2>
+        <p>Your server infrastructure is the delivery mechanism. If your server is compromised, the attacker can inject malicious JavaScript into your portal, which will then execute with the user's authority. </p>
+        <p>Your Nginx configuration should serve as a strict gatekeeper:</p>
+        <pre>
+# Example of strict header configuration
+add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://trusted-cdn.com; object-src 'none';";
+add_header X-Frame-Options "DENY";
+add_header X-Content-Type-Options "nosniff";
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+        </pre>
+        <p>By enforcing <strong>Content Security Policy (CSP)</strong>, you prevent the browser from executing scripts that were not explicitly whitelisted, effectively neutralizing most XSS attacks.</p>
+
+        <h2>2. WAF and API Protection</h2>
+        <p>Web3 portals rely heavily on backend APIs to fetch chain state, exchange rates, and transaction history. An attacker can attempt to probe these APIs to extract sensitive data or find vulnerabilities in your business logic. Deploying a <strong>Web Application Firewall (WAF)</strong> (such as Cloudflare or AWS WAF) is non-negotiable.</p>
+        <p>Configure your WAF to block:</p>
+        <ul>
+            <li><strong>SQL Injection (SQLi)</strong> attempts against your transactional database.</li>
+            <li><strong>Cross-Site Request Forgery (CSRF)</strong> by validating tokens on every state-changing API request.</li>
+            <li><strong>Rate Limiting:</strong> Essential for preventing API exhaustion attacks that could take your portal offline.</li>
+        </ul>
+
+        <h2>3. Transaction Integrity</h2>
+        <p>The "Non-Custodial" label applies to keys, but it doesn't absolve the portal provider of responsibility regarding data integrity. If your backend provides the transaction data (such as the contract address, amount, or recipient) that the user signs in their wallet, that data must be strictly validated.</p>
+        <p>Never blindly trust data from the front end. Validate every request on the server-side against a known, audited registry of contract addresses. If a user is swapping tokens, your backend must verify that the routing parameters are valid before sending them to the front-end for signing. A common attack vector is "Parameter Manipulation," where the frontend requests are intercepted and modified to redirect funds to an attacker's address.</p>
+
+        <h2>4. Key Security Principles for Web3 Engineers</h2>
+        <ul>
+            <li><strong>Minimize Dependencies:</strong> Every NPM package you add is a potential supply chain vulnerability. Audit your dependencies regularly (use <code>npm audit</code>) to ensure you aren't pulling in compromised libraries.</li>
+            <li><strong>Secrets Management:</strong> Never hardcode API keys (like Alchemy or Infura project IDs) in your frontend code. Use a backend proxy to interact with blockchain RPC nodes, effectively masking your API keys from the public.</li>
+            <li><strong>Audit the "Signed" Logic:</strong> In Web3, the user is the one performing the action. Your portal acts as the interface. Your logs must be immutable. Ensure you are logging the <code>transaction_hash</code> (once provided) and the <code>public_address</code> of the user on every request to provide an audit trail for dispute resolution.</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>Securing a Web3 portal is about trust. Users trust your interface to facilitate transactions with their private assets. By hardening your Nginx delivery, strictly filtering traffic via a WAF, and sanitizing the transaction data before it ever reaches the user's wallet, you build a fortress around that bridge. Security in Web3 isn't just a feature; it is the product.</p>
+
+        <hr>
+        <h3>References</h3>
+        <ul>
+            <li><em>OWASP Top 10: Security Risks for Web Applications</em></li>
+            <li><em>Ethereum Security Best Practices (consensys.github.io)</em></li>
+            <li><em>Mozilla: Content Security Policy (CSP) guide</em></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems Architect</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

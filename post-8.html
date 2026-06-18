@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Securing Internal RDP Access: Routing & VPC Isolation - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Technical guide on designing 3-Tier VPC architectures and securing remote access." />
+    <meta name="keywords" content="VPC, Routing, Subnetting, RDP, Security, Bastion Host, Cloud Networking" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Securing Internal RDP Access: Routing & VPC Isolation</h1>
+        <p><em>Published: November 2025 | Category: Networking & Security</em></p>
+
+        <p>The most dangerous configuration in cloud networking is placing a Windows or Linux server that requires RDP or SSH access directly into a public subnet. Doing so essentially places your server on the front porch of the internet, waiting for the first automated bot to brute-force its credentials. In this post, we will dissect the <strong>3-Tier VPC Architecture</strong>—the industry-standard blueprint for isolating compute resources while maintaining administrative access.</p>
+
+        <h2>The Anatomy of a 3-Tier VPC</h2>
+        <p>A secure VPC should be segmented into three distinct layers, each with its own route table and security posture:</p>
+        <ol>
+            <li><strong>Public Subnet:</strong> Contains only the resources that must be reachable from the internet, such as Application Load Balancers (ALBs) and NAT Gateways.</li>
+            <li><strong>Private Application Subnet:</strong> Contains your application servers (web servers, background workers). These have no public IP addresses and cannot receive traffic from the internet.</li>
+            <li><strong>Private Database Subnet:</strong> Contains your data stores. This layer should have no egress to the internet, even through a NAT Gateway.</li>
+        </ol>
+
+        
+
+        <h2>Solving the RDP Connectivity Paradox</h2>
+        <p>When you move an RDP-enabled Windows server into a Private Application Subnet, you immediately face a connectivity problem: You cannot RDP into a server that doesn't have a public IP or a path to the internet. This is where the <strong>Bastion Host (or Jump Box)</strong> or <strong>Identity-Aware Proxy (IAP)</strong> enters the picture.</p>
+        
+        <h3>The Bastion Host Strategy</h3>
+        <p>A Bastion host is a highly-hardened, minimal instance placed in the Public Subnet. It acts as the gatekeeper. The workflow for an administrator looks like this:</p>
+        <ul>
+            <li>Connect to the Bastion host via SSH/RDP (restricted by source IP/Security Group).</li>
+            <li>Once authenticated on the Bastion, initiate a secondary RDP session from the Bastion host to the internal private IP of your application server.</li>
+        </ul>
+
+        <h2>Debugging Route Tables: Why Connections Fail</h2>
+        <p>When you are debugging RDP connectivity, 90% of the time, the issue lies in the <strong>Route Table</strong> or <strong>Network ACL (NACL)</strong> configuration. Even if your Security Group allows port 3389, if the Route Table does not know how to return the traffic, the packet will simply drop into the void.</p>
+        
+        <p>Common troubleshooting steps:</p>
+        <ul>
+            <li><strong>Check Return Path:</strong> Ensure the private subnet's route table has a route to the NAT Gateway (for outbound) and is configured to allow internal peering traffic.</li>
+            <li><strong>Verify NACLs:</strong> Remember that NACLs are stateless. If you open port 3389 inbound, you <em>must</em> also open the ephemeral ports (typically 1024-65535) outbound to allow the traffic to return.</li>
+            <li><strong>Security Group Chaining:</strong> Configure the internal server's security group to <em>only</em> allow RDP traffic where the Source is the Security Group ID of the Bastion host, not just an IP range. This is the ultimate "Least Privilege" network security pattern.</li>
+        </ul>
+
+        <pre>
+# Conceptual Terraform Logic for SG Chaining
+resource "aws_security_group" "private_app_server" {
+  ingress {
+    from_port       = 3389
+    to_port         = 3389
+    protocol        = "tcp"
+    security_groups = [aws_security_group.bastion_sg.id] # Only Bastion can reach me
+  }
+}
+        </pre>
+
+        <h2>Moving Beyond Bastion: Identity-Aware Proxies</h2>
+        <p>Bastion hosts are effective, but they add management overhead—you have to patch the Bastion host, monitor it, and rotate its keys. Cloud-native alternatives like <strong>GCP Identity-Aware Proxy (IAP)</strong> or <strong>AWS Systems Manager (SSM) Session Manager</strong> eliminate the need for bastion hosts entirely.</p>
+        <p>With SSM Session Manager, you don't even need to open port 3389 or 22 on your instances. The connection is tunneled through the cloud provider's internal API control plane. This is the gold standard for secure, zero-exposure remote management. It eliminates the public surface area completely—there is no RDP port to scan, and therefore, nothing to brute force.</p>
+
+        <h2>Conclusion</h2>
+        <p>Never prioritize convenience over network isolation. If you find yourself placing a database or a management interface in a public subnet, pause and re-evaluate your architecture. By utilizing Bastion hosts with Security Group chaining, or modern tunnel-based tools like SSM Session Manager, you can maintain full administrative control while keeping your compute resources shielded from the chaotic nature of the public internet.</p>
+
+        <hr>
+        <h3>References</h3>
+        <ul>
+            <li><em>AWS Systems Manager: Session Manager Documentation</em></li>
+            <li><em>Google Cloud: Setting up Identity-Aware Proxy for TCP forwarding</em></li>
+            <li><em>NIST Guide to Network Security for Cloud Infrastructure</em></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems Architect</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>High Availability & Fault-Tolerant Design - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Technical guide on designing fault-tolerant and highly available cloud systems." />
+    <meta name="keywords" content="High Availability, Fault Tolerance, SRE, Distributed Systems, Cloud Architecture" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>High Availability & Fault-Tolerant Design</h1>
+        <p><em>Published: February 2026 | Category: Cloud Architecture & SRE</em></p>
+
+        <p>In cloud-native engineering, there is a fundamental law: <strong>Everything fails.</strong> Hard drives fail, network cables get cut, data centers lose power, and software bugs introduce memory leaks. If your architecture assumes that components will stay healthy indefinitely, you aren't an engineer—you're an optimist. Building for High Availability (HA) and Fault Tolerance is the rigorous pursuit of maintaining service continuity despite these inevitable failures.</p>
+
+        <h2>Reliability vs. Availability</h2>
+        <p>It is vital to distinguish between these two: <strong>Availability</strong> is the percentage of time your service is accessible (the "nines"), while <strong>Reliability</strong> is the probability that your system will perform its intended function without failure for a specific time. A system can be highly available but unreliable if it frequently returns incorrect data or fails to process requests correctly.</p>
+
+        <h2>The AWS Well-Architected Approach</h2>
+        <p>The Reliability Pillar of the AWS Well-Architected Framework dictates three core areas:</p>
+        <ol>
+            <li><strong>Foundations:</strong> Service quotas and network topology.</li>
+            <li><strong>Workload Architecture:</strong> How you isolate your services and design for asynchronous processing.</li>
+            <li><strong>Change Management:</strong> How you monitor and adapt to growth.</li>
+        </ol>
+
+        
+
+        <h2>Designing for Failure: Circuit Breakers and Retries</h2>
+        <p>One of the most dangerous patterns in distributed systems is the "Cascading Failure." This happens when one service fails, and other services keep retrying their requests, effectively conducting a Distributed Denial of Service (DDoS) attack on the failing service.</p>
+        
+        <h3>The Circuit Breaker Pattern</h3>
+        <p>Instead of endless retries, implement the <strong>Circuit Breaker</strong> pattern. If a downstream service is down, the circuit opens, and subsequent requests fail fast. This gives the failing service time to recover without being overwhelmed by a flood of retry requests.</p>
+        <pre>
+# Conceptual logic for a Circuit Breaker
+if (circuit_status == "OPEN") {
+    return FallbackResponse();
+} else {
+    try {
+        result = call_service();
+    } catch (Exception) {
+        record_failure();
+        if (failure_threshold_reached()) {
+            circuit_status = "OPEN";
+        }
+    }
+}
+        </pre>
+
+        <h2>Multi-AZ vs. Multi-Region</h2>
+        <p><strong>Availability Zones (AZs)</strong> are distinct physical locations within a single region. Architecting for Multi-AZ is the bare minimum for any production environment. However, if an entire region experiences a catastrophic event, Multi-AZ won't save you. <strong>Multi-Region</strong> is the holy grail of HA, but it introduces the CAP theorem constraint—specifically, the trade-off between consistency and availability.</p>
+
+        <p>When you replicate data across regions, you introduce latency (asynchronous replication lag). You must decide if your application can tolerate "eventual consistency" (where a user might see slightly stale data) to maintain 100% uptime during a regional disaster.</p>
+
+        <h2>Load Balancing and Auto-Scaling</h2>
+        <p>Load balancers are the traffic cops of your architecture. Use <strong>Application Load Balancers (ALBs)</strong> to distribute traffic based on content (e.g., routing <code>/api</code> to one cluster and <code>/web</code> to another). Combine this with <strong>Auto-Scaling Groups (ASG)</strong>.</p>
+        <p><em>Crucial Tip:</em> When designing auto-scaling, ensure your "warm-up time" is correctly configured. If your application takes 3 minutes to initialize because it needs to pull down model weights or cache data, your auto-scaling health checks must account for this, or you will end up in a boot-loop where instances are killed before they are ready to serve traffic.</p>
+
+        <h2>Disaster Recovery: RTO and RPO</h2>
+        <p>When planning for disasters, you need to define two metrics with your stakeholders:</p>
+        <ul>
+            <li><strong>RTO (Recovery Time Objective):</strong> How long can the system be down before the damage becomes unacceptable?</li>
+            <li><strong>RPO (Recovery Point Objective):</strong> How much data (measured in time) can we afford to lose?</li>
+        </ul>
+        <p>If your RPO is zero, you need synchronous cross-region data replication. If your RTO is near-zero, you need an "Active-Active" configuration where traffic is routed to multiple regions simultaneously. This is expensive, but for mission-critical financial systems, it is the only way to operate.</p>
+
+        <h2>Conclusion</h2>
+        <p>Building highly available systems is a trade-off between cost and resilience. You must analyze your failure modes. Use asynchronous messaging (SQS/PubSub) to decouple services, leverage managed databases with read replicas, and always test your recovery procedures—because an untested backup is not a backup.</p>
+
+        <hr>
+        <h3>References</h3>
+        <ul>
+            <li><em>AWS Well-Architected Framework: Reliability Pillar Whitepaper</em></li>
+            <li><em>Google SRE Handbook: Managing Risk</em></li>
+            <li><em>Martin Fowler: Circuit Breaker Pattern</em></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems Architect</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

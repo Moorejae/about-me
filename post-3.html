@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Zero-Trust Architecture & IAM - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Implementing Zero-Trust Architecture and advanced IAM policies for modern cloud environments." />
+    <meta name="keywords" content="Zero Trust, IAM, Security, Governance, Least Privilege, Cloud Security" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Zero-Trust Architecture & IAM: Identity as the New Perimeter</h1>
+        <p><em>Published: April 2026 | Category: Security & Governance</em></p>
+
+        <p>The traditional "Castle and Moat" approach to network security—where everything inside the corporate network is implicitly trusted—is dead. In an era of cloud-native development, remote workforces, and multi-tenant SaaS, the network boundary is effectively non-existent. We have entered the era of <strong>Zero-Trust Architecture (ZTA)</strong>.</p>
+
+        <h2>The Zero-Trust Philosophy</h2>
+        <p>Zero-Trust is not a product; it is a framework defined by the principle: <em>"Never trust, always verify."</em> Every request for a resource, whether it originates from inside or outside the network, must be authenticated, authorized, and encrypted before access is granted. This approach aligns with the NIST SP 800-207 standard, focusing on resource-centric security rather than network-centric security.</p>
+
+        <h2>Identity and Access Management (IAM)</h2>
+        <p>In a Zero-Trust environment, <strong>Identity is the new perimeter</strong>. If your identity management is weak, your entire security posture collapses. Effective IAM relies on three pillars:</p>
+        <ol>
+            <li><strong>Authentication:</strong> Moving beyond simple passwords to hardware-backed Multi-Factor Authentication (MFA).</li>
+            <li><strong>Authorization:</strong> Using Attribute-Based Access Control (ABAC) or Role-Based Access Control (RBAC) to grant only the minimum permissions necessary.</li>
+            <li><strong>Continuity:</strong> Monitoring session behavior to ensure that a user's risk profile hasn't changed during the session.</li>
+        </ol>
+
+        <h2>Practical Implementation: Row-Level Security (RLS)</h2>
+        <p>Security must extend to the database layer. In many legacy systems, if an attacker gains access to the database credentials, they have access to all data. Using PostgreSQL <strong>Row-Level Security (RLS)</strong>, we can restrict which rows a user can see based on their identity, regardless of what the application code requests.</p>
+
+        <pre>
+-- Enable RLS on the table
+ALTER TABLE financial_transactions ENABLE ROW LEVEL SECURITY;
+
+-- Define a policy that only allows a user to see their own records
+CREATE POLICY user_transaction_policy ON financial_transactions
+    FOR SELECT
+    USING (user_id = current_setting('app.current_user_id')::uuid);
+        </pre>
+
+        <p>By enforcing this at the database level, we prevent the "broken access control" vulnerability—a top OWASP risk—at the source. Even if the application logic contains a bug that accidentally exposes user data, the database itself rejects the unauthorized query.</p>
+
+        <h2>Micro-segmentation and Least Privilege</h2>
+        <p>We must decompose our infrastructure into micro-segments. Using modern Cloud Identity-Aware Proxies (IAP), we can control access to applications without exposing them to the public internet via VPNs. This creates a "dark" network where services are invisible unless the requesting user has both a valid identity and a compliant device posture.</p>
+
+        <h3>The "Least Privilege" Checklist:</h3>
+        <ul>
+            <li><strong>JIT (Just-In-Time) Access:</strong> Temporary credentials that expire after a set time frame (e.g., 1 hour), rather than long-lived API keys.</li>
+            <li><strong>Separation of Duties:</strong> Ensure that the person who writes the code (Dev) is not the same person who manages the production IAM policies (Ops/Sec).</li>
+            <li><strong>Continuous Audit:</strong> IAM is not "set and forget." Use automated tools to scan for unused permissions and prune them every 30 days.</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>Zero-Trust is a journey of continuous improvement. It requires strict discipline, especially in managing the lifecycle of identities and credentials. By moving away from implicit trust and implementing granular controls at the identity, network, and database layers, we build systems that are significantly more resilient to modern breach techniques.</p>
+
+        <hr>
+        <h3>References</h3>
+        <ul>
+            <li><em>NIST SP 800-207: Zero Trust Architecture</em></li>
+            <li><em>OWASP Top 10: Broken Access Control Risks</em></li>
+            <li><em>Cloud Security Alliance (CSA): Zero Trust Implementation Guidance</em></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems Architect</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

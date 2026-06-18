@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CI/CD & GitOps Drift Detection - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Technical guide on implementing CI/CD pipelines and GitOps principles for automated infrastructure." />
+    <meta name="keywords" content="CI/CD, GitOps, DevOps, Automation, Drift Detection, DORA Metrics, GitHub Actions" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>CI/CD & GitOps: The Architecture of Modern Deployment</h1>
+        <p><em>Published: January 2026 | Category: DevOps & Automation</em></p>
+
+        <p>The transition from "manual script execution" to "automated CI/CD pipelines" is the single greatest productivity multiplier in software engineering. However, automation itself is not the end goal—reliability and predictability are. In this final post of our series, we explore the maturity model of deployment: moving from Continuous Delivery to true GitOps and the importance of measuring success through DORA metrics.</p>
+
+        <h2>CI vs. CD: Defining the Pipeline</h2>
+        <p>A pipeline is not just a sequence of shell commands; it is an integrated testing and verification engine.</p>
+        <ul>
+            <li><strong>Continuous Integration (CI):</strong> The practice of merging code changes into a central repository frequently. Every merge triggers automated builds and tests (unit, integration, and security scans). If the pipeline breaks, the code does not move forward.</li>
+            <li><strong>Continuous Delivery (CD):</strong> The practice of ensuring that the code is <em>always in a deployable state</em>.</li>
+            <li><strong>Continuous Deployment (CD):</strong> The practice where every successful build is automatically released to production without human intervention.</li>
+        </ul>
+
+        
+
+        <h2>The GitOps Paradigm</h2>
+        <p>GitOps takes IaC (Infrastructure as Code) a step further. In a GitOps model, your Git repository is the <strong>Single Source of Truth</strong> for your entire environment. When you use tools like ArgoCD or Flux for Kubernetes, the cluster constantly polls your Git repository. If the state in the cluster differs from the state in Git, the system automatically corrects the cluster to match the Git definition.</p>
+
+        <h3>Drift Detection: Why it Matters</h3>
+        <p>Infrastructure "drift" occurs when manual changes (ad-hoc changes in the K8s console or cloud UI) cause your production environment to diverge from your codebase. Manual changes are invisible to the repository, leading to "snowflake servers" that are impossible to replicate.</p>
+        
+        <pre>
+# Example: GitHub Actions Workflow for IaC Validation
+name: Terraform Validate and Plan
+on: [pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Validate
+        run: terraform validate
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        # This plan output is later commented on the PR for review
+        </pre>
+
+        <p>With GitOps, drift detection is continuous. If an engineer manually updates a replica count in the cluster, ArgoCD detects the discrepancy against the Git repo, notifies the team, and (if configured) automatically overwrites the manual change to restore the desired state. This is how you enforce compliance at scale.</p>
+
+        <h2>Measuring Success: The DORA Metrics</h2>
+        <p>How do you know if your engineering team is performing well? The DevOps Research and Assessment (DORA) group identified four key metrics that differentiate high-performing teams from the rest:</p>
+        <ol>
+            <li><strong>Deployment Frequency:</strong> How often do you deploy code to production? (High performers do this on-demand).</li>
+            <li><strong>Lead Time for Changes:</strong> How long does it take from code commit to code running in production?</li>
+            <li><strong>Change Failure Rate:</strong> What percentage of deployments cause a failure in production?</li>
+            <li><strong>Time to Restore Service (MTTR):</strong> How long does it take to recover from a failure?</li>
+        </ol>
+
+        <p>If your Lead Time is high, your pipeline is bloated with manual steps or slow tests. If your Change Failure Rate is high, your automated testing suite is insufficient. If your MTTR is high, your observability and rollback strategies are inadequate. These metrics are the dashboard of your engineering health.</p>
+
+        <h2>Architecting for Rollbacks</h2>
+        <p>An automated deployment pipeline without an automated rollback strategy is a liability. You must design for failure. In Kubernetes, this means using <code>kubectl rollout undo</code> or having an automated pipeline that can redeploy the previous successful container image/Terraform state in seconds. Your pipeline should always have a "kill switch" that reverts the environment to the last known good state.</p>
+
+        <h2>Conclusion</h2>
+        <p>The journey to CI/CD and GitOps maturity is ongoing. Start by automating your tests, then move to automated deployment, and finally, shift toward declarative GitOps. By focusing on DORA metrics and treating your infrastructure as immutable, you will spend less time "fighting fires" and more time building value. Security, reliability, and velocity are not competing priorities—they are the results of a well-engineered pipeline.</p>
+
+        <hr>
+        <h3>References</h3>
+        <ul>
+            <li><em>Google Cloud: Accelerate: State of DevOps Report (DORA)</em></li>
+            <li><em>CNCF GitOps Working Group: Principles of GitOps</em></li>
+            <li><em>ArgoCD Documentation: Managing Declarative Kubernetes Infrastructure</em></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems Architect</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

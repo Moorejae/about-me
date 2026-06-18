@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Agentic AI: Building LLM Systems with Function Calling - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A deep dive into building production-ready AI agents using function calling and context management." />
+    <meta name="keywords" content="AI Agents, LLM, Function Calling, Python, Engineering" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.6; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        body.dark-mode pre { background: #222; border: 1px solid #444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Agentic AI: Building LLM Systems with Function Calling</h1>
+        <p><em>Published: June 2026 | Category: AI Engineering</em></p>
+        
+        <p>The landscape of Large Language Models (LLMs) has shifted. We have moved beyond the "chatbot era," where models were primarily passive text generators. We are now in the age of <strong>Agentic AI</strong>—where models are empowered to interact with the world, query databases, execute code, and perform multi-step reasoning to accomplish complex objectives.</p>
+
+        <h2>The Paradigm Shift: From Text to Action</h2>
+        <p>At its core, an AI Agent is an LLM combined with an execution engine. The critical bridge in this architecture is <strong>Function Calling</strong>. When a user asks an agent, "What is the status of my recent transaction?", the agent does not guess based on its training data. Instead, it identifies the intent, selects the appropriate function (e.g., <code>query_transaction_db</code>), generates the required parameters (JSON), and waits for the system to execute that function.</p>
+
+        <h3>1. The Mechanics of Function Calling</h3>
+        <p>Function calling is not magic; it is a structured data exchange. The model acts as a reasoning engine, but it requires a schema. When we define a tool for the agent, we provide a structured description:</p>
+        <pre>
+{
+  "name": "get_transaction_status",
+  "description": "Fetch status of a transaction by ID",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "transaction_id": { "type": "string" }
+    },
+    "required": ["transaction_id"]
+  }
+}
+        </pre>
+        <p>The model analyzes this schema. If the agent perceives that the user's intent matches this tool, it outputs a specific JSON payload rather than natural language. Your backend application intercepts this payload, executes the database query, and returns the result back to the model. This loop—<strong>Reason -> Execute -> Observe -> Refine</strong>—is the fundamental rhythm of modern agentic systems.</p>
+
+        <h2>Context Management: The Memory of the Agent</h2>
+        <p>One of the biggest hurdles in building agents is context windows. You cannot dump your entire database into the LLM context. Instead, we implement "Selective Context." We observe the user's state (e.g., they are currently on the 'P2P Trading' page) and pre-seed the model's environment with only the metadata relevant to that specific session.</p>
+        <p>This approach reduces token consumption and, more importantly, reduces hallucinations. By narrowing the agent's focus to only the tools and data relevant to the current screen state, we dramatically increase the accuracy of the model's decisions.</p>
+
+        <h2>Challenges in Production Deployment</h2>
+        <p>Moving agents from a playground environment to production introduces three significant challenges:</p>
+        <ol>
+            <li><strong>Idempotency:</strong> If an agent accidentally fires a "send payment" tool twice due to a timeout, the results are catastrophic. All agent-accessible tools must be idempotent.</li>
+            <li><strong>Error Handling:</strong> Agents must be able to recover from tool failures. If a database query fails, the agent should report the error back to the user or attempt a fallback method, rather than freezing.</li>
+            <li><strong>Security (The Prompt Injection Vector):</strong> When an LLM controls a tool, it can be tricked. We must implement guardrails at the API level. Even if the LLM is "tricked" into asking to delete a table, your backend authorization logic must block that execution.</li>
+        </ol>
+
+        <h2>Conclusion</h2>
+        <p>Building agents is fundamentally an engineering problem, not just a prompt-engineering one. By mastering function calling, state management, and rigorous backend validation, we can build AI systems that are not just conversational, but genuinely functional. The future of software is not humans typing commands; it is humans giving objectives to agents that handle the "how" of execution.</p>
+
+        <hr>
+        <h3>References & Further Reading</h3>
+        <ul>
+            <li><em>OpenAI Platform Docs: Function Calling Guide</em></li>
+            <li><em>Anthropic Research: Contextual Caching and State Management</em></li>
+            <li><em>LangChain Documentation: Introduction to Agentic Orchestration</em></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems Architect</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

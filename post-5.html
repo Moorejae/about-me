@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Linux Server Hardening 101 - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A comprehensive guide to fortifying Linux production servers through kernel optimization, firewall configuration, and access control." />
+    <meta name="keywords" content="Linux, Security, Hardening, DevOps, SysAdmin, CIS Benchmarks" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Linux Server Hardening 101</h1>
+        <p><em>Published: March 2026 | Category: Security & Infrastructure</em></p>
+
+        <p>In the world of cloud infrastructure, the server is the primary attack surface. Whether you are running a bare-metal rack or a containerized instance in the cloud, an unhardened Linux system is essentially an invitation for automated scanning bots. Hardening is not a one-time "set and forget" configuration; it is a layered, proactive defense strategy aimed at minimizing your attack surface.</p>
+
+        <h2>1. The Identity Perimeter: SSH Security</h2>
+        <p>The SSH daemon is the most exposed service on any Linux server. If you leave it at default settings, you are vulnerable to brute-force attacks within seconds of assigning a public IP address.</p>
+        
+        <h3>Key SSH Hardening Rules:</h3>
+        <ul>
+            <li><strong>Disable Root Login:</strong> Never allow direct root access. Require users to log in as a standard user and escalate privileges via <code>sudo</code>.</li>
+            <li><strong>Disable Password Authentication:</strong> Only allow SSH keys (Ed25519 is currently recommended over RSA).</li>
+            <li><strong>Change Default Port:</strong> While this is "security through obscurity," it significantly reduces log spam from automated scanners.</li>
+        </ul>
+
+        <pre>
+# /etc/ssh/sshd_config
+Port 2222
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+        </pre>
+
+        <h2>2. Network Perimeter: Firewall & Least Privilege</h2>
+        <p>A server should only communicate over the ports absolutely required for its function. If your server is a database, only the application server’s internal IP should be allowed on the database port. Everything else should be blocked by default.</p>
+        <p>Using <code>UFW</code> (Uncomplicated Firewall) or <code>iptables</code> is essential. Implement a <strong>Default Deny</strong> policy:</p>
+        <pre>
+# Set default policies
+ufw default deny incoming
+ufw default allow outgoing
+
+# Allow specific SSH port
+ufw allow 2222/tcp
+
+# Enable firewall
+ufw enable
+        </pre>
+
+        <h2>3. System Minimization: Reducing the Attack Surface</h2>
+        <p>Every unnecessary package is a potential vulnerability. If a library has a zero-day exploit, and that library is installed but unused, your server remains vulnerable. Adopt a "minimalist" mindset:</p>
+        <ul>
+            <li><strong>Remove unused daemons:</strong> Run <code>systemctl list-unit-files --state=enabled</code> to identify unnecessary services like <code>avahi-daemon</code>, <code>cups</code>, or <code>nfs-server</code> if they aren't required.</li>
+            <li><strong>Filesystem Security:</strong> Mount <code>/tmp</code>, <code>/var/tmp</code>, and <code>/dev/shm</code> with <code>noexec</code>, <code>nosuid</code>, and <code>nodev</code> options. This prevents users from executing malicious binaries within temporary directories.</li>
+        </ul>
+
+        <h2>4. Kernel Hardening with sysctl</h2>
+        <p>The Linux kernel itself can be tuned to resist common network attacks. Modifying <code>/etc/sysctl.conf</code> allows you to ignore spoofed packets or protect against SYN flood attacks.</p>
+        <pre>
+# Disable IP forwarding (unless server is a router)
+net.ipv4.ip_forward = 0
+
+# Protect against SYN flood attacks
+net.ipv4.tcp_syncookies = 1
+
+# Ignore ICMP echo requests (prevents being discovered by simple pings)
+net.ipv4.icmp_echo_ignore_all = 1
+        </pre>
+
+        <h2>5. Intrusion Detection & Auditing</h2>
+        <p>Hardening stops attackers, but auditing tells you who tried to get in. You should implement two critical layers:</p>
+        <ol>
+            <li><strong>Fail2Ban:</strong> Automatically bans IP addresses that show malicious signs—such as too many failed password attempts or searching for exploits on your web server.</li>
+            <li><strong>Auditd:</strong> The Linux Audit Framework provides a detailed log of every file access, process execution, and system call. This is vital for forensic analysis if a breach occurs.</li>
+        </ol>
+
+        <p>Monitoring the <code>/var/log/auth.log</code> or <code>journalctl</code> is crucial. I recommend piping these logs to a centralized stack (like the ELK Stack discussed in my previous post) so that you can create alerts for unauthorized sudo attempts or repeated failed SSH connections.</p>
+
+        <h2>Conclusion</h2>
+        <p>Hardening Linux is a continuous process of reducing risk. By implementing the layers discussed—securing SSH, enforcing strict firewall rules, minimizing the OS, and enabling auditing—you make it significantly harder for an attacker to achieve their goals. Remember, security is not about being unhackable; it is about being an unattractive target. Make your server a fortress, not a target of opportunity.</p>
+
+        <hr>
+        <h3>References</h3>
+        <ul>
+            <li><em>CIS Linux Benchmarks (Center for Internet Security)</em></li>
+            <li><em>NIST SP 800-123: Guide to General Server Security</em></li>
+            <li><em>Linux Auditd Documentation</em></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems Architect</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>
