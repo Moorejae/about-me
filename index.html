@@ -27,14 +27,18 @@
             transition: background-color 0.3s, color 0.3s;
         }
         
+        /* Metallic Violet for specific titles */
+        .metallic-violet { color: #9370DB !important; }
+
         /* Dark Mode Overrides */
         body.dark-mode {
             background-color: #1a1a1a;
             color: #e0e0e0;
         }
-        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode span {
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode span, body.dark-mode a {
             color: #f0f0f0 !important;
         }
+        body.dark-mode .metallic-violet { color: #9370DB !important; }
         body.dark-mode .colorlib-navbar-brand a { color: #fff !important; }
         body.dark-mode #colorlib-about, body.dark-mode #colorlib-services, body.dark-mode #colorlib-work {
             background-color: #1a1a1a;
@@ -263,7 +267,7 @@
                             <a href="work.html" class="work-img" style="background-image: url(images/work-1.jpg);">
                                 <div class="display-t">
                                     <div class="work-name">
-                                        <h2>CloudVoid Blueprint</h2>
+                                        <h2 class="metallic-violet">CloudVoid Blueprint</h2>
                                     </div>
                                 </div>
                             </a>
@@ -280,7 +284,7 @@
                             <a href="work.html" class="work-img" style="background-image: url(images/work-2.jpg);">
                                 <div class="display-t">
                                     <div class="work-name">
-                                        <h2>N8N Automation</h2>
+                                        <h2 class="metallic-violet">N8N Automation</h2>
                                     </div>
                                 </div>
                             </a>
@@ -297,7 +301,7 @@
                             <a href="work.html" class="work-img" style="background-image: url(images/work-3.jpg);">
                                 <div class="display-t">
                                     <div class="work-name">
-                                        <h2>Multi-Cloud Security</h2>
+                                        <h2 class="metallic-violet">Multi-Cloud Security</h2>
                                     </div>
                                 </div>
                             </a>
@@ -336,7 +340,7 @@
                         <div class="item">
                             <div class="col-md-12">
                                 <div class="article">
-                                    <a href="blog.html" class="blog-img">
+                                    <a href="post-1.html" class="blog-img">
                                         <img class="img-responsive" src="images/img-1.jpg" alt="Cloud Architecture">
                                         <div class="overlay"></div>
                                         <div class="link">
@@ -344,8 +348,8 @@
                                         </div>
                                     </a>
                                     <div class="desc">
-                                        <span class="meta">June 2026</span>
-                                        <h2><a href="blog.html">CloudVoid: Non-Custodial Architecture</a></h2>
+                                        <span class="meta metallic-violet">June 2026</span>
+                                        <h2><a href="post-1.html" class="metallic-violet">CloudVoid: Building LLM Systems</a></h2>
                                         <p>Deep dive into sovereign wallet security and Fiat/Crypto on-ramping.</p>
                                     </div>
                                 </div>
@@ -354,7 +358,7 @@
                         <div class="item">
                             <div class="col-md-12">
                                 <div class="article">
-                                    <a href="blog.html" class="blog-img">
+                                    <a href="post-4.html" class="blog-img">
                                         <img class="img-responsive" src="images/img-2.jpg" alt="Automation">
                                         <div class="overlay"></div>
                                         <div class="link">
@@ -362,8 +366,8 @@
                                         </div>
                                     </a>
                                     <div class="desc">
-                                        <span class="meta">May 2026</span>
-                                        <h2><a href="blog.html">Scaling N8N Pipelines</a></h2>
+                                        <span class="meta metallic-violet">May 2026</span>
+                                        <h2><a href="post-4.html" class="metallic-violet">Scaling ELK Stack</a></h2>
                                         <p>Lessons in recursion, rate-limiting, and state management for web scrapers.</p>
                                     </div>
                                 </div>
@@ -372,7 +376,7 @@
                         <div class="item">
                             <div class="col-md-12">
                                 <div class="article">
-                                    <a href="blog.html" class="blog-img">
+                                    <a href="post-2.html" class="blog-img">
                                         <img class="img-responsive" src="images/img-3.jpg" alt="Infrastructure">
                                         <div class="overlay"></div>
                                         <div class="link">
@@ -380,8 +384,8 @@
                                         </div>
                                     </a>
                                     <div class="desc">
-                                        <span class="meta">April 2026</span>
-                                        <h2><a href="blog.html">OCI Headless Securement</a></h2>
+                                        <span class="meta metallic-violet">April 2026</span>
+                                        <h2><a href="post-2.html" class="metallic-violet">Terraform & GCP</a></h2>
                                         <p>Securing remote server racks for 99.9% uptime and persistence.</p>
                                     </div>
                                 </div>
@@ -468,24 +472,24 @@
                         <div class="col-md-4 col-pb-sm">
                             <h2>Recent Insights</h2>
                             <div class="f-entry">
-                                <a href="#" class="featured-img" style="background-image: url(images/img-1.jpg);"></a>
+                                <a href="post-1.html" class="featured-img" style="background-image: url(images/img-1.jpg);"></a>
                                 <div class="desc">
-                                    <span>June 2026</span>
-                                    <h3><a href="#">CloudVoid Blueprint</a></h3>
+                                    <span class="metallic-violet">June 2026</span>
+                                    <h3><a href="post-1.html" class="metallic-violet">Agentic AI</a></h3>
                                 </div>
                             </div>
                             <div class="f-entry">
-                                <a href="#" class="featured-img" style="background-image: url(images/img-2.jpg);"></a>
+                                <a href="post-4.html" class="featured-img" style="background-image: url(images/img-2.jpg);"></a>
                                 <div class="desc">
-                                    <span>May 2026</span>
-                                    <h3><a href="#">Scaling N8N</a></h3>
+                                    <span class="metallic-violet">May 2026</span>
+                                    <h3><a href="post-4.html" class="metallic-violet">Scaling ELK Stack</a></h3>
                                 </div>
                             </div>
                             <div class="f-entry">
-                                <a href="#" class="featured-img" style="background-image: url(images/img-3.jpg);"></a>
+                                <a href="post-2.html" class="featured-img" style="background-image: url(images/img-3.jpg);"></a>
                                 <div class="desc">
-                                    <span>April 2026</span>
-                                    <h3><a href="#">OCI Securement</a></h3>
+                                    <span class="metallic-violet">April 2026</span>
+                                    <h3><a href="post-2.html" class="metallic-violet">Infrastructure as Code</a></h3>
                                 </div>
                             </div>
                         </div>
