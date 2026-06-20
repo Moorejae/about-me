@@ -32,13 +32,19 @@
             background-color: #121212;
             color: #e0e0e0;
         }
-        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode span, body.dark-mode label {
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode span, body.dark-mode label, body.dark-mode a {
             color: #ffffff !important;
         }
         body.dark-mode .contact-info li, body.dark-mode .contact-info li span, body.dark-mode .contact-info li a { color: #cccccc !important; }
         body.dark-mode .form-control { background-color: #1e1e1e; border: 1px solid #444; color: #fff; }
-        body.dark-mode .colorlib-navbar-brand a { color: #fff; }
+        body.dark-mode .colorlib-navbar-brand a { color: #fff !important; }
         body.dark-mode #colorlib-contact { background-color: #121212; }
+        
+        /* Menu Toggle and Nav Fixes for Dark Mode */
+        body.dark-mode .colorlib-nav-toggle i { background: #fff !important; }
+        body.dark-mode .colorlib-nav-toggle i::before,
+        body.dark-mode .colorlib-nav-toggle i::after { background: #fff !important; }
+        body.dark-mode #colorlib-main-nav { background: #1a1a1a !important; }
         
         /* Toggle Button */
         .theme-toggle {
@@ -70,14 +76,6 @@
         <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle active"><i></i></a>
         <div class="js-fullheight colorlib-table">
             <div class="colorlib-table-cell js-fullheight">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="search" placeholder="Enter any key to search...">
-                            <button type="submit" class="btn btn-primary"><i class="icon-search3"></i></button>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <ul>

@@ -32,14 +32,20 @@
             background-color: #121212;
             color: #e0e0e0;
         }
-        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode span {
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode span, body.dark-mode a {
             color: #ffffff !important;
         }
         body.dark-mode .desc p { color: #cccccc !important; }
         body.dark-mode .article { background: #1e1e1e; padding: 20px; border: 1px solid #333; }
-        body.dark-mode .colorlib-navbar-brand a { color: #fff; }
+        body.dark-mode .colorlib-navbar-brand a { color: #fff !important; }
         body.dark-mode #colorlib-blog { background-color: #121212; }
         
+        /* Menu Toggle and Nav Fixes for Dark Mode */
+        body.dark-mode .colorlib-nav-toggle i { background: #fff !important; }
+        body.dark-mode .colorlib-nav-toggle i::before,
+        body.dark-mode .colorlib-nav-toggle i::after { background: #fff !important; }
+        body.dark-mode #colorlib-main-nav { background: #1a1a1a !important; }
+
         /* High Contrast Overlay for Readability */
         .blog-img .overlay { background: rgba(0,0,0,0.4) !important; }
         body.dark-mode .blog-img .overlay { background: rgba(0,0,0,0.6) !important; }
@@ -74,14 +80,6 @@
         <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle active"><i></i></a>
         <div class="js-fullheight colorlib-table">
             <div class="colorlib-table-cell js-fullheight">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="search" placeholder="Enter any key to search...">
-                            <button type="submit" class="btn btn-primary"><i class="icon-search3"></i></button>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <ul>
@@ -306,7 +304,7 @@
                                     <p class="colorlib-social-icons">
                                         <a href="https://www.linkedin.com/in/aguchiedoxie/"><i class="icon-linkedin"></i></a>
                                         <a href="https://github.com/Moorejae"><i class="icon-github"></i></a>
-                                        <a href="#"><i class="icon-twitter3"></i></a>
+                                        <a href="https://www.upwork.com/freelancers/~0147c70614cf9a49e2?mp_source=share"><i class="icon-briefcase"></i></a>
                                     </p>
                                 </div>
                             </div>

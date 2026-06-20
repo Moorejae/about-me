@@ -35,7 +35,7 @@
             background-color: #121212;
             color: #e0e0e0;
         }
-        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode strong, body.dark-mode span {
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode strong, body.dark-mode span, body.dark-mode a {
             color: #ffffff !important;
         }
         /* Ensure titles stay metallic violet even in dark mode */
@@ -48,10 +48,16 @@
 
         body.dark-mode .work-entry .desc p { color: #cccccc !important; }
         body.dark-mode .work-entry .work-name h2 { color: #9370DB !important; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
-        body.dark-mode .colorlib-navbar-brand a { color: #fff; }
+        body.dark-mode .colorlib-navbar-brand a { color: #fff !important; }
         body.dark-mode #colorlib-work { background-color: #121212; }
-        body.dark-mode .btn-primary.btn-outline { border-color: #fff; color: #fff; }
+        body.dark-mode .btn-primary.btn-outline { border-color: #fff !important; color: #fff !important; }
         
+        /* Menu Toggle and Nav Fixes for Dark Mode */
+        body.dark-mode .colorlib-nav-toggle i { background: #fff !important; }
+        body.dark-mode .colorlib-nav-toggle i::before,
+        body.dark-mode .colorlib-nav-toggle i::after { background: #fff !important; }
+        body.dark-mode #colorlib-main-nav { background: #1a1a1a !important; }
+
         /* Toggle Button */
         .theme-toggle {
             cursor: pointer;
@@ -82,14 +88,6 @@
         <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle active"><i></i></a>
         <div class="js-fullheight colorlib-table">
             <div class="colorlib-table-cell js-fullheight">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="search" placeholder="Enter any key to search...">
-                            <button type="submit" class="btn btn-primary"><i class="icon-search3"></i></button>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <ul>
@@ -242,7 +240,7 @@
                                     <p class="colorlib-social-icons">
                                         <a href="https://www.linkedin.com/in/aguchiedoxie/"><i class="icon-linkedin"></i></a>
                                         <a href="https://github.com/Moorejae"><i class="icon-github"></i></a>
-                                        <a href="https://www.upwork.com/freelancers/~0147c70614cf9a49e2?mp_source=share"><i class="icon-briefcase"></i></a>
+                                        <a href="#"><i class="icon-twitter3"></i></a>
                                     </p>
                                 </div>
                             </div>
@@ -250,24 +248,24 @@
                         <div class="col-md-4 col-pb-sm">
                             <h2>Recent Insights</h2>
                             <div class="f-entry">
-                                <a href="post-1.html" class="featured-img" style="background-image: url(images/img-1.jpg);"></a>
+                                <a href="#" class="featured-img" style="background-image: url(images/img-1.jpg);"></a>
                                 <div class="desc">
                                     <span>June 2026</span>
-                                    <h3><a href="post-1.html">Agentic AI Deployment</a></h3>
+                                    <h3><a href="#">Agentic AI Deployment</a></h3>
                                 </div>
                             </div>
                             <div class="f-entry">
-                                <a href="post-4.html" class="featured-img" style="background-image: url(images/img-2.jpg);"></a>
-                                <div class="desc">
-                                    <span>April 2026</span>
-                                    <h3><a href="post-4.html">Serverless Observability</a></h3>
-                                </div>
-                            </div>
-                            <div class="f-entry">
-                                <a href="post-2.html" class="featured-img" style="background-image: url(images/img-3.jpg);"></a>
+                                <a href="#" class="featured-img" style="background-image: url(images/img-2.jpg);"></a>
                                 <div class="desc">
                                     <span>May 2026</span>
-                                    <h3><a href="post-2.html">Terraform Security</a></h3>
+                                    <h3><a href="#">Serverless Observability</a></h3>
+                                </div>
+                            </div>
+                            <div class="f-entry">
+                                <a href="#" class="featured-img" style="background-image: url(images/img-3.jpg);"></a>
+                                <div class="desc">
+                                    <span>April 2026</span>
+                                    <h3><a href="#">Terraform Security</a></h3>
                                 </div>
                             </div>
                         </div>

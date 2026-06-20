@@ -43,6 +43,12 @@
         body.dark-mode #colorlib-about, body.dark-mode #colorlib-services, body.dark-mode #colorlib-work {
             background-color: #1a1a1a;
         }
+
+        /* Menu Toggle and Nav Fixes for Dark Mode */
+        body.dark-mode .colorlib-nav-toggle i { background: #fff !important; }
+        body.dark-mode .colorlib-nav-toggle i::before,
+        body.dark-mode .colorlib-nav-toggle i::after { background: #fff !important; }
+        body.dark-mode #colorlib-main-nav { background: #1a1a1a !important; }
         
         /* Toggle Button */
         .theme-toggle {
@@ -74,14 +80,6 @@
         <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle active"><i></i></a>
         <div class="js-fullheight colorlib-table">
             <div class="colorlib-table-cell js-fullheight">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="search" placeholder="Enter any key to search...">
-                            <button type="submit" class="btn btn-primary"><i class="icon-search3"></i></button>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <ul>
@@ -475,21 +473,21 @@
                                 <a href="post-1.html" class="featured-img" style="background-image: url(images/img-1.jpg);"></a>
                                 <div class="desc">
                                     <span class="metallic-violet">June 2026</span>
-                                    <h3><a href="post-1.html" class="metallic-violet">Agentic AI</a></h3>
+                                    <h3><a href="post-1.html" class="metallic-violet">CloudVoid Blueprint</a></h3>
                                 </div>
                             </div>
                             <div class="f-entry">
                                 <a href="post-4.html" class="featured-img" style="background-image: url(images/img-2.jpg);"></a>
                                 <div class="desc">
                                     <span class="metallic-violet">May 2026</span>
-                                    <h3><a href="post-4.html" class="metallic-violet">Scaling ELK Stack</a></h3>
+                                    <h3><a href="post-4.html" class="metallic-violet">Scaling N8N</a></h3>
                                 </div>
                             </div>
                             <div class="f-entry">
                                 <a href="post-2.html" class="featured-img" style="background-image: url(images/img-3.jpg);"></a>
                                 <div class="desc">
                                     <span class="metallic-violet">April 2026</span>
-                                    <h3><a href="post-2.html" class="metallic-violet">Infrastructure as Code</a></h3>
+                                    <h3><a href="post-2.html" class="metallic-violet">OCI Securement</a></h3>
                                 </div>
                             </div>
                         </div>
