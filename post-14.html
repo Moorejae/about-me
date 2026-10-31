@@ -20,6 +20,8 @@
         body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
         code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
         .hero { width: 100%; border-radius: 8px; margin: 24px 0 32px; display: block; }
+        .video { width: 100%; border-radius: 8px; margin: 22px 0 6px; display: block; background: #000; }
+        .video-note { font-size: 14px; color: #777; margin-bottom: 26px; }
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #ddd; }
         body.dark-mode th, body.dark-mode td { border-bottom: 1px solid #444; }
@@ -37,6 +39,12 @@
 
         <p>Honk is a sports prediction system that reports a 70–80% success rate. The interesting part is not the number — it is the constraint the engine is built on: it never reads odds. No prices, no lines, no market movement. Every fixture is scored from raw kinetic and tactical match data, and every settled fixture is autopsied afterwards.</p>
         <p>That constraint sounds philosophical. In practice it is an engineering requirement, and it shapes the entire codebase.</p>
+
+        <video class="video" controls preload="none" poster="images/poster-honk.jpg">
+            <source src="videos/honk-v61.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="video-note">System overview: the three pillars, then the framework patches that constrain them.</p>
 
         <h2>Why refuse the market?</h2>
         <p>If a model can see the price, it will eventually learn the price instead of the football. Odds already contain the wisdom of everyone else, so a system trained on them looks accurate while actually doing nothing but echoing a bookmaker. Worse, it becomes impossible to tell whether a good hit came from analysis or from the market being right.</p>

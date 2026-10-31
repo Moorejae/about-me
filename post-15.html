@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Designing and Deploying Client Websites - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Two client sites built end to end: BEM Africa, a fashion house site with an admin console, and Mind Renewal Care, a therapy NGO website with a matching mobile layout." />
+    <meta name="keywords" content="Web Design, Frontend, Cloudflare Pages, Netlify, Responsive Design, Motion, Admin Panel" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        .video { width: 100%; border-radius: 8px; margin: 22px 0 6px; display: block; background: #000; }
+        .video-note { font-size: 14px; color: #777; margin-bottom: 28px; }
+        .pair { display: flex; gap: 18px; align-items: flex-start; }
+        .pair .wide { flex: 1; }
+        .pair .tall { width: 210px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #ddd; }
+        body.dark-mode th, body.dark-mode td { border-bottom: 1px solid #444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Designing and Deploying Client Websites</h1>
+        <p><em>Published: October 2026 | Category: Web Design &amp; Deployment</em></p>
+
+        <p>Alongside the AI systems, I design and ship websites for small businesses and NGOs — layout, visual system, motion, front-end build, hosting, DNS and TLS. Two recent builds show the range: a fashion house with an admin console, and a therapy NGO that has to work on a cheap phone as well as a laptop.</p>
+
+        <p>Both are preview builds, so there is no public domain to click through yet. The walkthroughs are the demo.</p>
+
+        <h2>BEM Africa: a scroll-driven fashion house site</h2>
+        <p>The brief was a site that behaves like a lookbook rather than a catalogue. The homepage is built around a scrolling editorial sequence — full-bleed imagery, staged reveals and motion transitions between looks — with the collection, story and contact routes hanging off it.</p>
+        <p>Behind the site sits an admin console for products and content, so the client is not emailing a developer to change a hero image.</p>
+
+        <video class="video" controls preload="none" poster="images/poster-bem-africa.jpg">
+            <source src="videos/bem-africa.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="video-note">BEM Africa &mdash; public site and admin console walkthrough.</p>
+
+        <h2>Mind Renewal Care: a therapy NGO site</h2>
+        <p>This one is the opposite discipline. The audience arrives anxious and often on a phone, so the site leads with clarity: what the service is, who delivers it, what a session involves, and a single obvious action — schedule a session.</p>
+        <p>Service cards cover psychiatric care, counselling and community programmes; the team, approach and impact sections carry the credibility; and the whole layout collapses cleanly to mobile instead of being an afterthought.</p>
+
+        <div class="pair">
+            <div class="wide">
+                <video class="video" controls preload="none" poster="images/poster-mind-renewal-care.jpg">
+                    <source src="videos/mind-renewal-care.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="tall">
+                <video class="video" controls preload="none" poster="images/poster-mind-renewal-care-mobile.jpg">
+                    <source src="videos/mind-renewal-care-mobile.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <p class="video-note">Mind Renewal Care &mdash; desktop and mobile walkthroughs.</p>
+
+        <h2>How I ship a site</h2>
+        <table>
+            <tr><th>Layer</th><th>What I actually do</th></tr>
+            <tr><td>Design</td><td>Type scale, colour, spacing and a page system that survives real content, not lorem ipsum.</td></tr>
+            <tr><td>Build</td><td>Semantic HTML/CSS, responsive layout, motion that respects reduced-motion, images sized for the connection.</td></tr>
+            <tr><td>Hosting</td><td>Cloudflare Pages or Workers for static and edge, Netlify where forms and previews fit better, Hugging Face for anything ML-backed, or a hardened VPS with Nginx when the site needs a server.</td></tr>
+            <tr><td>Domain</td><td>DNS, TLS and WAF at Cloudflare; self-hosted mail on the same domain when the client wants their own inboxes.</td></tr>
+            <tr><td>After launch</td><td>Monitoring, uptime checks and a deployment path that does not require me to be awake.</td></tr>
+        </table>
+
+        <h2>What the two builds have in common</h2>
+        <ol>
+            <li><strong>The site is a product, not a poster.</strong> If the client cannot update it, it is not finished — hence the admin console on BEM Africa.</li>
+            <li><strong>Mobile is the default.</strong> The therapy site was designed at phone width first and expanded up.</li>
+            <li><strong>Motion is a tool, not decoration.</strong> Scroll animation earns its place only when it carries the reader forward.</li>
+            <li><strong>Deployment is part of the work.</strong> A design that is not live, fast and reachable is a mock-up.</li>
+        </ol>
+
+        <hr>
+        <h3>Related</h3>
+        <ul>
+            <li><a href="post-13.html">REZMO: Memory That Outlives the Chat</a></li>
+            <li><a href="post-12.html">ForChi: A Telegram Agent With Three Jobs</a></li>
+            <li><a href="work.html#websites">Work &mdash; websites</a></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud &amp; AI Systems Engineer</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

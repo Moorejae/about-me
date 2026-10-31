@@ -20,6 +20,8 @@
         body.dark-mode pre { background: #222; border: 1px solid #444; }
         .status { background: #f6f2ff; border-left: 4px solid #9370DB; padding: 14px 18px; border-radius: 4px; font-size: 15px; }
         body.dark-mode .status { background: #1c1a24; }
+        .video { width: 100%; border-radius: 8px; margin: 22px 0 6px; display: block; background: #000; }
+        .video-note { font-size: 14px; color: #777; margin-bottom: 26px; }
     </style>
 </head>
 <body>
@@ -31,6 +33,12 @@
         <p><em>Published: July 2026 | Category: Cybersecurity &amp; DevOps</em></p>
 
         <p class="status"><strong>Status:</strong> the wallet these defences were built for, CloudVoid, is decommissioned. This is kept as a retrospective on the hardening work rather than a page for a live product.</p>
+
+        <video class="video" controls preload="none" poster="images/poster-cloudvoid.jpg">
+            <source src="videos/cloudvoid-demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="video-note">CloudVoid at <a href="https://cloudvoid.online">cloudvoid.online</a> &mdash; the onboarding flow that is still served, kept as an archive.</p>
 
         <p>In modern financial and wallet applications, server security cannot rely on traditional perimeter defenses alone. Today's hackers frequently target user vulnerabilities and exploit internal entry points. To truly protect financial systems, we must assume that breaches <em>could</em> happen and engineer resilient, self-healing architectures that neutralize threats instantly.</p>
 

@@ -20,6 +20,8 @@
         body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
         code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
         .hero { width: 100%; border-radius: 8px; margin: 24px 0 12px; display: block; }
+        .video { width: 100%; border-radius: 8px; margin: 22px 0 6px; display: block; background: #000; }
+        .video-note { font-size: 14px; color: #777; margin-bottom: 26px; }
         figure { margin: 28px 0; }
         figure img { width: 100%; border-radius: 8px; display: block; }
         figcaption { font-size: 14px; color: #777; margin-top: 8px; }
@@ -42,6 +44,12 @@
         <p>Every assistant keeps a memory of your work, and every one of those memories is a summary written by the assistant, held by the assistant, and available only inside that product. Change tools and the record resets to a thinner copy of itself. After enough switches, the work is gone and only summaries of it remain.</p>
         <p>REZMO takes the opposite position: the record is the asset, and the models are readers of it. I built it at <a href="https://rezmo.online">rezmo.online</a>.</p>
 
+        <video class="video" controls preload="none" poster="images/poster-rezmo.jpg">
+            <source src="videos/rezmo-demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="video-note">Recorded walkthrough: sign-in, the workspace, and how the memory layer serves a connected model.</p>
+
         <h2>The design: a record you own</h2>
         <p>A user's conversations, notes, projects and the documents generated from them are stored as their material, with a copy in a folder in their own Google Drive. If REZMO disappeared tomorrow, the folder would still open. That constraint decided almost everything else in the architecture.</p>
         <ul>
@@ -59,8 +67,15 @@
         <p>The answer to "which tool remembers your work?" is not a better chat window. It is a record that lives outside all of them. REZMO runs a Model Context Protocol server, so Claude, ChatGPT, Grok, Cursor or any other MCP-capable client can be pointed at the same record.</p>
         <p>The permission model matters as much as the protocol. The user approves the connection in their browser and decides whether a client may only read, or may also add to the record. Memory is not something a model should be able to write to silently.</p>
 
+        <video class="video" controls preload="none" poster="images/poster-rezmo-mcp.jpg">
+            <source src="videos/rezmo-mcp-consent.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="video-note">The consent step: a client is approved in the browser before it can touch the record.</p>
+
         <h2>Topology: one host, an edge worker, and a very short trip to the database</h2>
         <p>The API, Postgres 17 and Redis run as containers on a single Contabo host behind Cloudflare. The frontend is a Cloudflare Worker. Keeping the pieces few was a deliberate trade: one host is easy to reason about, easy to back up, and cheap to run.</p>
+        <p>Cloudflare does more than sit in front of the site: DNS, WAF rules and TLS terminate at the edge, and the Worker is the only public entry point to the API. The origin only answers traffic that arrives through Cloudflare.</p>
         <p>The performance lesson was about placement, not hardware:</p>
         <table>
             <tr><th>Layout</th><th>Database round trip</th></tr>
@@ -76,6 +91,9 @@
             <li><strong>Frontend:</strong> the approval flow and workspace states, because the moment a user cannot tell what a model is allowed to do, trust is gone.</li>
         </ul>
         <p>Payments run live through Paystack, which adds the usual requirement that nothing in the entitlement path is allowed to be flaky.</p>
+
+        <h2>Mail is part of the stack too</h2>
+        <p>REZMO's email is self-hosted on its own domain: mailboxes served from my own host over IMAP and SMTP rather than handed to a third-party mail provider. It keeps account mail, the domain's DNS and the product under one operator, and it means the domain's SPF, DKIM and DMARC records are mine to get right. That is the same trade as the rest of the system &mdash; fewer moving providers, more responsibility.</p>
 
         <h2>What I took from building it</h2>
         <ol>

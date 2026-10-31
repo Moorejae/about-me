@@ -20,6 +20,8 @@
         body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
         code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
         .hero { width: 100%; border-radius: 8px; margin: 24px 0 32px; display: block; }
+        .video { width: 100%; border-radius: 8px; margin: 22px 0 6px; display: block; background: #000; }
+        .video-note { font-size: 14px; color: #777; margin-bottom: 26px; }
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #ddd; }
         body.dark-mode th, body.dark-mode td { border-bottom: 1px solid #444; }
@@ -36,6 +38,12 @@
         <img class="hero" src="images/project-forchi.png" alt="ForChi Telegram automation agent: three workflows">
 
         <p>Most "AI agent" demos are a single task wrapped in a chat window. ForChi is the opposite: one Telegram bot that runs three independent production workflows in parallel, unattended, on free infrastructure. It publishes to two social networks, produces and uploads YouTube videos, and hunts for jobs — all from the same process.</p>
+
+        <video class="video" controls preload="none" poster="images/poster-forchi-build.jpg">
+            <source src="videos/forchi-build.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="video-note">Recorded build session &mdash; extending the job-application engine and its Lever/Ashby submission path.</p>
 
         <h2>The three workflows</h2>
         <table>
@@ -70,6 +78,7 @@ run_job_workflow(params.data)            # only now does the LLM get involved
         <h2>The model stack</h2>
         <p>Judgement calls — matching a posting to my actual experience, writing copy in my voice, picking a video angle — run on Gemini. Gemini's free tier is generous but not guaranteed, so the stack degrades instead of dying: a Qwen2.5-7B model I host on Hugging Face takes over as fallback.</p>
         <p>That split matters operationally. The workflows are not allowed to depend on a single provider being up, and the fallback is a model I control, not another company's quota.</p>
+        <p>Hugging Face carries more than the fallback model. ForChi also uses an image Space for post visuals and two voice Spaces (F5-TTS and Higgs TTS 3) to generate the narration for the video pipeline, so the whole content stack can be rebuilt from components I control.</p>
 
         <h2>Running on free tiers without babysitting</h2>
         <p>ForChi runs on Render and Hugging Face free tiers, which means it has to survive cold starts, sleeping dynos and credential expiry without me noticing. Two decisions carried most of that weight:</p>

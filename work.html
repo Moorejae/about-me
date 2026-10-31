@@ -30,6 +30,26 @@
         /* Metallic Violet for Titles */
         .metallic-violet { color: #9370DB !important; }
 
+        /* Project media */
+        .project-video {
+            width: 100%;
+            display: block;
+            margin-top: 10px;
+            border-radius: 8px;
+            background: #000;
+            box-shadow: 0 18px 40px rgba(0,0,0,.16);
+        }
+        .video-note {
+            font-size: 13px;
+            text-align: center;
+            color: #888;
+            margin-top: 10px;
+        }
+        body.dark-mode .video-note { color: #9a9a9a !important; }
+        .media-pair { display: flex; gap: 20px; align-items: flex-start; margin-top: 10px; }
+        .media-pair .desktop { flex: 1; }
+        .media-pair .mobile { width: 240px; }
+
         /* Dark Mode Overrides for High Contrast */
         body.dark-mode {
             background-color: #121212;
@@ -172,6 +192,13 @@
                                     <p class="read"><a href="https://rezmo.online">Visit rezmo.online</a></p>
                                 </div>
                             </div>
+                            <div class="col-md-8 col-md-offset-2">
+                                <video class="project-video" controls preload="none" poster="images/poster-rezmo.jpg">
+                                    <source src="videos/rezmo-demo.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="video-note">REZMO walkthrough &mdash; sign-in, workspace and the memory layer in use.</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -190,6 +217,13 @@
                                     <p>It runs on free tiers (Render, Hugging Face) and cut the manual time I spent on these tasks by about 99.9%.</p>
                                     <p class="read"><a href="post-12.html">Read the build notes</a></p>
                                 </div>
+                            </div>
+                            <div class="col-md-8 col-md-offset-2">
+                                <video class="project-video" controls preload="none" poster="images/poster-forchi-build.jpg">
+                                    <source src="videos/forchi-build.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="video-note">Recorded build session &mdash; wiring the job-application engine (Lever and Ashby submission path).</p>
                             </div>
                         </div>
                     </div>
@@ -210,6 +244,13 @@
                                     <p class="read"><a href="post-14.html">Read the build notes</a></p>
                                 </div>
                             </div>
+                            <div class="col-md-8 col-md-offset-2">
+                                <video class="project-video" controls preload="none" poster="images/poster-honk.jpg">
+                                    <source src="videos/honk-v61.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="video-note">Engine overview &mdash; the three pillars and the framework patches that guard them.</p>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -227,6 +268,109 @@
                                     <p>Private keys never left the device, and the backend only saw public addresses through an encrypted envelope (P-256 ECDH, HKDF-SHA256, AES-256-GCM) with the master key held on a separate server.</p>
                                     <p>The operational patterns from that build &mdash; PM2 monitoring, iptables hardening, automated return-to-source &mdash; now protect the systems I run today.</p>
                                     <p class="read"><a href="post-10.html">Read the security retrospective</a></p>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-md-offset-2">
+                                <video class="project-video" controls preload="none" poster="images/poster-cloudvoid.jpg">
+                                    <source src="videos/cloudvoid-demo.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="video-note">CloudVoid at cloudvoid.online &mdash; the non-custodial onboarding flow, kept online as an archive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row text-center">
+                    <h2 class="bold">Websites</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-0 text-center animate-box intro-heading">
+                        <span>Design &amp; Deployment</span>
+                        <h2>Sites I Designed, Built and Shipped</h2>
+                        <p>Layout, motion, front-end build, hosting and DNS &mdash; usually on Cloudflare, Netlify or Hugging Face. These two are preview builds with no public domain yet, so the walkthroughs below are the demo.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="rotate">
+                            <h2 class="heading">Websites</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="websites">
+                    <div class="col-md-12">
+                        <div class="work-entry animate-box">
+                            <a href="videos/bem-africa.mp4" class="work-img" style="background-image: url(images/poster-bem-africa.jpg);">
+                                <div class="display-t">
+                                    <div class="work-name">
+                                        <h2 class="metallic-violet">BEM Africa &mdash; Fashion House Site &amp; Admin</h2>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="desc">
+                                    <p>A fashion house site built around a scroll-driven homepage: editorial lookbook panels, motion transitions and a fully responsive layout, backed by an admin console for products and content.</p>
+                                    <p>Designed and built end to end &mdash; visual system, page composition, motion, front-end build and deployment &mdash; with the admin panel shipped alongside the public site.</p>
+                                    <video class="project-video" controls preload="none" poster="images/poster-bem-africa.jpg">
+                                        <source src="videos/bem-africa.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="video-note">Walkthrough of the public site and the admin console. Preview build &mdash; no public domain yet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="work-entry animate-box">
+                            <a href="videos/mind-renewal-care.mp4" class="work-img" style="background-image: url(images/poster-mind-renewal-care.jpg);">
+                                <div class="display-t">
+                                    <div class="work-name">
+                                        <h2 class="metallic-violet">Mind Renewal Care &mdash; Therapy NGO Website</h2>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="desc">
+                                    <p>A website for a therapy NGO: service cards for psychiatric care, counselling and community programmes, team and approach sections, impact reporting and a session-booking call to action.</p>
+                                    <p>Built as a responsive site with a matching mobile layout, designed for slow connections and older devices as much as for desktop.</p>
+                                    <div class="media-pair">
+                                        <div class="desktop">
+                                            <video class="project-video" controls preload="none" poster="images/poster-mind-renewal-care.jpg">
+                                                <source src="videos/mind-renewal-care.mp4" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                        <div class="mobile">
+                                            <video class="project-video" controls preload="none" poster="images/poster-mind-renewal-care-mobile.jpg">
+                                                <source src="videos/mind-renewal-care-mobile.mp4" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                    </div>
+                                    <p class="video-note">Desktop and mobile walkthroughs. Preview build &mdash; no public domain yet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="work-entry animate-box">
+                            <a href="post-11.html" class="work-img" style="background-image: url(images/poster-eyeno.jpg);">
+                                <div class="display-t">
+                                    <div class="work-name">
+                                        <h2 class="metallic-violet">Eyeno &mdash; Prompt Architect Workspace</h2>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="desc">
+                                    <p>An interface for the Eyeno second brain: a prompt workspace that diagnoses a draft across persona, objectives, delimiters and variables, then asks the user four alignment questions before it writes the final system prompt.</p>
+                                    <p>The knowledge behind it lives as Obsidian Markdown on GitHub rather than inside model weights, so the behavioural rules can be read, diffed and corrected.</p>
+                                    <video class="project-video" controls preload="none" poster="images/poster-eyeno.jpg">
+                                        <source src="videos/eyeno-walkthrough.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="video-note">Pipeline overview &mdash; the prompt checks and the vault nodes they query.</p>
                                 </div>
                             </div>
                         </div>

@@ -20,6 +20,9 @@
         body.dark-mode pre { background: #222; border: 1px solid #444; }
         img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; border: 1px solid #ddd; }
         body.dark-mode img { border: 1px solid #444; }
+        .video { width: 100%; border-radius: 8px; margin: 22px 0 6px; display: block; background: #000; border: 1px solid #ddd; }
+        body.dark-mode .video { border: 1px solid #444; }
+        .video-note { font-size: 14px; color: #777; margin-bottom: 26px; }
     </style>
 </head>
 <body>
@@ -34,7 +37,11 @@
 
         <p>Here is the story and technical blueprint of how we connected prompt engineering with an Obsidian knowledge graph on GitHub to build a self-training AI ecosystem.</p>
 
-        <img src="images/prompt-architect-ui.png" alt="Prompt Architect Workspace UI">
+        <video class="video" controls preload="none" poster="images/poster-eyeno.jpg">
+            <source src="videos/eyeno-walkthrough.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p class="video-note">Pipeline overview: what the Prompt Architect checks, and the vault nodes it queries.</p>
 
         <h2>1. The Gateway: The Prompt Architect</h2>
         <p>At the center of our workspace is the Prompt Architect. It takes raw, ambiguous prompts (e.g., <em>"Make me a react component"</em>) and runs them through a diagnostic pipeline. It rates the draft across multiple prompt engineering metrics—role/persona, objectives, delimiters, and variables—and generates a 4-step interactive alignment panel to clarify missing details.</p>
@@ -50,7 +57,7 @@
         </ul>
         <p>In parallel to any prompt query, the backend executes a semantic check against this database. If a prompt triggers keywords related to our boundaries, the system pulls these custom principles and merges them directly into the output prompt.</p>
 
-        <img src="images/eyeno-graph.png" alt="Obsidian Second Brain Graph View">
+        <img src="images/project-eyeno.png" alt="Eyeno: prompt architect and Obsidian vault overview">
 
         <h2>3. The Self-Training Loop</h2>
         <p>To train the brain dynamically without manually writing new nodes or uploading raw documents, we built a <strong>Continuous Learning Loop</strong> directly into the Express API backend.</p>
