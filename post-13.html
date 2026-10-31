@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>REZMO: Memory That Outlives the Chat - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Building REZMO, a portable AI memory layer: a full record in the user's own Google Drive, served to Claude and Grok over an MCP server." />
+    <meta name="keywords" content="MCP, AI Memory, RAG, Postgres, Redis, Cloudflare Workers, Contabo, Paystack, Google Drive" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+        .hero { width: 100%; border-radius: 8px; margin: 24px 0 12px; display: block; }
+        figure { margin: 28px 0; }
+        figure img { width: 100%; border-radius: 8px; display: block; }
+        figcaption { font-size: 14px; color: #777; margin-top: 8px; }
+        body.dark-mode figcaption { color: #aaa; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #ddd; }
+        body.dark-mode th, body.dark-mode td { border-bottom: 1px solid #444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>REZMO: Memory That Outlives the Chat</h1>
+        <p><em>Published: October 2026 | Category: AI Infrastructure</em></p>
+
+        <img class="hero" src="images/project-rezmo.jpg" alt="REZMO — the AI memory layer">
+
+        <p>Every assistant keeps a memory of your work, and every one of those memories is a summary written by the assistant, held by the assistant, and available only inside that product. Change tools and the record resets to a thinner copy of itself. After enough switches, the work is gone and only summaries of it remain.</p>
+        <p>REZMO takes the opposite position: the record is the asset, and the models are readers of it. I built it at <a href="https://rezmo.online">rezmo.online</a>.</p>
+
+        <h2>The design: a record you own</h2>
+        <p>A user's conversations, notes, projects and the documents generated from them are stored as their material, with a copy in a folder in their own Google Drive. If REZMO disappeared tomorrow, the folder would still open. That constraint decided almost everything else in the architecture.</p>
+        <ul>
+            <li><strong>Full depth, not digests.</strong> The record keeps the files, not a paragraph about the files, so a later model can go back to the source.</li>
+            <li><strong>Portable by default.</strong> Download the folder, keep it offline, push it back later, continue as if nothing had been lost.</li>
+            <li><strong>Many models, one record.</strong> The product name for the result is a Digital Passport: one history that travels with the user across assistants.</li>
+        </ul>
+
+        <figure>
+            <img src="images/project-rezmo-app.jpg" alt="REZMO sign-in: sign in to your workspace">
+            <figcaption>REZMO's workspace sign-in, with Google account access to the same record.</figcaption>
+        </figure>
+
+        <h2>How models connect: MCP, not another chat window</h2>
+        <p>The answer to "which tool remembers your work?" is not a better chat window. It is a record that lives outside all of them. REZMO runs a Model Context Protocol server, so Claude, ChatGPT, Grok, Cursor or any other MCP-capable client can be pointed at the same record.</p>
+        <p>The permission model matters as much as the protocol. The user approves the connection in their browser and decides whether a client may only read, or may also add to the record. Memory is not something a model should be able to write to silently.</p>
+
+        <h2>Topology: one host, an edge worker, and a very short trip to the database</h2>
+        <p>The API, Postgres 17 and Redis run as containers on a single Contabo host behind Cloudflare. The frontend is a Cloudflare Worker. Keeping the pieces few was a deliberate trade: one host is easy to reason about, easy to back up, and cheap to run.</p>
+        <p>The performance lesson was about placement, not hardware:</p>
+        <table>
+            <tr><th>Layout</th><th>Database round trip</th></tr>
+            <tr><td>Database on a separate host from the API</td><td>~112 ms</td></tr>
+            <tr><td>Database next to the API on the same host</td><td>~5 ms</td></tr>
+        </table>
+        <p>Moving Postgres next to the API cut the round trip by more than an order of magnitude. For a request path that touches the database several times per call, that is not a micro-optimisation — it is the difference between a product that feels instant and one that feels broken. The trade is that the host becomes a real dependency, which is exactly why the record also lives in the user's Drive.</p>
+
+        <h2>Tests are the reason I can move fast on it</h2>
+        <p>REZMO carries 2,000+ backend tests and 480+ frontend tests. That sounds excessive until you consider what the product does: it reads and writes a user's own history. A regression here is not a visual bug, it is lost context.</p>
+        <ul>
+            <li><strong>Backend:</strong> Postgres 17 and Redis behaviour, permission boundaries between read-only and read-write clients, and the Drive synchronisation path.</li>
+            <li><strong>Frontend:</strong> the approval flow and workspace states, because the moment a user cannot tell what a model is allowed to do, trust is gone.</li>
+        </ul>
+        <p>Payments run live through Paystack, which adds the usual requirement that nothing in the entitlement path is allowed to be flaky.</p>
+
+        <h2>What I took from building it</h2>
+        <ol>
+            <li><strong>Ownership is an architecture decision.</strong> Putting the record in the user's Drive changed the schema, the sync path and the failure modes — and it is the reason the product is credible.</li>
+            <li><strong>Latency is a placement problem first.</strong> Before optimising queries, check what the query is crossing.</li>
+            <li><strong>Give the model a role, not the keys.</strong> Read-only versus read-write is the simplest permission model that still respects the user.</li>
+            <li><strong>Test the product's promise.</strong> The promise is "your history is still here". Test that, not the button colours.</li>
+        </ol>
+
+        <hr>
+        <h3>Related</h3>
+        <ul>
+            <li><a href="post-12.html">ForChi: A Telegram Agent With Three Jobs</a></li>
+            <li><a href="post-1.html">Agentic AI: Building LLM Systems with Function Calling</a></li>
+            <li><a href="post-14.html">Honk and the V6.1 Football Engine</a></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud &amp; AI Systems Engineer</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

@@ -75,6 +75,15 @@
 			}
 
 		} , { offset: '85%' } );
+
+		// Waypoints only fire when an element crosses the offset while scrolling down,
+		// so anything already in view on load would otherwise stay hidden.
+		$('.animate-box').each(function() {
+			var el = $(this);
+			if ( el.offset().top < $(window).height() * 0.85 ) {
+				el.addClass('fadeIn animated');
+			}
+		});
 	};
 
 

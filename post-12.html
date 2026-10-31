@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ForChi: A Telegram Agent With Three Jobs - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How ForChi runs three autonomous workflows from one Telegram bot: social publishing, a YouTube pipeline, and a job-application engine." />
+    <meta name="keywords" content="AI Agents, Telegram Bot, Gemini, Zod, Automation, Render, Hugging Face, Python" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+        .hero { width: 100%; border-radius: 8px; margin: 24px 0 32px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #ddd; }
+        body.dark-mode th, body.dark-mode td { border-bottom: 1px solid #444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>ForChi: A Telegram Agent With Three Jobs</h1>
+        <p><em>Published: October 2026 | Category: AI Engineering</em></p>
+
+        <img class="hero" src="images/project-forchi.png" alt="ForChi Telegram automation agent: three workflows">
+
+        <p>Most "AI agent" demos are a single task wrapped in a chat window. ForChi is the opposite: one Telegram bot that runs three independent production workflows in parallel, unattended, on free infrastructure. It publishes to two social networks, produces and uploads YouTube videos, and hunts for jobs — all from the same process.</p>
+
+        <h2>The three workflows</h2>
+        <table>
+            <tr><th>Workflow</th><th>What it does</th><th>Cadence</th></tr>
+            <tr><td>Social</td><td>Writes and publishes posts to Facebook and LinkedIn</td><td>5× per day</td></tr>
+            <tr><td>Video</td><td>Scripts, voices and assembles YouTube uploads</td><td>up to 2 per day</td></tr>
+            <tr><td>Jobs</td><td>Scans boards, scores each role against my profile, applies through Lever and Ashby</td><td>every 30 minutes</td></tr>
+        </table>
+
+        <p>Together those three loops used to eat most of a working day. Running them as one agent cut the manual time I spent on them by roughly 99.9%.</p>
+
+        <h2>The hard part: deciding when <em>not</em> to act</h2>
+        <p>The failure mode of an always-on agent is not that it is dumb — it is that it is eager. If a casual "hey, how's the job hunt going?" can trigger an application run, the agent is dangerous, and you will spend more time supervising it than doing the work yourself.</p>
+        <p>So ForChi has a deterministic trigger layer in front of the model:</p>
+        <ol>
+            <li><strong>Regex gate.</strong> The message must match an explicit command shape. Ordinary conversation never gets past this point, no matter how it is phrased or how convincing it sounds.</li>
+            <li><strong>Schema extraction.</strong> Once past the gate, a Zod schema validates the extracted parameters — target role, location, posting age, board — before anything executes. A missing or malformed field fails closed.</li>
+        </ol>
+        <p>The rule I apply everywhere now: deterministic code owns the <em>whether</em>, and the model owns the <em>what</em>.</p>
+        <pre>
+# The shape of the rule, not the actual implementation
+if not COMMAND_PATTERN.match(text):     # regex gate
+    return reply("I only act on explicit commands.")
+
+params = JobRequest.safe_parse(extract(text))   # Zod-equivalent validation
+if not params.success:
+    return reply(f"Invalid request: {params.error}")
+
+run_job_workflow(params.data)            # only now does the LLM get involved
+        </pre>
+
+        <h2>The model stack</h2>
+        <p>Judgement calls — matching a posting to my actual experience, writing copy in my voice, picking a video angle — run on Gemini. Gemini's free tier is generous but not guaranteed, so the stack degrades instead of dying: a Qwen2.5-7B model I host on Hugging Face takes over as fallback.</p>
+        <p>That split matters operationally. The workflows are not allowed to depend on a single provider being up, and the fallback is a model I control, not another company's quota.</p>
+
+        <h2>Running on free tiers without babysitting</h2>
+        <p>ForChi runs on Render and Hugging Face free tiers, which means it has to survive cold starts, sleeping dynos and credential expiry without me noticing. Two decisions carried most of that weight:</p>
+        <ul>
+            <li><strong>Long polling instead of webhooks.</strong> No public callback to keep registered, no tunnel to maintain, and the bot recovers on its own after a restart.</li>
+            <li><strong>A real health endpoint.</strong> <code>/</code> returns a cheap status document and <code>/status</code> reports workflow state, so an external keep-alive ping is enough to know the process is alive and to wake it when it is not.</li>
+        </ul>
+        <pre>
+GET https://forchi.onrender.com/
+{"status": "healthy", "bot": "ForChi", "mode": "long-polling"}
+        </pre>
+
+        <h2>Scheduling three workflows in one process</h2>
+        <p>Each workflow has its own interval and its own failure blast radius. A YouTube render that takes forty minutes must not block the job scan that runs every thirty, and a failed social post must not take down the scheduler.</p>
+        <ul>
+            <li>Every workflow writes its result, success or failure, so a silent stop is visible.</li>
+            <li>Retries are bounded and idempotent: an application is never submitted twice for the same role, even if the board returns the listing again.</li>
+            <li>Configuration lives in the environment, not in code, so a schedule change is a config change.</li>
+        </ul>
+
+        <h2>What I would tell anyone building this</h2>
+        <ol>
+            <li><strong>Guardrails before intelligence.</strong> Build the gate first. A precise agent that refuses ambiguous input is worth more than a clever one that guesses.</li>
+            <li><strong>Log the decision, not just the action.</strong> When a workflow does not fire, the reason is the most valuable line in the log.</li>
+            <li><strong>Free tiers are a design constraint, not a hack.</strong> If the system has to survive cold starts and quotas, it ends up simpler and cheaper to run than the version that assumes a warm server.</li>
+        </ol>
+
+        <hr>
+        <h3>Related</h3>
+        <ul>
+            <li><a href="post-13.html">REZMO: Memory That Outlives the Chat</a></li>
+            <li><a href="post-1.html">Agentic AI: Building LLM Systems with Function Calling</a></li>
+            <li><a href="post-14.html">Honk and the V6.1 Football Engine</a></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud &amp; AI Systems Engineer</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>

@@ -3,17 +3,17 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Work - Agu Chiedozie - Cloud Systems Architect</title>
+    <title>Work - Agu Chiedozie - Cloud &amp; AI Systems Engineer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Portfolio of Agu Chiedozie - Cloud Infrastructure, AI Systems, and Data Engineering Projects" />
-    <meta name="keywords" content="AWS, GCP, Terraform, Kubernetes, Data Engineering, AI Agents, DevOps" />
+    <meta name="description" content="Production systems built by Agu Chiedozie: REZMO, ForChi and the V6.1 football engine, plus archived builds." />
+    <meta name="keywords" content="Cloud Engineering, AI Agents, MCP, RAG, Contabo, Cloudflare, Docker, Python, TypeScript" />
     <meta name="author" content="Agu Chiedozie" />
 
     <meta property="og:title" content="Work - Agu Chiedozie"/>
-    <meta property="og:image" content=""/>
+    <meta property="og:image" content="images/project-rezmo.jpg"/>
     <meta property="og:url" content="https://victormoore.online"/>
     <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
-    <meta property="og:description" content="Systems Architect specializing in high-stakes infrastructure, AI agents, and scalable data pipelines."/>
+    <meta property="og:description" content="Cloud & AI Systems Engineer: production agents, AI memory layers and prediction engines."/>
     <meta name="twitter:title" content="" />
     <meta name="twitter:image" content="" />
     <meta name="twitter:url" content="" />
@@ -144,7 +144,7 @@
                 <div class="row">
                     <div class="col-md-12 col-md-offset-0 text-center animate-box intro-heading">
                         <span>Portfolio</span>
-                        <h2>Technical Execution & Case Studies</h2>
+                        <h2>Systems I Have Built &amp; Run</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -157,68 +157,76 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="#" class="work-img" style="background-image: url(images/work-1.jpg);">
+                            <a href="https://rezmo.online" class="work-img" style="background-image: url(images/project-rezmo-wide.jpg);">
                                 <div class="display-t">
                                     <div class="work-name">
-                                        <h2 class="metallic-violet">CloudVoid: Web3 Infrastructure</h2>
+                                        <h2 class="metallic-violet">REZMO &mdash; Portable AI Memory Layer</h2>
                                     </div>
                                 </div>
                             </a>
                             <div class="col-md-4 col-md-offset-4">
                                 <div class="desc">
-                                    <p>Lead architect of a non-custodial Web3 portal. Engineered backend Express.js services, integrated secure fiat/crypto on-ramping, and implemented enterprise-grade security using Nginx, Certbot, and Cloudflare WAF.</p>
-                                    <p class="read"><a href="https://www.linkedin.com/in/aguchiedoxie/">View LinkedIn</a></p>
+                                    <p>A user's conversations and files live in their own Google Drive, and any connected model picks up the same context. Claude and Grok both connect through an MCP server I built.</p>
+                                    <p>The API, Postgres 17 and Redis run as containers on one Contabo host behind Cloudflare, with the frontend on a Cloudflare Worker. Moving the database next to the API cut the round trip from about 112 ms to about 5 ms.</p>
+                                    <p>Covered by 2,000+ backend tests and 480+ frontend tests, with live payments shipped through Paystack.</p>
+                                    <p class="read"><a href="https://rezmo.online">Visit rezmo.online</a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="#" class="work-img" style="background-image: url(images/work-2.jpg);">
+                            <a href="post-12.html" class="work-img" style="background-image: url(images/project-forchi.png);">
                                 <div class="display-t">
                                     <div class="work-name">
-                                        <h2 class="metallic-violet">AI Agent & Automation</h2>
+                                        <h2 class="metallic-violet">ForChi &mdash; Telegram Automation Agent</h2>
                                     </div>
                                 </div>
                             </a>
                             <div class="col-md-4 col-md-offset-4">
                                 <div class="desc">
-                                    <p>Architected production AI assistants using LLM function-calling and contextual reasoning. Built robust N8N and Python pipelines for high-frequency job scalping and automated document generation.</p>
-                                    <p class="read"><a href="https://www.linkedin.com/in/aguchiedoxie/">View LinkedIn</a></p>
+                                    <p>Three workflows in parallel: social posts to Facebook and LinkedIn five times a day, a YouTube video pipeline of up to two videos a day, and a job-application workflow that scans every 30 minutes, scores roles with Gemini and applies through Lever and Ashby.</p>
+                                    <p>A deterministic trigger layer (regex gate, then a Zod-schema extractor) keeps casual chat from ever firing a workflow. The LLM stack is Gemini with a Qwen2.5-7B model I host on Hugging Face as fallback.</p>
+                                    <p>It runs on free tiers (Render, Hugging Face) and cut the manual time I spent on these tasks by about 99.9%.</p>
+                                    <p class="read"><a href="post-12.html">Read the build notes</a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="#" class="work-img" style="background-image: url(images/work-3.jpg);">
+                            <a href="post-14.html" class="work-img" style="background-image: url(images/project-v61.png);">
                                 <div class="display-t">
                                     <div class="work-name">
-                                        <h2 class="metallic-violet">DevOps & Cloud Orchestration</h2>
+                                        <h2 class="metallic-violet">Honk &mdash; V6.1 Football Engine</h2>
                                     </div>
                                 </div>
                             </a>
                             <div class="col-md-4 col-md-offset-4">
                                 <div class="desc">
-                                    <p>Designed and provisioned multi-cloud infrastructure (AWS/GCP/OCI) using Terraform and Ansible. Managed Kubernetes clusters, CI/CD pipelines, and implemented full observability stacks with Prometheus and Grafana.</p>
-                                    <p class="read"><a href="https://www.linkedin.com/in/aguchiedoxie/">View LinkedIn</a></p>
+                                    <p>Honk is a sports prediction system that reports a 70&ndash;80% success rate. The engine underneath it is bookmaker-independent: it never reads odds, lines or market movement, scoring fixtures instead from raw kinetic and tactical match data.</p>
+                                    <p>Three structural pillars &mdash; kinetic velocity, defensive elasticity and structural integrity &mdash; feed a set of hard-coded framework patches, guarded by a market-decoupling veto and a virtual-fixture kill switch.</p>
+                                    <p>On finished fixtures it runs a Diagnostic Recurrence Analysis to autopsy why a prediction hit or missed, so the framework tunes from evidence rather than opinion.</p>
+                                    <p class="read"><a href="post-14.html">Read the build notes</a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="#" class="work-img" style="background-image: url(images/work-4.jpg);">
+                            <a href="post-10.html" class="work-img" style="background-image: url(images/project-cloudvoid.png);">
                                 <div class="display-t">
                                     <div class="work-name">
-                                        <h2 class="metallic-violet">Data Pipeline Engineering</h2>
+                                        <h2 class="metallic-violet">CloudVoid &mdash; Archived Build</h2>
                                     </div>
                                 </div>
                             </a>
                             <div class="col-md-4 col-md-offset-4">
                                 <div class="desc">
-                                    <p>Built end-to-end Python ETL/ELT pipelines processing 360,000+ records. Integrated Elasticsearch/Kibana for real-time observability, data validation checkpoints, and pipeline health monitoring.</p>
-                                    <p class="read"><a href="https://www.linkedin.com/in/aguchiedoxie/">View LinkedIn</a></p>
+                                    <p>A non-custodial multi-chain wallet covering 15 chains, now decommissioned. It stays in this portfolio as an archived build: it is where I worked out key custody, encrypted transport and runtime hardening.</p>
+                                    <p>Private keys never left the device, and the backend only saw public addresses through an encrypted envelope (P-256 ECDH, HKDF-SHA256, AES-256-GCM) with the master key held on a separate server.</p>
+                                    <p>The operational patterns from that build &mdash; PM2 monitoring, iptables hardening, automated return-to-source &mdash; now protect the systems I run today.</p>
+                                    <p class="read"><a href="post-10.html">Read the security retrospective</a></p>
                                 </div>
                             </div>
                         </div>
@@ -248,24 +256,24 @@
                         <div class="col-md-4 col-pb-sm">
                             <h2>Recent Insights</h2>
                             <div class="f-entry">
-                                <a href="#" class="featured-img" style="background-image: url(images/img-1.jpg);"></a>
+                                <a href="post-12.html" class="featured-img" style="background-image: url(images/project-forchi.png);"></a>
                                 <div class="desc">
-                                    <span>June 2026</span>
-                                    <h3><a href="#">Agentic AI Deployment</a></h3>
+                                    <span>October 2026</span>
+                                    <h3><a href="post-12.html">ForChi: Three Workflows</a></h3>
                                 </div>
                             </div>
                             <div class="f-entry">
-                                <a href="#" class="featured-img" style="background-image: url(images/img-2.jpg);"></a>
+                                <a href="post-13.html" class="featured-img" style="background-image: url(images/project-rezmo-wide.jpg);"></a>
                                 <div class="desc">
-                                    <span>May 2026</span>
-                                    <h3><a href="#">Serverless Observability</a></h3>
+                                    <span>October 2026</span>
+                                    <h3><a href="post-13.html">REZMO Memory Layer</a></h3>
                                 </div>
                             </div>
                             <div class="f-entry">
-                                <a href="#" class="featured-img" style="background-image: url(images/img-3.jpg);"></a>
+                                <a href="post-14.html" class="featured-img" style="background-image: url(images/project-v61.png);"></a>
                                 <div class="desc">
-                                    <span>April 2026</span>
-                                    <h3><a href="#">Terraform Security</a></h3>
+                                    <span>September 2026</span>
+                                    <h3><a href="post-14.html">V6.1 Football Engine</a></h3>
                                 </div>
                             </div>
                         </div>

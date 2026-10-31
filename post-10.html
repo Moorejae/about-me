@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Architecting Enterprise-Grade Security for Next-Gen Wallets - Agu Chiedozie</title>
+    <title>Wallet Security: A Retrospective - Agu Chiedozie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A deep dive into advanced server security protocols, automated lockdown, and codebase self-healing for financial applications." />
-    <meta name="keywords" content="Security, Cloudflare, Next-Gen Web, Architecture, PM2, DevOps, Hardened Server" />
+    <meta name="description" content="A retrospective on hardening the backend of a now-decommissioned wallet: automated lockdown, self-healing code and edge protection." />
+    <meta name="keywords" content="Security, Cloudflare, Architecture, PM2, DevOps, Hardened Server, Retrospective" />
     <meta name="author" content="Agu Chiedozie" />
 
     <style>
@@ -18,6 +18,8 @@
         body.dark-mode .theme-toggle { background: #eee; color: #333; }
         pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
         body.dark-mode pre { background: #222; border: 1px solid #444; }
+        .status { background: #f6f2ff; border-left: 4px solid #9370DB; padding: 14px 18px; border-radius: 4px; font-size: 15px; }
+        body.dark-mode .status { background: #1c1a24; }
     </style>
 </head>
 <body>
@@ -25,12 +27,14 @@
         <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
         <a href="blog.html">← Back to Blog</a>
 
-        <h1>Architecting Enterprise-Grade Security for Next-Gen Wallets</h1>
-        <p><em>Published: July 2026 | Category: Cybersecurity & DevOps</em></p>
-        
+        <h1>Wallet Security: A Retrospective</h1>
+        <p><em>Published: July 2026 | Category: Cybersecurity &amp; DevOps</em></p>
+
+        <p class="status"><strong>Status:</strong> the wallet these defences were built for, CloudVoid, is decommissioned. This is kept as a retrospective on the hardening work rather than a page for a live product.</p>
+
         <p>In modern financial and wallet applications, server security cannot rely on traditional perimeter defenses alone. Today's hackers frequently target user vulnerabilities and exploit internal entry points. To truly protect financial systems, we must assume that breaches <em>could</em> happen and engineer resilient, self-healing architectures that neutralize threats instantly.</p>
 
-        <p>While architecting the backend for a new web and mobile application, we implemented a custom, highly hardened Linux security protocol. Here is a breakdown of our advanced defense-in-depth approach.</p>
+        <p>While architecting the backend for CloudVoid — a non-custodial multi-chain wallet I have since retired — I implemented a custom, highly hardened Linux security protocol. Here is a breakdown of that defense-in-depth approach, and which parts I still use today.</p>
 
         <h2>1. The Edge: Cloudflare Bot Mitigation</h2>
         <p>The first line of defense is <strong>Cloudflare</strong>. By routing all traffic through Cloudflare, we enforce strict firewall rules to instantly block malicious IPs, mitigate DDoS attacks, and severely limit bot traffic. This ensures that the only traffic reaching the origin server is legitimate user activity or authenticated application API calls.</p>
@@ -69,9 +73,10 @@ git clean -fd
 
         <h2>Conclusion</h2>
         <p>Security is no longer just about building walls; it is about building traps and automated countermeasures. By combining Cloudflare's edge protection with rigorous server hardening, instant PM2 automated lockdowns, and a self-healing codebase, we can engineer applications that actively fight back against intrusions.</p>
+        <p>CloudVoid is no longer operated, but the pattern outlived it: the same edge protection, hardened ports and return-to-source routine now run behind the systems I maintain in production.</p>
 
         <hr>
-        <p><strong>Author:</strong> Agu Chiedozie | Cloud Systems & Security Architect</p>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud &amp; AI Systems Engineer</p>
     </div>
 
     <script>

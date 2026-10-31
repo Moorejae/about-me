@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Honk and the V6.1 Football Engine - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How Honk predicts football fixtures without reading odds: three structural pillars, hard-coded framework patches, and a Diagnostic Recurrence Analysis on every settled result." />
+    <meta name="keywords" content="Prediction Engine, Football Analytics, Python, Sports Modelling, Backtesting, Telegram Bot" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode p, body.dark-mode strong, body.dark-mode li { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+        .hero { width: 100%; border-radius: 8px; margin: 24px 0 32px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #ddd; }
+        body.dark-mode th, body.dark-mode td { border-bottom: 1px solid #444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Honk and the V6.1 Football Engine</h1>
+        <p><em>Published: September 2026 | Category: Prediction Systems</em></p>
+
+        <img class="hero" src="images/project-v61.png" alt="Honk: V6.1 football engine">
+
+        <p>Honk is a sports prediction system that reports a 70–80% success rate. The interesting part is not the number — it is the constraint the engine is built on: it never reads odds. No prices, no lines, no market movement. Every fixture is scored from raw kinetic and tactical match data, and every settled fixture is autopsied afterwards.</p>
+        <p>That constraint sounds philosophical. In practice it is an engineering requirement, and it shapes the entire codebase.</p>
+
+        <h2>Why refuse the market?</h2>
+        <p>If a model can see the price, it will eventually learn the price instead of the football. Odds already contain the wisdom of everyone else, so a system trained on them looks accurate while actually doing nothing but echoing a bookmaker. Worse, it becomes impossible to tell whether a good hit came from analysis or from the market being right.</p>
+        <p>So the provider layer never exposes odds at all, and a hard-coded veto refuses any output that depends on them. That veto is not a comment in a README — it is a rule the engine enforces at runtime.</p>
+
+        <h2>The three structural pillars</h2>
+        <p>Each team is scored 0–100 on three axes, then blended:</p>
+        <table>
+            <tr><th>Pillar</th><th>Weight</th><th>What it measures</th></tr>
+            <tr><td>Kinetic Velocity</td><td>40%</td><td>Offensive transition speed, spatial penetration, first-strike efficiency</td></tr>
+            <tr><td>Defensive Elasticity</td><td>30%</td><td>Recovery speed, low-block resilience, late-game integrity</td></tr>
+            <tr><td>Structural Integrity</td><td>30%</td><td>Squad continuity, tactical discipline, head-to-head stability</td></tr>
+        </table>
+        <p>The weighted blend plus home advantage produces a spread, and the spread drives the outcome classification. Kinetic Velocity carries the heaviest weight because transition speed is the signal that degrades least between competitions — form tables transfer badly across leagues, but how fast a side moves the ball up the pitch does not lie as often.</p>
+
+        <h2>Framework patches: encoding what the model keeps getting wrong</h2>
+        <p>Every model has systematic blind spots. Instead of retraining and hoping, V6.1 applies explicit, versioned patches over the base score. A few of the ones currently in force:</p>
+        <ul>
+            <li><strong>Market decoupling</strong> — vetoes any odds-reliant output outright.</li>
+            <li><strong>Virtual kill-switch</strong> — abandons virtual, simulated or unverified fixtures instead of scoring them.</li>
+            <li><strong>Favourite spread</strong> — a 25% devaluation for favourites in knockout games, where the model otherwise over-trusts the stronger side.</li>
+            <li><strong>Road favourite allowance</strong> — 35% devaluation for away favourites in lower leagues.</li>
+            <li><strong>Defensive elasticity</strong> — 15% devaluation for teams facing high-transition underdogs.</li>
+            <li><strong>Structural re-evaluation</strong> — collapses a goals-favourite that has leaked structurally into a no-bet. Internally this is the Critical Illusion filter.</li>
+        </ul>
+        <p>These are boring, narrow rules. They are also the difference between a model that is impressive in a notebook and one that is defensible when money is on the line, because each patch has a reason attached and can be evaluated in isolation.</p>
+
+        <h2>"No data = no agreement"</h2>
+        <p>The most important behaviour in the engine is refusing to answer. When coverage is insufficient — a team with no recent competitive data, a competition the pipeline does not trust — the system raises a data-missing error and stalls. It does not interpolate, and it does not guess a plausible-looking score.</p>
+        <pre>
+# The directive, enforced at the boundary
+if coverage.score(fixture) < MINIMUM_COVERAGE:
+    raise DataMissingError(fixture, "insufficient kinetic coverage")
+        </pre>
+        <p>A prediction system that always produces an answer is a random number generator with good typography. The abstentions are a feature.</p>
+
+        <h2>The autopsy: Diagnostic Recurrence Analysis</h2>
+        <p>Once a fixture is finished, the engine runs a Diagnostic Recurrence Analysis: it walks back through the pillars and patches to explain why the call hit or missed. No fix goes into the framework until the autopsy on the failure is complete.</p>
+        <p>This is what keeps a prediction system honest over time. Without it, every miss invites an immediate "tweak", and after a season of tweaks you no longer know which rule is doing any work. The DRA turns each result into evidence about a specific part of the model.</p>
+
+        <h2>Operating it</h2>
+        <p>The engine runs as a scheduled pipeline with a Telegram bot on top, packaged in Docker, with separate football, tennis (Apex) and basketball evaluation packages sharing the same evidence discipline. It also publishes a prediction sheet and keeps a persistent blacklist of blocklisted teams and competitions, so a single corrupted data source cannot quietly poison later runs.</p>
+
+        <h2>What transfers to other systems</h2>
+        <ol>
+            <li><strong>Remove the shortcut.</strong> If a system can lean on someone else's answer, it will. Deleting that input is often worth more than any amount of tuning.</li>
+            <li><strong>Make abstention explicit.</strong> Encode "I do not know" as a first-class outcome with an error type, not a fallback.</li>
+            <li><strong>Audit before you adjust.</strong> An autopsy on one miss is worth more than ten speculative retrains.</li>
+            <li><strong>Version your judgement.</strong> Hard-coded rules with reasons and identifiers can be evaluated and removed. Vibes cannot.</li>
+        </ol>
+
+        <hr>
+        <h3>Related</h3>
+        <ul>
+            <li><a href="post-12.html">ForChi: A Telegram Agent With Three Jobs</a></li>
+            <li><a href="post-13.html">REZMO: Memory That Outlives the Chat</a></li>
+            <li><a href="post-1.html">Agentic AI: Building LLM Systems with Function Calling</a></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud &amp; AI Systems Engineer</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>
