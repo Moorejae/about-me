@@ -81,6 +81,15 @@
 
         <p>Through this loop, the brain scales its knowledge database automatically with every prompt you design, turning your daily engineering tasks into permanent structural learning.</p>
 
+        <h2>4. Keeping it up when the provider is not</h2>
+        <p>The first version of the agent crashed whenever Gemini's free tier hit a quota wall. Two layers fixed that:</p>
+        <ul>
+            <li><strong>Key rotation.</strong> A pool of API keys sits in the environment. On a 429 (quota exceeded) or 400 (invalid key), the server intercepts the error, rotates to the next key and retries, instead of taking the process down.</li>
+            <li><strong>Dual-axis fallback.</strong> When a model goes offline or returns 503, the request cascades from the most capable model down to a more stable one, chosen by the error class rather than a single fixed retry list.</li>
+            <li><strong>Memory that survives redeploys.</strong> Render's disk is ephemeral, so a file-based brain would reset on every deploy. The server commits new Markdown nodes to the GitHub repository over the REST API, which makes the vault the source of truth and the runtime disposable.</li>
+        </ul>
+        <p>That last decision is the one I would repeat everywhere: keep state in a system that is designed to keep it, and let the server be replaceable.</p>
+
         <h2>Conclusion</h2>
         <p>By coupling an interactive prompt constructor with an Obsidian-backed GitHub repository, we created a closed-loop system where AI and human judgment constantly refine each other. Eyeno is no longer just a passive database—it's an active, self-expanding extension of our intelligence.</p>
 

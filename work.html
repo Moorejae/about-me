@@ -376,6 +376,41 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row text-center" style="margin-top: 70px;">
+                    <div class="col-md-12 col-md-offset-0 text-center animate-box intro-heading">
+                        <span>Also Built</span>
+                        <h2>Platform Work Behind the Products</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 animate-box">
+                        <div class="services">
+                            <h3>Crypto Bank Platform &mdash; OCI</h3>
+                            <p>A containerised banking front end deployed on Oracle Cloud's Always Free tier. In production the heavy Node runtime is dropped for a static NGINX delivery layer, cutting live memory to under 5&nbsp;MB. The image is multi-stage, so <code>node_modules</code> and build scripts never reach the running node, and the backend steps down from root to the <code>node</code> user. Kubernetes manifests live alongside the app.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 animate-box">
+                        <div class="services">
+                            <h3>LinkedIn AI Agent &mdash; Resilience Layer</h3>
+                            <p>The publishing agent behind the social workflow: a key-rotation engine pools API credentials and rotates on quota or invalid-key errors instead of crashing, while a dual-axis fallback cascades between models when a provider degrades. Memory is committed straight to GitHub over the REST API, because the host's disk is ephemeral.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 animate-box">
+                        <div class="services">
+                            <h3>Self-Hosted Mail &mdash; REZMO</h3>
+                            <p>Own-domain mailboxes served from the REZMO host over IMAP and SMTP, with SPF, DKIM and DMARC managed by me rather than delegated to a mail provider. Account mail, DNS and the product all sit under one operator.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 animate-box">
+                        <div class="services">
+                            <h3>Cloudflare Delivery Layer</h3>
+                            <p>Workers and Pages for front ends, DNS and TLS at the edge, WAF rules in front of origin APIs, and origin lockdown so the host only answers traffic that arrives through Cloudflare. Netlify and Hugging Face Spaces are used where a static deploy or an ML demo fits the job better.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
