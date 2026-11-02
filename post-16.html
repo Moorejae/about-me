@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Gemini 4 Argon: Google's New Frontier Model, Tested - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hands-on notes on Gemini 4 Argon plus its published benchmarks against GPT-6 Astra and Claude Opus 5.5, including where Argon still loses." />
+    <meta name="keywords" content="Gemini 4 Argon, Google DeepMind, Benchmark, DeepSWE, AutomationBench, AI Agents, LLM Comparison" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p, body.dark-mode strong, body.dark-mode li, body.dark-mode td, body.dark-mode th { color: #ffffff !important; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { cursor: pointer; background: #333; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; margin-bottom: 20px; }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; border: 1px solid #ddd; }
+        body.dark-mode pre { background: #1e1e1e; border: 1px solid #444; }
+        code { font-family: 'Courier New', Courier, monospace; color: #d63384; }
+        .hero { width: 100%; border-radius: 8px; margin: 24px 0 32px; display: block; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+        th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid #ddd; }
+        th { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: #666; }
+        body.dark-mode th, body.dark-mode td { border-bottom: 1px solid #444; }
+        body.dark-mode th { color: #aaa; }
+        td.num { font-variant-numeric: tabular-nums; }
+        .lead-cell { font-weight: 600; }
+        @media (max-width: 700px) {
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            th, td { white-space: nowrap; }
+        }
+        .note { background: #eef4ff; border-left: 4px solid #4d8bf0; padding: 14px 18px; border-radius: 4px; font-size: 15px; }
+        body.dark-mode .note { background: #17202f; }
+        .warn { background: #fff6ec; border-left: 4px solid #d98324; padding: 14px 18px; border-radius: 4px; font-size: 15px; }
+        body.dark-mode .warn { background: #241c12; }
+        .sources { font-size: 14px; color: #666; }
+        body.dark-mode .sources { color: #aaa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+        <a href="blog.html">← Back to Blog</a>
+
+        <h1>Gemini 4 Argon: Google's New Frontier Model, Tested</h1>
+        <p><em>Published: November 2026 | Category: AI Engineering</em></p>
+
+        <img class="hero" src="images/project-argon.png" alt="Gemini 4 Argon overview">
+
+        <p>Google's first Gemini 4 model, <strong>Argon</strong>, landed at the end of September 2026 and opened up more widely in mid-October. I have been using it on the same work I run every week — agent workflows, test generation, long patches — and my honest reaction is that it is the first model where I stopped checking on a long task every few minutes.</p>
+
+        <p>But "it felt great" is not useful to anyone deciding what to pay for. So this post does two things: what Argon actually changed in my hands, and what the published benchmark tables say when you read them all the way across instead of just down the column Google highlighted.</p>
+
+        <h2>What is actually new</h2>
+        <p>Three things matter for the kind of work I do:</p>
+        <ul>
+            <li><strong>A 1M-token output limit</strong>, up from 64K. Context windows get the headlines, but the output ceiling is what used to break my long jobs — a full test suite, a migration plan across a dozen files, or a tailored resume plus cover letter would hit the wall and stop mid-thought.</li>
+            <li><strong>Training aimed at long-horizon work</strong>: software engineering, legal and finance research, and cybersecurity defence rather than one-shot chat.</li>
+            <li><strong>Introductory pricing of $2 per million input and $10 per million output tokens</strong>, with cached input at roughly 95% off. That caching discount is the single biggest lever on cost for agent loops, because the system prompt and tool schemas repeat on every single step.</li>
+        </ul>
+
+        <h2>What changed in practice</h2>
+        <p>The difference is not that Argon writes better sentences. It is that it keeps the thread.</p>
+        <p>On my agent work, the old pattern was: give a task, watch it lose the plot around the fifth step, restart with a tighter prompt. Argon holds a plan across many steps and keeps its own constraints straight — the schema it must satisfy, the endpoints it must not touch, the format the output has to be in. That is the difference between an agent I supervise and an agent I delegate to.</p>
+        <p>Two places it showed up immediately:</p>
+        <ol>
+            <li><strong>Test generation.</strong> Asking for a module's tests used to produce a handful of happy-path cases and then stop. With the higher output ceiling I get the error branches and the edge cases in the same pass, which is exactly where the value is.</li>
+            <li><strong>Reading untrusted text.</strong> My automation pipelines ingest job listings and scraped pages. Argon is the most injection-resistant model Google has shipped, and that matters more for an agent than a couple of benchmark points. Google reports a 0.7% success rate for indirect prompt injection on Gray Swan's test, against 8.5% for GPT-6 Astra.</li>
+        </ol>
+        <p>There is a cost to that willingness to work longer: <strong>it writes a lot more</strong>. Artificial Analysis measured roughly 62,000 output tokens for Argon against about 27,000 for Astra on the same evaluation set. If it picks the wrong direction, you pay for the whole detour. I now put a hard budget and an explicit "stop and report" instruction on long runs.</p>
+
+        <h2>Published benchmarks, read properly</h2>
+        <p>Google's comparison table covers 19 evaluations. Argon took first place outright on 13 and tied for first on one more. Here are the rows that matter for engineering work, compared with GPT-6 Astra and Claude Opus 5.5.</p>
+
+        <h3>Coding</h3>
+        <table>
+            <tr><th>Benchmark</th><th>Argon</th><th>GPT-6 Astra</th><th>Opus 5.5</th><th>Leader</th></tr>
+            <tr><td>DeepSWE v1.1 <span class="sources">(long SWE tasks)</span></td><td class="num lead-cell">77.9%</td><td class="num">74.1%</td><td class="num">74.2%</td><td>Argon</td></tr>
+            <tr><td>FrontierSWE v2</td><td class="num">55.0%</td><td class="num lead-cell">65.5%</td><td class="num">62.3%</td><td>Astra</td></tr>
+            <tr><td>Terminal-Bench 4.0</td><td class="num">57.4%</td><td class="num">58.2%</td><td class="num lead-cell">66.4%</td><td>Opus 5.5</td></tr>
+            <tr><td>CWE-bench v1 <span class="sources">(fixing security bugs)</span></td><td class="num lead-cell">68%</td><td class="num">—</td><td class="num">—</td><td>Argon, tied for first</td></tr>
+        </table>
+        <p>That first row is the one quoted everywhere: <strong>77.9% on DeepSWE v1.1</strong>, a new high. The third and fourth rows are why I do not treat that as a general coding verdict. Argon is 10.5 points behind Astra on FrontierSWE v2 and about nine behind Opus on Terminal-Bench. Different tasks, different winners.</p>
+
+        <h3>Long context, video and business work</h3>
+        <table>
+            <tr><th>Benchmark</th><th>Argon</th><th>GPT-6 Astra</th><th>Opus 5.5</th><th>Leader</th></tr>
+            <tr><td>GraphWalks, 256k–1M BFS F1</td><td class="num lead-cell">84.2%</td><td class="num">71.8%</td><td class="num">66.8%</td><td>Argon</td></tr>
+            <tr><td>LVBench <span class="sources">(long video)</span></td><td class="num lead-cell">91.7%</td><td class="num">87.5%</td><td class="num">83.7%</td><td>Argon</td></tr>
+            <tr><td>AutomationBench <span class="sources">(Zapier, end-to-end tasks)</span></td><td class="num lead-cell">51.3%</td><td class="num">41.4%</td><td class="num">42.5%</td><td>Argon</td></tr>
+            <tr><td>Vals Index <span class="sources">(finance, legal, tax, coding)</span></td><td class="num lead-cell">68.9%</td><td class="num">63.1%</td><td class="num">67.0%</td><td>Argon</td></tr>
+        </table>
+        <p>AutomationBench is the row I care about most, because it measures whether a model can complete a business task end to end rather than answer a question about it. <strong>51.3% against 41.4% and 42.5%</strong> is roughly a nine-point lead — the largest gap anywhere in Google's table, and the closest thing to "does it finish the job".</p>
+
+        <h3>Security</h3>
+        <table>
+            <tr><th>Benchmark</th><th>Argon</th><th>GPT-6 Astra</th><th>Opus 5.5</th><th>Note</th></tr>
+            <tr><td>Gray Swan indirect prompt injection <span class="sources">(lower is better)</span></td><td class="num lead-cell">0.7%</td><td class="num">8.5%</td><td class="num">1.0%</td><td>Argon best</td></tr>
+        </table>
+        <p>Google also says Argon found a critical vulnerability in healthcare software used by hospitals worldwide that earlier frontier models missed, and that it is trained specifically for defensive cyber work. It shipped to trusted defenders without the usual cyber safety guardrails for that reason.</p>
+
+        <h2>The independent numbers</h2>
+        <p>Vendor tables are marketing until someone else runs the tests. Two independent sources are worth checking.</p>
+        <p><strong>Artificial Analysis Intelligence Index.</strong> Argon at high reasoning scores <strong>53</strong>, tying GPT-6 Astra at max (53) and one point above GPT-6.1 Sol (52). It sits about five points behind Claude Opus 5.5 and Sonnet 5.5. The more interesting number is the trend: that is a <strong>23-point jump over Gemini 3.1 Pro Preview</strong>, Google's previous top model. On cost per index task, Argon came in at $1.99 during the launch discount — roughly 60% of Astra's $3.26 — rising to about $3.98 at list price, still under Opus 5.5 at $5.98.</p>
+        <p><strong>BenchGecko's aggregate.</strong> An average of 89.2 across 24 public benchmarks, ranking 8th of 323 tracked models, with <strong>agentic work ranked #1 globally</strong> (82.4) and reasoning 5th (94.9). Its top individual scores are startling: 100% on the OTIS mock AIME set, 99.2% on GPQA Diamond, 99.0% on ProofBench, 98.5% on ARC-AGI and 91.3% on ARC-AGI-2. Epoch AI's index puts it at 166, 5th of 253 models.</p>
+
+        <div class="warn">
+            <strong>The one number nobody quotes.</strong> On Artificial Analysis's factuality tests, Argon's reported hallucination rate was 15% against an accuracy of 50%, while Astra's accuracy was 63%. A lower hallucination rate is not the same as a higher accuracy rate — abstention, correct and incorrect answers have to be counted separately. For anything where a confident wrong answer is expensive, that is the number to design around, not the AIME score.
+        </div>
+
+        <h2>Where it loses, honestly</h2>
+        <ul>
+            <li><strong>Hard multi-file engineering.</strong> FrontierSWE v2 is not close: 55.0 against 65.5. If my task is a difficult held-out refactor across a large repo, Astra is the better first attempt.</li>
+            <li><strong>Terminal-heavy operations.</strong> Opus leads Terminal-Bench 4.0 by nine points. Anything that lives in a shell belongs there.</li>
+            <li><strong>Code quality as a composite.</strong> BenchGecko's coding category scores Argon at 51.3, 89th globally, even though its agentic score is first. It is very good at completing long tasks and not uniformly the best at writing code.</li>
+            <li><strong>The vendor-vs-reality gap.</strong> Bloomberg reported that some Google staff find the model stronger on benchmarks than in real work, and that it struggles with some coding tasks. Google disputes that framing. Either way, a launch table is a hypothesis about your job, not a result.</li>
+            <li><strong>Context capacity is not recall.</strong> 84.2% on GraphWalks at 256k–1M is strong, but it means the model still misses roughly one in six long-range links. If a fact matters, ask it to quote the source.</li>
+            <li><strong>Methodology drift.</strong> Some competitor figures in Google's table do not match what those vendors published — Anthropic reported 58.7% for Opus on Terminal-Bench Science where Google lists 63.3%, and 57.9% for Astra on Terminal-Bench 4.0 where Google lists 58.2%. The video row also gives Gemini 1 FPS while allowing 800 frames for GPT and 600 for Opus.</li>
+        </ul>
+
+        <h2>How I route work now</h2>
+        <table>
+            <tr><th>Task</th><th>Model I reach for</th></tr>
+            <tr><td>Long migrations, large patch sets, whole-suite test generation</td><td>Argon</td></tr>
+            <tr><td>Agents that read untrusted content (listings, scraped pages, email)</td><td>Argon</td></tr>
+            <tr><td>Terminal work, deployment scripts, failure recovery</td><td>Opus 5.5</td></tr>
+            <tr><td>The hardest held-out refactor where precise diffs matter</td><td>Astra, with Argon as challenger</td></tr>
+            <tr><td>High-volume classification behind a deterministic regex gate</td><td>Cheapest flash tier that passes</td></tr>
+        </table>
+        <p>Two practices make the cost work:</p>
+        <ol>
+            <li><strong>Cache the stable part.</strong> Keep the system prompt, tool schemas and repo summary byte-identical across calls and the 95% cached-input discount applies. Put the changing instruction last.</li>
+            <li><strong>Budget the output, not the input.</strong> Argon earns its price by writing more. Give it a ceiling and an explicit instruction to stop and report if it is off-plan, or it will happily spend the whole budget exploring.</li>
+        </ol>
+
+        <h2>Bottom line</h2>
+        <p>Argon is genuinely excellent at a specific thing: <em>finishing</em> long, messy, multi-step work without supervision. If your problem looks like an agent that has to hold a plan for twenty steps, or a task where the answer is forty thousand tokens long, it is the best thing I have used.</p>
+        <p>It is not the best model at every sub-skill inside that work. It trails on FrontierSWE, trails Opus in a terminal, and its factuality numbers need care. Treat the benchmark table as a map of where to start testing, not a ranking to buy.</p>
+
+        <hr>
+        <h3>Sources</h3>
+        <ul class="sources">
+            <li>Google's published Argon comparison table and model card (September–October 2026), summarised by <a href="https://9to5google.com/2026/09/30/gemini-4-argon-announcement/">9to5Google</a>.</li>
+            <li>Benchmark cross-check and methodology limits: <a href="https://ofox.ai/blog/gemini-4-argon-benchmarks-vs-gpt-6-astra-claude-opus/">Ofox, Gemini 4 Argon vs GPT-6 Astra and Claude Opus</a>.</li>
+            <li>Independent index: Artificial Analysis Intelligence Index, 30 September 2026 report (via <a href="https://me.mashable.com/tech/77144/google-releases-gemini-4-argon-its-new-frontier-model-benchmarks-how-to-try-it-and-pricing">Mashable</a>).</li>
+            <li>Aggregate scores and capability breakdown: <a href="https://benchgecko.ai/model/gemini-4-argon">BenchGecko, Gemini 4 Argon</a> (data as of 29 October 2026).</li>
+            <li>Internal scepticism reporting: <a href="https://thenextweb.com/news/google-gemini-4-argon-cyber-defenders-fairwind">The Next Web, citing Bloomberg</a>.</li>
+            <li>Vals Index figures: <a href="https://chosun-chosun-prod.cdn.arcpublishing.com/english/industry-en/2026/10/01/KIDAS7JVQJCE5AWKTMJ2CG2MB4/">Chosun English</a>.</li>
+        </ul>
+        <p class="sources">All benchmark figures are as published by the sources above. Google's comparison table is vendor-reported; the competitor figures in it were not run by Google under identical harnesses.</p>
+
+        <hr>
+        <h3>Related</h3>
+        <ul>
+            <li><a href="post-12.html">ForChi: A Telegram Agent With Three Jobs</a></li>
+            <li><a href="post-13.html">REZMO: Memory That Outlives the Chat</a></li>
+            <li><a href="post-1.html">Agentic AI: Building LLM Systems with Function Calling</a></li>
+        </ul>
+        <p><strong>Author:</strong> Agu Chiedozie | Cloud &amp; AI Systems Engineer</p>
+    </div>
+
+    <script>
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
+        if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>
