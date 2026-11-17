@@ -29,7 +29,7 @@
         <h1>CI/CD & GitOps: The Architecture of Modern Deployment</h1>
         <p><em>Published: January 2026 | Category: DevOps & Automation</em></p>
 
-        <p>The transition from "manual script execution" to "automated CI/CD pipelines" is the single greatest productivity multiplier in software engineering. However, automation itself is not the end goal—reliability and predictability are. In this final post of our series, we explore the maturity model of deployment: moving from Continuous Delivery to true GitOps and the importance of measuring success through DORA metrics.</p>
+        <p>The transition from "manual script execution" to "automated CI/CD pipelines" is the single greatest productivity multiplier in software engineering. However, automation itself is not the end goal, reliability and predictability are. In this final post of our series, we explore the maturity model of deployment: moving from Continuous Delivery to true GitOps and the importance of measuring success through DORA metrics.</p>
 
         <h2>CI vs. CD: Defining the Pipeline</h2>
         <p>A pipeline is not just a sequence of shell commands; it is an integrated testing and verification engine.</p>
@@ -83,7 +83,7 @@ jobs:
         <p>An automated deployment pipeline without an automated rollback strategy is a liability. You must design for failure. In Kubernetes, this means using <code>kubectl rollout undo</code> or having an automated pipeline that can redeploy the previous successful container image/Terraform state in seconds. Your pipeline should always have a "kill switch" that reverts the environment to the last known good state.</p>
 
         <h2>Conclusion</h2>
-        <p>The journey to CI/CD and GitOps maturity is ongoing. Start by automating your tests, then move to automated deployment, and finally, shift toward declarative GitOps. By focusing on DORA metrics and treating your infrastructure as immutable, you will spend less time "fighting fires" and more time building value. Security, reliability, and velocity are not competing priorities—they are the results of a well-engineered pipeline.</p>
+        <p>The journey to CI/CD and GitOps maturity is ongoing. Start by automating your tests, then move to automated deployment, and finally, shift toward declarative GitOps. By focusing on DORA metrics and treating your infrastructure as immutable, you will spend less time "fighting fires" and more time building value. Security, reliability, and velocity are not competing priorities, they are the results of a well-engineered pipeline.</p>
 
         <hr>
         <h3>References</h3>

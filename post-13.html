@@ -39,7 +39,7 @@
         <h1>REZMO: Memory That Outlives the Chat</h1>
         <p><em>Published: October 2026 | Category: AI Infrastructure</em></p>
 
-        <img class="hero" src="images/project-rezmo.jpg" alt="REZMO — the AI memory layer">
+        <img class="hero" src="images/project-rezmo.jpg" alt="REZMO, the AI memory layer">
 
         <p>Every assistant keeps a memory of your work, and every one of those memories is a summary written by the assistant, held by the assistant, and available only inside that product. Change tools and the record resets to a thinner copy of itself. After enough switches, the work is gone and only summaries of it remain.</p>
         <p>REZMO takes the opposite position: the record is the asset, and the models are readers of it. I built it at <a href="https://rezmo.online">rezmo.online</a>.</p>
@@ -53,9 +53,9 @@
         <h2>The design: a record you own</h2>
         <p>A user's conversations, notes, projects and the documents generated from them are stored as their material, with a copy in a folder in their own Google Drive. If REZMO disappeared tomorrow, the folder would still open. That constraint decided almost everything else in the architecture.</p>
         <ul>
-            <li><strong>Full depth, not digests.</strong> The record keeps the files, not a paragraph about the files, so a later model can go back to the source.</li>
+            <li><strong>Full depth: not digests.</strong> The record keeps the files, not a paragraph about the files, so a later model can go back to the source.</li>
             <li><strong>Portable by default.</strong> Download the folder, keep it offline, push it back later, continue as if nothing had been lost.</li>
-            <li><strong>Many models, one record.</strong> The product name for the result is a Digital Passport: one history that travels with the user across assistants.</li>
+            <li><strong>Many models: one record.</strong> The product name for the result is a Digital Passport: one history that travels with the user across assistants.</li>
         </ul>
 
         <figure>
@@ -82,7 +82,7 @@
             <tr><td>Database on a separate host from the API</td><td>~112 ms</td></tr>
             <tr><td>Database next to the API on the same host</td><td>~5 ms</td></tr>
         </table>
-        <p>Moving Postgres next to the API cut the round trip by more than an order of magnitude. For a request path that touches the database several times per call, that is not a micro-optimisation — it is the difference between a product that feels instant and one that feels broken. The trade is that the host becomes a real dependency, which is exactly why the record also lives in the user's Drive.</p>
+        <p>Moving Postgres next to the API cut the round trip by more than an order of magnitude. For a request path that touches the database several times per call. That is not a micro-optimisation, it is the difference between a product that feels instant and one that feels broken. The trade is that the host becomes a real dependency, which is exactly why the record also lives in the user's Drive.</p>
 
         <h2>Tests are the reason I can move fast on it</h2>
         <p>REZMO carries 2,000+ backend tests and 480+ frontend tests. That sounds excessive until you consider what the product does: it reads and writes a user's own history. A regression here is not a visual bug, it is lost context.</p>
@@ -93,13 +93,13 @@
         <p>Payments run live through Paystack, which adds the usual requirement that nothing in the entitlement path is allowed to be flaky.</p>
 
         <h2>Mail is part of the stack too</h2>
-        <p>REZMO's email is self-hosted on its own domain: mailboxes served from my own host over IMAP and SMTP rather than handed to a third-party mail provider. It keeps account mail, the domain's DNS and the product under one operator, and it means the domain's SPF, DKIM and DMARC records are mine to get right. That is the same trade as the rest of the system &mdash; fewer moving providers, more responsibility.</p>
+        <p>REZMO's email is self-hosted on its own domain: mailboxes served from my own host over IMAP and SMTP rather than handed to a third-party mail provider. It keeps account mail, the domain's DNS and the product under one operator, and it means the domain's SPF, DKIM and DMARC records are mine to get right. That is the same trade as the rest of the system, fewer moving providers, more responsibility.</p>
 
         <h2>What I took from building it</h2>
         <ol>
-            <li><strong>Ownership is an architecture decision.</strong> Putting the record in the user's Drive changed the schema, the sync path and the failure modes — and it is the reason the product is credible.</li>
+            <li><strong>Ownership is an architecture decision.</strong> Putting the record in the user's Drive changed the schema, the sync path and the failure modes, and it is the reason the product is credible.</li>
             <li><strong>Latency is a placement problem first.</strong> Before optimising queries, check what the query is crossing.</li>
-            <li><strong>Give the model a role, not the keys.</strong> Read-only versus read-write is the simplest permission model that still respects the user.</li>
+            <li><strong>Give the model a role: not the keys.</strong> Read-only versus read-write is the simplest permission model that still respects the user.</li>
             <li><strong>Test the product's promise.</strong> The promise is "your history is still here". Test that, not the button colours.</li>
         </ol>
 

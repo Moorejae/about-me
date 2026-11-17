@@ -37,7 +37,7 @@
             margin-top: 10px;
             border-radius: 8px;
             background: #000;
-            box-shadow: 0 18px 40px rgba(0,0,0,.16);
+            box-shadow: 0 18px 40px rgba(0,0,0.16);
         }
         .video-note {
             font-size: 13px;
@@ -177,19 +177,17 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="story-rezmo.html" class="work-img" style="background-image: url(images/project-rezmo-wide.jpg);">
-                                <div class="display-t">
-                                    <div class="work-name">
-                                        <h2 class="metallic-violet">REZMO &mdash; Portable AI Memory Layer</h2>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="col-md-4 col-md-offset-4">
+                            <a href="story-rezmo.html" class="work-img" style="background-image: url(images/project-rezmo.png)"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">REZMO: Portable AI Memory Layer</h2>
+                            </div>
+                            <div class="col-md-6 col-md-offset-3">
                                 <div class="desc">
                                     <p>A user's conversations and files live in their own Google Drive, and any connected model picks up the same context. Claude and Grok both connect through an MCP server I built.</p>
                                     <p>The API, Postgres 17 and Redis run as containers on one Contabo host behind Cloudflare, with the frontend on a Cloudflare Worker. Moving the database next to the API cut the round trip from about 112 ms to about 5 ms.</p>
                                     <p>Covered by 2,000+ backend tests and 480+ frontend tests, with live payments shipped through Paystack.</p>
-                                    <p class="read"><a href="story-rezmo.html">Read the full story</a> &nbsp;&middot;&nbsp; <a href="https://rezmo.online">Visit rezmo.online</a></p>
+                                    <p class="read"><a href="story-rezmo.html">Read the full story</a></p>
+                                    <p style="text-align:center;"><a href="https://rezmo.online" style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#9370DB;border-bottom:1px solid rgba(147,112,219,.4);padding-bottom:2px;">Visit rezmo.online</a></p>
                                 </div>
                             </div>
                             <div class="col-md-8 col-md-offset-2">
@@ -197,20 +195,17 @@
                                     <source src="videos/rezmo-demo.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <p class="video-note">REZMO walkthrough &mdash; sign-in, workspace and the memory layer in use.</p>
+                                <p class="video-note">REZMO walkthrough, sign-in, workspace and the memory layer in use.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="story-forchi.html" class="work-img" style="background-image: url(images/project-forchi.png);">
-                                <div class="display-t">
-                                    <div class="work-name">
-                                        <h2 class="metallic-violet">ForChi &mdash; Telegram Automation Agent</h2>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="col-md-4 col-md-offset-4">
+                            <a href="story-forchi.html" class="work-img" style="background-image: url(images/project-forchi.png)"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">ForChi: Telegram Automation Agent</h2>
+                            </div>
+                            <div class="col-md-6 col-md-offset-3">
                                 <div class="desc">
                                     <p>Three workflows in parallel: social posts to Facebook and LinkedIn five times a day (copy written through Vertex AI, images generated on a Hugging Face model), a YouTube video pipeline of up to two videos a day, and a job-application workflow that scans every 30 minutes, scores roles with Gemini and applies through Lever and Ashby.</p>
                                     <p>A deterministic trigger layer (regex gate, then a Zod-schema extractor) keeps casual chat from ever firing a workflow. The LLM stack is Gemini with a Qwen2.5-7B model I host on Hugging Face as fallback.</p>
@@ -223,23 +218,20 @@
                                     <source src="videos/forchi-build.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <p class="video-note">Recorded build session &mdash; wiring the job-application engine (Lever and Ashby submission path).</p>
+                                <p class="video-note">Recorded build session, wiring the job-application engine (Lever and Ashby submission path).</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="story-wcm.html" class="work-img" style="background-image: url(images/project-wcm.png);">
-                                <div class="display-t">
-                                    <div class="work-name">
-                                        <h2 class="metallic-violet">WCM &mdash; Live Pricing Model</h2>
-                                    </div>
-                                </div>
-                            </a>
+                            <a href="story-wcm.html" class="work-img" style="background-image: url(images/project-wcm.png)"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">WCM: Live Pricing Model</h2>
+                            </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
                                     <p>WCM is a live pricing model for football.com: closing-line priors, a probability shrunk toward the market, and a checkpoint dataset that logs every bet it skips so the model can be calibrated instead of argued about.</p>
-                                    <p>Built from a written specification, with 145 tests asserting every worked example and every behaviour the live API actually has &mdash; including the regression that came out of the night it lost a full allocation by letting the scanner pick a side the formula disagreed with.</p>
+                                    <p>Built from a written specification, with 145 tests asserting every worked example and every behaviour the live API actually has, including the regression that came out of the night it lost a full allocation by letting the scanner pick a side the formula disagreed with.</p>
                                     <p>The predecessor was the <strong>V6.1 football engine</strong>, which scored fixtures from raw kinetic and tactical data with three weighted pillars, versioned framework patches and a diagnostic autopsy on every settled result.</p>
                                     <p class="read"><a href="story-wcm.html">Read the full story</a></p>
                                 </div>
@@ -248,18 +240,15 @@
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="story-cloudvoid.html" class="work-img" style="background-image: url(images/project-cloudvoid.png);">
-                                <div class="display-t">
-                                    <div class="work-name">
-                                        <h2 class="metallic-violet">CloudVoid &mdash; Archived Build</h2>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="col-md-4 col-md-offset-4">
+                            <a href="story-cloudvoid.html" class="work-img" style="background-image: url(images/project-cloudvoid.png)"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">CloudVoid: Archived Build</h2>
+                            </div>
+                            <div class="col-md-6 col-md-offset-3">
                                 <div class="desc">
                                     <p>A non-custodial multi-chain wallet covering 15 chains, now decommissioned. It stays in this portfolio as an archived build: it is where I worked out key custody, encrypted transport and runtime hardening.</p>
                                     <p>Private keys never left the device, and the backend only saw public addresses through an encrypted envelope (P-256 ECDH, HKDF-SHA256, AES-256-GCM) with the master key held on a separate server.</p>
-                                    <p>The operational patterns from that build &mdash; PM2 monitoring, iptables hardening, automated return-to-source &mdash; now protect the systems I run today.</p>
+                                    <p>The operational patterns from that build, PM2 monitoring, iptables hardening, automated return-to-source, now protect the systems I run today.</p>
                                     <p class="read"><a href="story-cloudvoid.html">Read the full story</a></p>
                                 </div>
                             </div>
@@ -268,7 +257,7 @@
                                     <source src="videos/cloudvoid-demo.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-                                <p class="video-note">CloudVoid at cloudvoid.online &mdash; the non-custodial onboarding flow, kept online as an archive.</p>
+                                <p class="video-note">CloudVoid at cloudvoid.online, the non-custodial onboarding flow, kept online as an archive.</p>
                             </div>
                         </div>
                     </div>
@@ -285,7 +274,7 @@
                     <div class="col-md-12 col-md-offset-0 text-center animate-box intro-heading">
                         <span>Design &amp; Deployment</span>
                         <h2>Sites I Designed, Built and Shipped</h2>
-                        <p>Layout, motion, front-end build, hosting and DNS &mdash; usually on Cloudflare, Netlify or Hugging Face. These two are preview builds with no public domain yet, so the walkthroughs below are the demo.</p>
+                        <p>Layout, motion, front-end build, hosting and DNS, usually on Cloudflare, Netlify or Hugging Face. These two are preview builds with no public domain yet, so the walkthroughs below are the demo.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -298,22 +287,19 @@
                 <div class="row" id="websites">
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="story-bem.html" class="work-img" style="background-image: url(images/poster-bem-africa.jpg);">
-                                <div class="display-t">
-                                    <div class="work-name">
-                                        <h2 class="metallic-violet">BEM Africa &mdash; Fashion House Site &amp; Admin</h2>
-                                    </div>
-                                </div>
-                            </a>
+                            <a href="story-bem.html" class="work-img" style="background-image: url(images/poster-bem-africa.jpg)"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">BEM Africa: Fashion House Site &amp; Admin</h2>
+                            </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
                                     <p>A fashion house site built around a scroll-driven homepage: editorial lookbook panels, motion transitions and a fully responsive layout, backed by an admin console for products and content.</p>
-                                    <p>Designed and built end to end &mdash; visual system, page composition, motion, front-end build and deployment &mdash; with the admin panel shipped alongside the public site.</p>
+                                    <p>Designed and built end to end, visual system, page composition, motion, front-end build and deployment, with the admin panel shipped alongside the public site.</p>
                                     <video class="project-video" controls preload="none" poster="images/poster-bem-africa.jpg">
                                         <source src="videos/bem-africa.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
-                                    <p class="video-note">Walkthrough of the public site and the admin console. Preview build &mdash; no public domain yet.</p>
+                                    <p class="video-note">Walkthrough of the public site and the admin console. Preview build, no public domain yet.</p>
                                     <p class="read"><a href="story-bem.html">Read the full story</a></p>
                                 </div>
                             </div>
@@ -321,13 +307,10 @@
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="story-mindrenewal.html" class="work-img" style="background-image: url(images/poster-mind-renewal-care.jpg);">
-                                <div class="display-t">
-                                    <div class="work-name">
-                                        <h2 class="metallic-violet">Mind Renewal Care &mdash; Therapy NGO Website</h2>
-                                    </div>
-                                </div>
-                            </a>
+                            <a href="story-mindrenewal.html" class="work-img" style="background-image: url(images/poster-mind-renewal-care.jpg)"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">Mind Renewal Care: Therapy NGO Website</h2>
+                            </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
                                     <p>A website for a therapy NGO: service cards for psychiatric care, counselling and community programmes, team and approach sections, impact reporting and a session-booking call to action.</p>
@@ -346,7 +329,7 @@
                                             </video>
                                         </div>
                                     </div>
-                                    <p class="video-note">Desktop and mobile walkthroughs. Preview build &mdash; no public domain yet.</p>
+                                    <p class="video-note">Desktop and mobile walkthroughs. Preview build, no public domain yet.</p>
                                     <p class="read"><a href="story-mindrenewal.html">Read the full story</a></p>
                                 </div>
                             </div>
@@ -354,13 +337,10 @@
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="story-eyeno.html" class="work-img" style="background-image: url(images/poster-eyeno.jpg);">
-                                <div class="display-t">
-                                    <div class="work-name">
-                                        <h2 class="metallic-violet">Eyeno &mdash; Prompt Architect Workspace</h2>
-                                    </div>
-                                </div>
-                            </a>
+                            <a href="story-eyeno.html" class="work-img" style="background-image: url(images/poster-eyeno.jpg)"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">Eyeno: Prompt Architect Workspace</h2>
+                            </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
                                     <p>An interface for the Eyeno second brain: a prompt workspace that diagnoses a draft across persona, objectives, delimiters and variables, then asks the user four alignment questions before it writes the final system prompt.</p>
@@ -369,7 +349,7 @@
                                         <source src="videos/eyeno-walkthrough.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
-                                    <p class="video-note">Pipeline overview &mdash; the prompt checks and the vault nodes they query.</p>
+                                    <p class="video-note">Pipeline overview, the prompt checks and the vault nodes they query.</p>
                                     <p class="read"><a href="story-eyeno.html">Read the full story</a></p>
                                 </div>
                             </div>
@@ -385,45 +365,33 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 animate-box">
-                        <a href="story-youtube.html" class="work-img" style="background-image: url(images/project-youtube.png); display:block; height:320px; border-radius:10px;">
-                            <div class="display-t">
-                                <div class="work-name">
-                                    <h2 class="metallic-violet">Automated YouTube Channel</h2>
-                                </div>
+                        <a href="story-youtube.html" class="work-img" style="background-image: url(images/project-youtube.png);  border-radius:10px"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">Automated YouTube Channel</h2>
                             </div>
-                        </a>
-                        <p style="margin-top:16px;">Script to upload with no human in the loop &mdash; and the Google sensitive-scope verification that made it legitimate to publish. <a href="story-youtube.html">Read the story</a></p>
+                        <p style="margin-top:16px;">Script to upload with no human in the loop, and the Google sensitive-scope verification that made it legitimate to publish. <a href="story-youtube.html">Read the story</a></p>
                     </div>
                     <div class="col-md-6 animate-box">
-                        <a href="story-cryptobank.html" class="work-img" style="background-image: url(images/project-cryptobank.png); display:block; height:320px; border-radius:10px;">
-                            <div class="display-t">
-                                <div class="work-name">
-                                    <h2 class="metallic-violet">A Bank Front End in 5 MB</h2>
-                                </div>
+                        <a href="story-cryptobank.html" class="work-img" style="background-image: url(images/project-cryptobank.png);  border-radius:10px"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">A Bank Front End in 5 MB</h2>
                             </div>
-                        </a>
                         <p style="margin-top:16px;">Oracle Cloud Always Free container work: static NGINX production tier, non-root runtime, multi-stage isolation. <a href="story-cryptobank.html">Read the story</a></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 animate-box">
-                        <a href="story-linkedin.html" class="work-img" style="background-image: url(images/project-linkedin.png); display:block; height:320px; border-radius:10px;">
-                            <div class="display-t">
-                                <div class="work-name">
-                                    <h2 class="metallic-violet">A Publishing Agent That Never Stops</h2>
-                                </div>
+                        <a href="story-linkedin.html" class="work-img" style="background-image: url(images/project-linkedin.png);  border-radius:10px"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">A Publishing Agent That Never Stops</h2>
                             </div>
-                        </a>
                         <p style="margin-top:16px;">Key rotation, dual-axis model fallback and a memory that survives redeploys by committing to GitHub. <a href="story-linkedin.html">Read the story</a></p>
                     </div>
                     <div class="col-md-6 animate-box">
-                        <a href="story-dexa.html" class="work-img" style="background-image: url(images/about-2.jpg); display:block; height:320px; border-radius:10px;">
-                            <div class="display-t">
-                                <div class="work-name">
-                                    <h2 class="metallic-violet">200 Students in Two Weeks</h2>
-                                </div>
+                        <a href="story-dexa.html" class="work-img" style="background-image: url(images/about-2.jpg);  border-radius:10px"></a>
+                            <div class="work-caption">
+                                <h2 class="metallic-violet">200 Students in Two Weeks</h2>
                             </div>
-                        </a>
                         <p style="margin-top:16px;">Marketing lead at leanwithdexa.com: outreach scripts, in-person pitching and a WhatsApp funnel that converted. <a href="story-dexa.html">Read the story</a></p>
                     </div>
                 </div>
@@ -437,14 +405,14 @@
                 <div class="row">
                     <div class="col-md-6 animate-box">
                         <div class="services">
-                            <h3>Crypto Bank Platform &mdash; OCI</h3>
+                            <h3>Crypto Bank Platform: OCI</h3>
                             <p>A containerised banking front end deployed on Oracle Cloud's Always Free tier. In production the heavy Node runtime is dropped for a static NGINX delivery layer, cutting live memory to under 5&nbsp;MB. The image is multi-stage, so <code>node_modules</code> and build scripts never reach the running node, and the backend steps down from root to the <code>node</code> user. Kubernetes manifests live alongside the app.</p>
                             <p class="read"><a href="story-cryptobank.html">Read the full story</a></p>
                         </div>
                     </div>
                     <div class="col-md-6 animate-box">
                         <div class="services">
-                            <h3>LinkedIn AI Agent &mdash; Resilience Layer</h3>
+                            <h3>LinkedIn AI Agent: Resilience Layer</h3>
                             <p>The publishing agent behind the social workflow: a key-rotation engine pools API credentials and rotates on quota or invalid-key errors instead of crashing, while a dual-axis fallback cascades between models when a provider degrades. Memory is committed straight to GitHub over the REST API, because the host's disk is ephemeral.</p>
                             <p class="read"><a href="story-linkedin.html">Read the full story</a></p>
                         </div>
@@ -453,7 +421,7 @@
                 <div class="row">
                     <div class="col-md-6 animate-box">
                         <div class="services">
-                            <h3>Self-Hosted Mail &mdash; REZMO</h3>
+                            <h3>Self-Hosted Mail: REZMO</h3>
                             <p>Own-domain mailboxes served from the REZMO host over IMAP and SMTP, with SPF, DKIM and DMARC managed by me rather than delegated to a mail provider. Account mail, DNS and the product all sit under one operator.</p>
                         </div>
                     </div>
@@ -495,7 +463,7 @@
                                 </div>
                             </div>
                             <div class="f-entry">
-                                <a href="post-13.html" class="featured-img" style="background-image: url(images/project-rezmo-wide.jpg);"></a>
+                                <a href="post-13.html" class="featured-img" style="background-image: url(images/project-rezmo.png);"></a>
                                 <div class="desc">
                                     <span>October 2026</span>
                                     <h3><a href="post-13.html">REZMO Memory Layer</a></h3>

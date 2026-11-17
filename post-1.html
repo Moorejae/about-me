@@ -28,10 +28,10 @@
         <h1>Agentic AI: Building LLM Systems with Function Calling</h1>
         <p><em>Published: June 2026 | Category: AI Engineering</em></p>
         
-        <p>The landscape of Large Language Models (LLMs) has shifted. We have moved beyond the "chatbot era," where models were primarily passive text generators. We are now in the age of <strong>Agentic AI</strong>—where models are empowered to interact with the world, query databases, execute code, and perform multi-step reasoning to accomplish complex objectives.</p>
+        <p>The landscape of Large Language Models (LLMs) has shifted. We have moved beyond the "chatbot era," where models were primarily passive text generators. We are now in the age of <strong>Agentic AI</strong>, where models are empowered to interact with the world, query databases, execute code, and perform multi-step reasoning to accomplish complex objectives.</p>
 
         <h2>The Paradigm Shift: From Text to Action</h2>
-        <p>At its core, an AI Agent is an LLM combined with an execution engine. The critical bridge in this architecture is <strong>Function Calling</strong>. When a user asks an agent, "What is the status of my recent transaction?", the agent does not guess based on its training data. Instead, it identifies the intent, selects the appropriate function (e.g., <code>query_transaction_db</code>), generates the required parameters (JSON), and waits for the system to execute that function.</p>
+        <p>At its core, an AI Agent is an LLM combined with an execution engine. The critical bridge in this architecture is <strong>Function Calling</strong>. When a user asks an agent, "What is the status of my recent transaction?", the agent does not guess based on its training data. Instead, it identifies the intent, selects the appropriate function (e.g. <code>query_transaction_db</code>), generates the required parameters (JSON), and waits for the system to execute that function.</p>
 
         <h3>1. The Mechanics of Function Calling</h3>
         <p>Function calling is not magic; it is a structured data exchange. The model acts as a reasoning engine, but it requires a schema. When we define a tool for the agent, we provide a structured description:</p>
@@ -48,10 +48,10 @@
   }
 }
         </pre>
-        <p>The model analyzes this schema. If the agent perceives that the user's intent matches this tool, it outputs a specific JSON payload rather than natural language. Your backend application intercepts this payload, executes the database query, and returns the result back to the model. This loop—<strong>Reason -> Execute -> Observe -> Refine</strong>—is the fundamental rhythm of modern agentic systems.</p>
+        <p>The model analyzes this schema. If the agent perceives that the user's intent matches this tool, it outputs a specific JSON payload rather than natural language. Your backend application intercepts this payload, executes the database query, and returns the result back to the model. This loop, <strong>Reason -> Execute -> Observe -> Refine</strong>, is the fundamental rhythm of modern agentic systems.</p>
 
         <h2>Context Management: The Memory of the Agent</h2>
-        <p>One of the biggest hurdles in building agents is context windows. You cannot dump your entire database into the LLM context. Instead, we implement "Selective Context." We observe the user's state (e.g., they are currently on the 'P2P Trading' page) and pre-seed the model's environment with only the metadata relevant to that specific session.</p>
+        <p>One of the biggest hurdles in building agents is context windows. You cannot dump your entire database into the LLM context. Instead, we implement "Selective Context." We observe the user's state (e.g. they are currently on the 'P2P Trading' page) and pre-seed the model's environment with only the metadata relevant to that specific session.</p>
         <p>This approach reduces token consumption and, more importantly, reduces hallucinations. By narrowing the agent's focus to only the tools and data relevant to the current screen state, we dramatically increase the accuracy of the model's decisions.</p>
 
         <h2>Challenges in Production Deployment</h2>

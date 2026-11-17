@@ -49,21 +49,21 @@
 
         <img class="hero" src="images/project-argon.png" alt="Gemini 4 Argon overview">
 
-        <p>Google's first Gemini 4 model, <strong>Argon</strong>, landed at the end of September 2026 and opened up more widely in mid-October. I have been using it on the same work I run every week — agent workflows, test generation, long patches — and my honest reaction is that it is the first model where I stopped checking on a long task every few minutes.</p>
+        <p>Google's first Gemini 4 model, <strong>Argon</strong>, landed at the end of September 2026 and opened up more widely in mid-October. I have been using it on the same work I run every week, agent workflows, test generation, long patches, and my honest reaction is that it is the first model where I stopped checking on a long task every few minutes.</p>
 
         <p>But "it felt great" is not useful to anyone deciding what to pay for. So this post does two things: what Argon actually changed in my hands, and what the published benchmark tables say when you read them all the way across instead of just down the column Google highlighted.</p>
 
         <h2>What is actually new</h2>
         <p>Three things matter for the kind of work I do:</p>
         <ul>
-            <li><strong>A 1M-token output limit</strong>, up from 64K. Context windows get the headlines, but the output ceiling is what used to break my long jobs — a full test suite, a migration plan across a dozen files, or a tailored resume plus cover letter would hit the wall and stop mid-thought.</li>
+            <li><strong>A 1M-token output limit</strong>: up from 64K. Context windows get the headlines, but the output ceiling is what used to break my long jobs, a full test suite, a migration plan across a dozen files, or a tailored resume plus cover letter would hit the wall and stop mid-thought.</li>
             <li><strong>Training aimed at long-horizon work</strong>: software engineering, legal and finance research, and cybersecurity defence rather than one-shot chat.</li>
             <li><strong>Introductory pricing of $2 per million input and $10 per million output tokens</strong>, with cached input at roughly 95% off. That caching discount is the single biggest lever on cost for agent loops, because the system prompt and tool schemas repeat on every single step.</li>
         </ul>
 
         <h2>What changed in practice</h2>
         <p>The difference is not that Argon writes better sentences. It is that it keeps the thread.</p>
-        <p>On my agent work, the old pattern was: give a task, watch it lose the plot around the fifth step, restart with a tighter prompt. Argon holds a plan across many steps and keeps its own constraints straight — the schema it must satisfy, the endpoints it must not touch, the format the output has to be in. That is the difference between an agent I supervise and an agent I delegate to.</p>
+        <p>On my agent work, the old pattern was: give a task, watch it lose the plot around the fifth step, restart with a tighter prompt. Argon holds a plan across many steps and keeps its own constraints straight, the schema it must satisfy, the endpoints it must not touch, the format the output has to be in. That is the difference between an agent I supervise and an agent I delegate to.</p>
         <p>Two places it showed up immediately:</p>
         <ol>
             <li><strong>Test generation.</strong> Asking for a module's tests used to produce a handful of happy-path cases and then stop. With the higher output ceiling I get the error branches and the edge cases in the same pass, which is exactly where the value is.</li>
@@ -80,7 +80,7 @@
             <tr><td>DeepSWE v1.1 <span class="sources">(long SWE tasks)</span></td><td class="num lead-cell">77.9%</td><td class="num">74.1%</td><td class="num">74.2%</td><td>Argon</td></tr>
             <tr><td>FrontierSWE v2</td><td class="num">55.0%</td><td class="num lead-cell">65.5%</td><td class="num">62.3%</td><td>Astra</td></tr>
             <tr><td>Terminal-Bench 4.0</td><td class="num">57.4%</td><td class="num">58.2%</td><td class="num lead-cell">66.4%</td><td>Opus 5.5</td></tr>
-            <tr><td>CWE-bench v1 <span class="sources">(fixing security bugs)</span></td><td class="num lead-cell">68%</td><td class="num">—</td><td class="num">—</td><td>Argon, tied for first</td></tr>
+            <tr><td>CWE-bench v1 <span class="sources">(fixing security bugs)</span></td><td class="num lead-cell">68%</td><td class="num"> </td><td class="num"> </td><td>Argon, tied for first</td></tr>
         </table>
         <p>That first row is the one quoted everywhere: <strong>77.9% on DeepSWE v1.1</strong>, a new high. The third and fourth rows are why I do not treat that as a general coding verdict. Argon is 10.5 points behind Astra on FrontierSWE v2 and about nine behind Opus on Terminal-Bench. Different tasks, different winners.</p>
 
@@ -92,7 +92,7 @@
             <tr><td>AutomationBench <span class="sources">(Zapier, end-to-end tasks)</span></td><td class="num lead-cell">51.3%</td><td class="num">41.4%</td><td class="num">42.5%</td><td>Argon</td></tr>
             <tr><td>Vals Index <span class="sources">(finance, legal, tax, coding)</span></td><td class="num lead-cell">68.9%</td><td class="num">63.1%</td><td class="num">67.0%</td><td>Argon</td></tr>
         </table>
-        <p>AutomationBench is the row I care about most, because it measures whether a model can complete a business task end to end rather than answer a question about it. <strong>51.3% against 41.4% and 42.5%</strong> is roughly a nine-point lead — the largest gap anywhere in Google's table, and the closest thing to "does it finish the job".</p>
+        <p>AutomationBench is the row I care about most, because it measures whether a model can complete a business task end to end rather than answer a question about it. <strong>51.3% against 41.4% and 42.5%</strong> is roughly a nine-point lead, the largest gap anywhere in Google's table, and the closest thing to "does it finish the job".</p>
 
         <h3>Security</h3>
         <table>
@@ -103,11 +103,11 @@
 
         <h2>The independent numbers</h2>
         <p>Vendor tables are marketing until someone else runs the tests. Two independent sources are worth checking.</p>
-        <p><strong>Artificial Analysis Intelligence Index.</strong> Argon at high reasoning scores <strong>53</strong>, tying GPT-6 Astra at max (53) and one point above GPT-6.1 Sol (52). It sits about five points behind Claude Opus 5.5 and Sonnet 5.5. The more interesting number is the trend: that is a <strong>23-point jump over Gemini 3.1 Pro Preview</strong>, Google's previous top model. On cost per index task, Argon came in at $1.99 during the launch discount — roughly 60% of Astra's $3.26 — rising to about $3.98 at list price, still under Opus 5.5 at $5.98.</p>
+        <p><strong>Artificial Analysis Intelligence Index.</strong> Argon at high reasoning scores <strong>53</strong>, tying GPT-6 Astra at max (53) and one point above GPT-6.1 Sol (52). It sits about five points behind Claude Opus 5.5 and Sonnet 5.5. The more interesting number is the trend: that is a <strong>23-point jump over Gemini 3.1 Pro Preview</strong>, Google's previous top model. On cost per index task, Argon came in at $1.99 during the launch discount, roughly 60% of Astra's $3.26, rising to about $3.98 at list price, still under Opus 5.5 at $5.98.</p>
         <p><strong>BenchGecko's aggregate.</strong> An average of 89.2 across 24 public benchmarks, ranking 8th of 323 tracked models, with <strong>agentic work ranked #1 globally</strong> (82.4) and reasoning 5th (94.9). Its top individual scores are startling: 100% on the OTIS mock AIME set, 99.2% on GPQA Diamond, 99.0% on ProofBench, 98.5% on ARC-AGI and 91.3% on ARC-AGI-2. Epoch AI's index puts it at 166, 5th of 253 models.</p>
 
         <div class="warn">
-            <strong>The one number nobody quotes.</strong> On Artificial Analysis's factuality tests, Argon's reported hallucination rate was 15% against an accuracy of 50%, while Astra's accuracy was 63%. A lower hallucination rate is not the same as a higher accuracy rate — abstention, correct and incorrect answers have to be counted separately. For anything where a confident wrong answer is expensive, that is the number to design around, not the AIME score.
+            <strong>The one number nobody quotes.</strong> On Artificial Analysis's factuality tests, Argon's reported hallucination rate was 15% against an accuracy of 50%, while Astra's accuracy was 63%. A lower hallucination rate is not the same as a higher accuracy rate, abstention, correct and incorrect answers have to be counted separately. For anything where a confident wrong answer is expensive, that is the number to design around, not the AIME score.
         </div>
 
         <h2>Where it loses, honestly</h2>
@@ -117,7 +117,7 @@
             <li><strong>Code quality as a composite.</strong> BenchGecko's coding category scores Argon at 51.3, 89th globally, even though its agentic score is first. It is very good at completing long tasks and not uniformly the best at writing code.</li>
             <li><strong>The vendor-vs-reality gap.</strong> Bloomberg reported that some Google staff find the model stronger on benchmarks than in real work, and that it struggles with some coding tasks. Google disputes that framing. Either way, a launch table is a hypothesis about your job, not a result.</li>
             <li><strong>Context capacity is not recall.</strong> 84.2% on GraphWalks at 256k–1M is strong, but it means the model still misses roughly one in six long-range links. If a fact matters, ask it to quote the source.</li>
-            <li><strong>Methodology drift.</strong> Some competitor figures in Google's table do not match what those vendors published — Anthropic reported 58.7% for Opus on Terminal-Bench Science where Google lists 63.3%, and 57.9% for Astra on Terminal-Bench 4.0 where Google lists 58.2%. The video row also gives Gemini 1 FPS while allowing 800 frames for GPT and 600 for Opus.</li>
+            <li><strong>Methodology drift.</strong> Some competitor figures in Google's table do not match what those vendors published, Anthropic reported 58.7% for Opus on Terminal-Bench Science where Google lists 63.3%, and 57.9% for Astra on Terminal-Bench 4.0 where Google lists 58.2%. The video row also gives Gemini 1 FPS while allowing 800 frames for GPT and 600 for Opus.</li>
         </ul>
 
         <h2>How I route work now</h2>
@@ -132,7 +132,7 @@
         <p>Two practices make the cost work:</p>
         <ol>
             <li><strong>Cache the stable part.</strong> Keep the system prompt, tool schemas and repo summary byte-identical across calls and the 95% cached-input discount applies. Put the changing instruction last.</li>
-            <li><strong>Budget the output, not the input.</strong> Argon earns its price by writing more. Give it a ceiling and an explicit instruction to stop and report if it is off-plan, or it will happily spend the whole budget exploring.</li>
+            <li><strong>Budget the output: not the input.</strong> Argon earns its price by writing more. Give it a ceiling and an explicit instruction to stop and report if it is off-plan, or it will happily spend the whole budget exploring.</li>
         </ol>
 
         <h2>Bottom line</h2>

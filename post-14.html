@@ -37,7 +37,7 @@
 
         <img class="hero" src="images/project-v61.png" alt="The V6.1 football engine">
 
-        <p>The V6.1 engine is a sports prediction framework that reported a 70–80% success rate. The interesting part is not the number — it is the constraint the engine is built on: it never reads odds. No prices, no lines, no market movement. Every fixture is scored from raw kinetic and tactical match data, and every settled fixture is autopsied afterwards.</p>
+        <p>The V6.1 engine is a sports prediction framework that reported a 70–80% success rate. The interesting part is not the number, it is the constraint the engine is built on: it never reads odds. No prices, no lines, no market movement. Every fixture is scored from raw kinetic and tactical match data, and every settled fixture is autopsied afterwards.</p>
         <p>That constraint sounds philosophical. In practice it is an engineering requirement, and it shapes the entire codebase.</p>
 
         <video class="video" controls preload="none" poster="images/poster-v61.jpg">
@@ -48,7 +48,7 @@
 
         <h2>Why refuse the market?</h2>
         <p>If a model can see the price, it will eventually learn the price instead of the football. Odds already contain the wisdom of everyone else, so a system trained on them looks accurate while actually doing nothing but echoing a bookmaker. Worse, it becomes impossible to tell whether a good hit came from analysis or from the market being right.</p>
-        <p>So the provider layer never exposes odds at all, and a hard-coded veto refuses any output that depends on them. That veto is not a comment in a README — it is a rule the engine enforces at runtime.</p>
+        <p>So the provider layer never exposes odds at all, and a hard-coded veto refuses any output that depends on them. That veto is not a comment in a README, it is a rule the engine enforces at runtime.</p>
 
         <h2>The three structural pillars</h2>
         <p>Each team is scored 0–100 on three axes, then blended:</p>
@@ -58,22 +58,22 @@
             <tr><td>Defensive Elasticity</td><td>30%</td><td>Recovery speed, low-block resilience, late-game integrity</td></tr>
             <tr><td>Structural Integrity</td><td>30%</td><td>Squad continuity, tactical discipline, head-to-head stability</td></tr>
         </table>
-        <p>The weighted blend plus home advantage produces a spread, and the spread drives the outcome classification. Kinetic Velocity carries the heaviest weight because transition speed is the signal that degrades least between competitions — form tables transfer badly across leagues, but how fast a side moves the ball up the pitch does not lie as often.</p>
+        <p>The weighted blend plus home advantage produces a spread, and the spread drives the outcome classification. Kinetic Velocity carries the heaviest weight because transition speed is the signal that degrades least between competitions, form tables transfer badly across leagues, but how fast a side moves the ball up the pitch does not lie as often.</p>
 
         <h2>Framework patches: encoding what the model keeps getting wrong</h2>
         <p>Every model has systematic blind spots. Instead of retraining and hoping, V6.1 applies explicit, versioned patches over the base score. A few of the ones currently in force:</p>
         <ul>
-            <li><strong>Market decoupling</strong> — vetoes any odds-reliant output outright.</li>
-            <li><strong>Virtual kill-switch</strong> — abandons virtual, simulated or unverified fixtures instead of scoring them.</li>
-            <li><strong>Favourite spread</strong> — a 25% devaluation for favourites in knockout games, where the model otherwise over-trusts the stronger side.</li>
-            <li><strong>Road favourite allowance</strong> — 35% devaluation for away favourites in lower leagues.</li>
-            <li><strong>Defensive elasticity</strong> — 15% devaluation for teams facing high-transition underdogs.</li>
-            <li><strong>Structural re-evaluation</strong> — collapses a goals-favourite that has leaked structurally into a no-bet. Internally this is the Critical Illusion filter.</li>
+            <li><strong>Market decoupling</strong>: vetoes any odds-reliant output outright.</li>
+            <li><strong>Virtual kill-switch</strong>: abandons virtual, simulated or unverified fixtures instead of scoring them.</li>
+            <li><strong>Favourite spread</strong>: a 25% devaluation for favourites in knockout games, where the model otherwise over-trusts the stronger side.</li>
+            <li><strong>Road favourite allowance</strong>: 35% devaluation for away favourites in lower leagues.</li>
+            <li><strong>Defensive elasticity</strong>: 15% devaluation for teams facing high-transition underdogs.</li>
+            <li><strong>Structural re-evaluation</strong>: collapses a goals-favourite that has leaked structurally into a no-bet. Internally this is the Critical Illusion filter.</li>
         </ul>
         <p>These are boring, narrow rules. They are also the difference between a model that is impressive in a notebook and one that is defensible when money is on the line, because each patch has a reason attached and can be evaluated in isolation.</p>
 
         <h2>"No data = no agreement"</h2>
-        <p>The most important behaviour in the engine is refusing to answer. When coverage is insufficient — a team with no recent competitive data, a competition the pipeline does not trust — the system raises a data-missing error and stalls. It does not interpolate, and it does not guess a plausible-looking score.</p>
+        <p>The most important behaviour in the engine is refusing to answer. When coverage is insufficient, a team with no recent competitive data, a competition the pipeline does not trust, the system raises a data-missing error and stalls. It does not interpolate, and it does not guess a plausible-looking score.</p>
         <pre>
 # The directive, enforced at the boundary
 if coverage.score(fixture) < MINIMUM_COVERAGE:

@@ -29,7 +29,7 @@
         <h1>Securing Internal RDP Access: Routing & VPC Isolation</h1>
         <p><em>Published: November 2025 | Category: Networking & Security</em></p>
 
-        <p>The most dangerous configuration in cloud networking is placing a Windows or Linux server that requires RDP or SSH access directly into a public subnet. Doing so essentially places your server on the front porch of the internet, waiting for the first automated bot to brute-force its credentials. In this post, we will dissect the <strong>3-Tier VPC Architecture</strong>—the industry-standard blueprint for isolating compute resources while maintaining administrative access.</p>
+        <p>The most dangerous configuration in cloud networking is placing a Windows or Linux server that requires RDP or SSH access directly into a public subnet. Doing so essentially places your server on the front porch of the internet, waiting for the first automated bot to brute-force its credentials. In this post, we will dissect the <strong>3-Tier VPC Architecture</strong>, the industry-standard blueprint for isolating compute resources while maintaining administrative access.</p>
 
         <h2>The Anatomy of a 3-Tier VPC</h2>
         <p>A secure VPC should be segmented into three distinct layers, each with its own route table and security posture:</p>
@@ -74,8 +74,8 @@ resource "aws_security_group" "private_app_server" {
         </pre>
 
         <h2>Moving Beyond Bastion: Identity-Aware Proxies</h2>
-        <p>Bastion hosts are effective, but they add management overhead—you have to patch the Bastion host, monitor it, and rotate its keys. Cloud-native alternatives like <strong>GCP Identity-Aware Proxy (IAP)</strong> or <strong>AWS Systems Manager (SSM) Session Manager</strong> eliminate the need for bastion hosts entirely.</p>
-        <p>With SSM Session Manager, you don't even need to open port 3389 or 22 on your instances. The connection is tunneled through the cloud provider's internal API control plane. This is the gold standard for secure, zero-exposure remote management. It eliminates the public surface area completely—there is no RDP port to scan, and therefore, nothing to brute force.</p>
+        <p>Bastion hosts are effective, but they add management overhead, you have to patch the Bastion host, monitor it, and rotate its keys. Cloud-native alternatives like <strong>GCP Identity-Aware Proxy (IAP)</strong> or <strong>AWS Systems Manager (SSM) Session Manager</strong> eliminate the need for bastion hosts entirely.</p>
+        <p>With SSM Session Manager, you don't even need to open port 3389 or 22 on your instances. The connection is tunneled through the cloud provider's internal API control plane. This is the gold standard for secure, zero-exposure remote management. It eliminates the public surface area completely, there is no RDP port to scan, and therefore, nothing to brute force.</p>
 
         <h2>Conclusion</h2>
         <p>Never prioritize convenience over network isolation. If you find yourself placing a database or a management interface in a public subnet, pause and re-evaluate your architecture. By utilizing Bastion hosts with Security Group chaining, or modern tunnel-based tools like SSM Session Manager, you can maintain full administrative control while keeping your compute resources shielded from the chaotic nature of the public internet.</p>

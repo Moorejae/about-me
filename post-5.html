@@ -87,14 +87,14 @@ net.ipv4.icmp_echo_ignore_all = 1
         <h2>5. Intrusion Detection & Auditing</h2>
         <p>Hardening stops attackers, but auditing tells you who tried to get in. You should implement two critical layers:</p>
         <ol>
-            <li><strong>Fail2Ban:</strong> Automatically bans IP addresses that show malicious signs—such as too many failed password attempts or searching for exploits on your web server.</li>
+            <li><strong>Fail2Ban:</strong> Automatically bans IP addresses that show malicious signs, such as too many failed password attempts or searching for exploits on your web server.</li>
             <li><strong>Auditd:</strong> The Linux Audit Framework provides a detailed log of every file access, process execution, and system call. This is vital for forensic analysis if a breach occurs.</li>
         </ol>
 
         <p>Monitoring the <code>/var/log/auth.log</code> or <code>journalctl</code> is crucial. I recommend piping these logs to a centralized stack (like the ELK Stack discussed in my previous post) so that you can create alerts for unauthorized sudo attempts or repeated failed SSH connections.</p>
 
         <h2>Conclusion</h2>
-        <p>Hardening Linux is a continuous process of reducing risk. By implementing the layers discussed—securing SSH, enforcing strict firewall rules, minimizing the OS, and enabling auditing—you make it significantly harder for an attacker to achieve their goals. Remember, security is not about being unhackable; it is about being an unattractive target. Make your server a fortress, not a target of opportunity.</p>
+        <p>Hardening Linux is a continuous process of reducing risk. By implementing the layers discussed, securing SSH, enforcing strict firewall rules, minimizing the OS, and enabling auditing, you make it significantly harder for an attacker to achieve their goals. Remember, security is not about being unhackable; it is about being an unattractive target. Make your server a fortress, not a target of opportunity.</p>
 
         <hr>
         <h3>References</h3>

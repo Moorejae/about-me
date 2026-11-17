@@ -41,7 +41,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219,.18) 0%, rgba(0,0,0,0) 65%);
+            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219.18) 0%, rgba(0,0,0,0) 65%);
         }
         .story-hero .container { position: relative; z-index: 2; }
         .story-kicker {
@@ -74,7 +74,7 @@
             flex-wrap: wrap;
             gap: 34px;
             padding-top: 26px;
-            border-top: 1px solid rgba(255,255,255,.18);
+            border-top: 1px solid rgba(255,255,255.18);
         }
         .story-meta div { min-width: 150px; }
         .story-meta .k {
@@ -113,7 +113,7 @@
             margin: 34px 0 6px;
         }
         .story-body p { margin-bottom: 20px; }
-        .story-body ul, .story-body ol { margin: 0 0 22px 22px; }
+        .story-body ul.story-body ol { margin: 0 0 22px 22px; }
         .story-body li { margin-bottom: 10px; }
         .story-body strong { color: #16131f; }
         .story-body code {
@@ -124,7 +124,7 @@
             padding: 2px 6px;
             border-radius: 3px;
         }
-        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184,.35); }
+        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184.35); }
 
         .stat-strip {
             display: flex;
@@ -239,10 +239,10 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #e6e2ee;
-            box-shadow: 0 22px 50px rgba(38,26,64,.14);
+            box-shadow: 0 22px 50px rgba(38,26,64.14);
         }
         .story-banner img { width: 100%; display: block; }
-        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0,.5); }
+        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0.5); }
         .story-figure-note {
             font-size: 13px;
             color: #8b8499;
@@ -386,7 +386,7 @@
                             <img src="images/project-linkedin.png" alt="A bot that never stops">
                         </figure>
                         <h2>What it is</h2>
-                        <p>An agent that plans, writes and publishes LinkedIn posts on a schedule, learning from what has worked before. The writing is the visible part. The engineering is everything that keeps it running when the provider misbehaves &mdash; which, on a free tier, is most days.</p>
+                        <p>An agent that plans, writes and publishes LinkedIn posts on a schedule, learning from what has worked before. The writing is the visible part. The engineering is everything that keeps it running when the provider misbehaves, which, on a free tier, is most days.</p>
 
                         <h2>Failure one: quota walls</h2>
                         <p>The first version crashed whenever Gemini's free tier hit a quota limit while processing a complex prompt. The fix was a <strong>key rotation engine</strong>: a pool of API keys in the environment, with the server intercepting 429 (quota exceeded) and 400 (invalid key) responses and rotating to the next credential instead of taking the process down. What used to be an outage became a retry.</p>
@@ -395,18 +395,18 @@
                         <p>Models also go offline or return 503 under load. A single fixed retry list handles that badly, because the right fallback depends on <em>why</em> the call failed. So the agent uses a <strong>dual-axis fallback matrix</strong>: it cascades from the most capable model down to a more stable one, choosing the path by error class. The result is that a degraded provider costs latency, not uptime.</p>
 
                         <h2>Failure three: the server forgets everything</h2>
-                        <p>This is the one most people miss. Eyeno &mdash; the prompt architect behind the agent &mdash; was learning genuinely useful structures and then losing them, because Render's disk is ephemeral. Every deploy erased the brain.</p>
+                        <p>This is the one most people miss. Eyeno, the prompt architect behind the agent, was learning genuinely useful structures and then losing them, because Render's disk is ephemeral. Every deploy erased the brain.</p>
                         <p>The fix was to stop treating the container as storage. The server talks to the <strong>GitHub REST API</strong> and commits each new Markdown memory node straight to the repository. The vault becomes the source of truth; the runtime becomes disposable.</p>
-                        <div class="pull">If state is worth keeping, keep it somewhere designed to keep it &mdash; and let the server be replaceable.</div>
+                        <div class="pull">If state is worth keeping, keep it somewhere designed to keep it, and let the server be replaceable.</div>
 
                         <h2>Why this is the interesting part</h2>
-                        <p>Anyone can wire a model to a posting endpoint. Making that survive real conditions &mdash; quotas, provider incidents, redeploys, cold starts &mdash; is the difference between a demo and something you can leave running overnight. The same three patterns (rotate, cascade by error class, externalise state) now run behind ForChi and REZMO too.</p>
+                        <p>Anyone can wire a model to a posting endpoint. Making that survive real conditions, quotas, provider incidents, redeploys, cold starts, is the difference between a demo and something you can leave running overnight. The same three patterns (rotate, cascade by error class, externalise state) now run behind ForChi and REZMO too.</p>
                         <h2>Stack</h2>
                         <div class="chips"><span>Node.js</span><span>Gemini API</span><span>Key rotation</span><span>Model fallback matrix</span><span>GitHub REST API</span><span>Render</span><span>LinkedIn publishing</span></div>
                     </div>
                     <div class="story-foot">
                         <div class="next">
-<a href="story-eyeno.html"><span class="k">Previous story</span><span class="n">Eyeno — the prompt architect that trains itself</span></a>
+<a href="story-eyeno.html"><span class="k">Previous story</span><span class="n">Eyeno, the prompt architect that trains itself</span></a>
 <a href="story-cryptobank.html"><span class="k">Next story</span><span class="n">A bank front end in 5 MB</span></a>
 <a href="work.html"><span class="k">Index</span><span class="n">All projects &amp; case studies</span></a>
                         </div>

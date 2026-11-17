@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>REZMO — portable AI memory served over MCP - Agu Chiedozie</title>
+    <title>REZMO: portable AI memory served over MCP - Agu Chiedozie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="How REZMO keeps a user's whole record in their own Google Drive and serves it to Claude and Grok over an MCP server, plus the SEO and email work behind it." />
     <meta name="keywords" content="REZMO, AI memory, MCP server, Cloudflare Workers, Postgres 17, Redis, Paystack, SEO, self-hosted email" />
     <meta name="author" content="Agu Chiedozie" />
 
-    <meta property="og:title" content="REZMO — portable AI memory served over MCP"/>
-    <meta property="og:image" content="images/project-rezmo-wide.jpg"/>
+    <meta property="og:title" content="REZMO: portable AI memory served over MCP"/>
+    <meta property="og:image" content="images/project-rezmo.png"/>
     <meta property="og:url" content="https://victormoore.online/story-rezmo.html"/>
     <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
     <meta property="og:description" content="How REZMO keeps a user's whole record in their own Google Drive and serves it to Claude and Grok over an MCP server, plus the SEO and email work behind it."/>
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="REZMO — portable AI memory served over MCP" />
-    <meta name="twitter:image" content="images/project-rezmo-wide.jpg" />
+    <meta name="twitter:title" content="REZMO: portable AI memory served over MCP" />
+    <meta name="twitter:image" content="images/project-rezmo.png" />
 
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -41,7 +41,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219,.18) 0%, rgba(0,0,0,0) 65%);
+            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219.18) 0%, rgba(0,0,0,0) 65%);
         }
         .story-hero .container { position: relative; z-index: 2; }
         .story-kicker {
@@ -74,7 +74,7 @@
             flex-wrap: wrap;
             gap: 34px;
             padding-top: 26px;
-            border-top: 1px solid rgba(255,255,255,.18);
+            border-top: 1px solid rgba(255,255,255.18);
         }
         .story-meta div { min-width: 150px; }
         .story-meta .k {
@@ -113,7 +113,7 @@
             margin: 34px 0 6px;
         }
         .story-body p { margin-bottom: 20px; }
-        .story-body ul, .story-body ol { margin: 0 0 22px 22px; }
+        .story-body ul.story-body ol { margin: 0 0 22px 22px; }
         .story-body li { margin-bottom: 10px; }
         .story-body strong { color: #16131f; }
         .story-body code {
@@ -124,7 +124,7 @@
             padding: 2px 6px;
             border-radius: 3px;
         }
-        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184,.35); }
+        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184.35); }
 
         .stat-strip {
             display: flex;
@@ -239,10 +239,10 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #e6e2ee;
-            box-shadow: 0 22px 50px rgba(38,26,64,.14);
+            box-shadow: 0 22px 50px rgba(38,26,64.14);
         }
         .story-banner img { width: 100%; display: block; }
-        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0,.5); }
+        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0.5); }
         .story-figure-note {
             font-size: 13px;
             color: #8b8499;
@@ -333,7 +333,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="head-title">Featured Projects</h2>
-                        <a href="images/project-rezmo.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/project-rezmo-wide.jpg);">
+                        <a href="images/project-rezmo.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/project-rezmo.png);">
                             <span><i class="icon-search3"></i></span>
                         </a>
                         <a href="images/project-forchi.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-forchi.png);">
@@ -370,7 +370,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <span class="story-kicker">Live product · AI memory infrastructure</span>
-                        <h1>REZMO — memory that belongs to the user</h1>
+                        <h1>REZMO: memory that belongs to the user</h1>
                         <p class="story-lede">Every assistant keeps a summary of your work and forgets the files. REZMO keeps the whole record in a Drive you own, then serves it to whichever model you point at it.</p>
                         <div class="story-meta"><div><span class="k">Role</span><span class="v">Product, backend, infra, SEO</span></div><div><span class="k">Live at</span><span class="v">rezmo.online</span></div><div><span class="k">Stack</span><span class="v">Node, Postgres 17, Redis, Cloudflare</span></div></div>
                     </div>
@@ -383,7 +383,7 @@
                 <div class="col-md-12">
                     <div class="story-body">
                         <figure class="story-banner">
-                            <img src="images/project-rezmo-wide.jpg" alt="REZMO — memory that belongs to the user">
+                            <img src="images/project-rezmo.png" alt="REZMO, memory that belongs to the user">
                         </figure>
                         <h2>The problem worth solving</h2>
                         <p>Every AI product keeps a memory of your work, and every one of those memories is a summary written by the assistant, held by the assistant, and readable only inside that product. Switch tools and the record resets to a thinner copy of itself. After enough switches the work is gone and only summaries of it survive.</p>
@@ -392,9 +392,9 @@
                         <h2>Ownership as an architecture decision</h2>
                         <p>A user's conversations, notes, projects and generated documents are stored as their material, with a copy in a folder in their own Google Drive. If REZMO disappeared tomorrow, that folder would still open. That single constraint decided almost everything else in the build.</p>
                         <ul>
-                            <li><strong>Full depth, not digests.</strong> The record keeps files, not a paragraph about the files, so a later model can return to the source.</li>
+                            <li><strong>Full depth: not digests.</strong> The record keeps files, not a paragraph about the files, so a later model can return to the source.</li>
                             <li><strong>Portable by default.</strong> Download the folder, keep it offline, push it back, continue as if nothing was lost.</li>
-                            <li><strong>Many models, one record.</strong> One history that travels with the user instead of being rebuilt in every new chat.</li>
+                            <li><strong>Many models: one record.</strong> One history that travels with the user instead of being rebuilt in every new chat.</li>
                         </ul>
 
                         <h2>Why MCP, not another chat window</h2>
@@ -410,25 +410,25 @@
                             <div class="s"><span class="n">2,000+</span><span class="l">Backend tests</span></div>
                             <div class="s"><span class="n">480+</span><span class="l">Frontend tests</span></div>
                         </div>
-                        <p>The performance lesson was about placement, not hardware. For a request path that touches the database several times per call, a 22&times; shorter round trip is the difference between a product that feels instant and one that feels broken. The trade is that the host becomes a real dependency &mdash; which is exactly why the record also lives in the user's Drive.</p>
+                        <p>The performance lesson was about placement, not hardware. For a request path that touches the database several times per call, a 22&times; shorter round trip is the difference between a product that feels instant and one that feels broken. The trade is that the host becomes a real dependency, which is exactly why the record also lives in the user's Drive.</p>
 
                         <h2>Tests are why I can move fast on it</h2>
-                        <p>That coverage sounds excessive until you consider what the product does: it reads and writes a user's own history. A regression here is not a visual bug, it is lost context. The suites cover Postgres and Redis behaviour, the permission boundary between read-only and read-write clients, the Drive synchronisation path, and the approval flow on the frontend &mdash; because the moment a user cannot tell what a model is allowed to do, trust is gone.</p>
+                        <p>That coverage sounds excessive until you consider what the product does: it reads and writes a user's own history. A regression here is not a visual bug, it is lost context. The suites cover Postgres and Redis behaviour, the permission boundary between read-only and read-write clients, the Drive synchronisation path, and the approval flow on the frontend, because the moment a user cannot tell what a model is allowed to do, trust is gone.</p>
                         <p>Payments run live through <strong>Paystack</strong>, which adds the usual requirement that nothing in the entitlement path is allowed to be flaky.</p>
 
                         <h2>SEO: making a new product findable</h2>
-                        <p>A product with no search presence does not exist. The SEO work on REZMO was not a plugin install &mdash; it was structuring the site so both search engines and AI crawlers can understand and quote it.</p>
+                        <p>A product with no search presence does not exist. The SEO work on REZMO was not a plugin install, it was structuring the site so both search engines and AI crawlers can understand and quote it.</p>
                         <ul>
                             <li><strong>One page per intent.</strong> Separate pages for the product overview, AI memory, and the MCP integration, so a search for "AI memory layer" and a search for "MCP server" both land somewhere specific instead of a generic homepage.</li>
                             <li><strong>Semantic structure and metadata.</strong> Real headings in order, descriptive titles and metas per page, canonical URLs, and Open Graph tags so links unfurl correctly when shared.</li>
-                            <li><strong>An <code>llms.txt</code> file</strong> so language models crawling the site get a clean, factual summary of what REZMO is and what it does &mdash; instead of inferring it from marketing copy.</li>
+                            <li><strong>An <code>llms.txt</code> file</strong> so language models crawling the site get a clean, factual summary of what REZMO is and what it does, instead of inferring it from marketing copy.</li>
                             <li><strong>Trust pages.</strong> Terms, privacy, refund and cookie policies built out as real pages. For a product that stores personal history, those pages are part of the conversion surface, not legal decoration.</li>
-                            <li><strong>Performance as a ranking input.</strong> Static delivery at the edge, compressed assets and no render-blocking bloat &mdash; the same latency work that made the app feel fast also made it cheap to crawl.</li>
+                            <li><strong>Performance as a ranking input.</strong> Static delivery at the edge, compressed assets and no render-blocking bloat, the same latency work that made the app feel fast also made it cheap to crawl.</li>
                         </ul>
                         <div class="pull">The best SEO decision I made was having a real product with a real purpose, then writing down honestly what it does.</div>
 
                         <h2>Email is part of the stack too</h2>
-                        <p>REZMO's mail is self-hosted on its own domain: mailboxes served from my own host over IMAP and SMTP instead of handed to a third-party provider. Account mail, the domain's DNS and the product sit under one operator, and the domain's SPF, DKIM and DMARC records are mine to get right. Same trade as the rest of the system &mdash; fewer moving providers, more responsibility.</p>
+                        <p>REZMO's mail is self-hosted on its own domain: mailboxes served from my own host over IMAP and SMTP instead of handed to a third-party provider. Account mail, the domain's DNS and the product sit under one operator, and the domain's SPF, DKIM and DMARC records are mine to get right. Same trade as the rest of the system, fewer moving providers, more responsibility.</p>
                         <video class="story-video" controls preload="none" poster="images/poster-rezmo.jpg">
                             <source src="videos/rezmo-demo.mp4" type="video/mp4">
                             Your browser does not support the video tag.
@@ -437,7 +437,7 @@
 
                         <h2>What I took from building it</h2>
                         <ol>
-                            <li><strong>Ownership is an architecture decision.</strong> Putting the record in the user's Drive changed the schema, the sync path and the failure modes &mdash; and it is the reason the product is credible.</li>
+                            <li><strong>Ownership is an architecture decision.</strong> Putting the record in the user's Drive changed the schema, the sync path and the failure modes, and it is the reason the product is credible.</li>
                             <li><strong>Latency is a placement problem first.</strong> Before optimising queries, check what the query is crossing.</li>
                             <li><strong>Test the product's promise.</strong> The promise is "your history is still here". Test that, not the button colours.</li>
                         </ol>
@@ -446,7 +446,7 @@
                     </div>
                     <div class="story-foot">
                         <div class="next">
-<a href="story-forchi.html"><span class="k">Next story</span><span class="n">ForChi — one agent, three jobs</span></a>
+<a href="story-forchi.html"><span class="k">Next story</span><span class="n">ForChi, one agent, three jobs</span></a>
 <a href="work.html"><span class="k">Index</span><span class="n">All projects &amp; case studies</span></a>
                         </div>
                     </div>
@@ -482,7 +482,7 @@
                                 </div>
                             </div>
                             <div class="f-entry">
-                                <a href="post-13.html" class="featured-img" style="background-image: url(images/project-rezmo-wide.jpg);"></a>
+                                <a href="post-13.html" class="featured-img" style="background-image: url(images/project-rezmo.png);"></a>
                                 <div class="desc">
                                     <span>October 2026</span>
                                     <h3><a href="post-13.html">REZMO Memory Layer</a></h3>

@@ -29,7 +29,7 @@
         <h1>Infrastructure as Code: Terraform & GCP Best Practices</h1>
         <p><em>Published: May 2026 | Category: DevOps & Cloud Infrastructure</em></p>
 
-        <p>In the early days of cloud computing, engineers managed infrastructure manually—a practice now rightfully referred to as "Click-Ops." You logged into the console, clicked "Create Instance," configured networking by hand, and hoped the environment was reproducible. Today, that approach is a liability. Infrastructure as Code (IaC) has become the industry standard for ensuring environment consistency, security, and velocity.</p>
+        <p>In the early days of cloud computing, engineers managed infrastructure manually, a practice now rightfully referred to as "Click-Ops." You logged into the console, clicked "Create Instance," configured networking by hand, and hoped the environment was reproducible. Today, that approach is a liability. Infrastructure as Code (IaC) has become the industry standard for ensuring environment consistency, security, and velocity.</p>
 
         <h2>The End of "Click-Ops"</h2>
         <p>Using Terraform with Google Cloud Platform (GCP) transforms infrastructure from a static, fragile asset into dynamic, version-controlled software. By declaring your desired end-state in HCL (HashiCorp Configuration Language), you gain the ability to version, test, and peer-review your infrastructure just like application code.</p>
@@ -37,7 +37,7 @@
         
 
         <h2>1. The Modular Design Pattern</h2>
-        <p>One of the most common pitfalls for beginners is writing a monolithic <code>main.tf</code> file. As your infrastructure scales, this file becomes unreadable and dangerous to modify. The professional approach is <strong>Modularization</strong>. Break your code into logical, reusable units (e.g., a network module, a Kubernetes cluster module, a database module).</p>
+        <p>One of the most common pitfalls for beginners is writing a monolithic <code>main.tf</code> file. As your infrastructure scales, this file becomes unreadable and dangerous to modify. The professional approach is <strong>Modularization</strong>. Break your code into logical, reusable units (e.g. a network module, a Kubernetes cluster module, a database module).</p>
         
         <pre>
 # Example of calling a reusable module
@@ -59,7 +59,7 @@ module "vpc_network" {
 
         <h2>3. Drift Detection and Security</h2>
         <p>Infrastructure "drift" occurs when someone makes a manual change via the console, causing the actual cloud environment to diverge from the code. Terraform’s <code>plan</code> command is your best defense against this. It acts as a diff viewer for your entire cloud footprint.</p>
-        <p>Furthermore, IaC enables <strong>Static Analysis</strong>. Before you deploy, you can run security tools (like <code>tfsec</code> or <code>checkov</code>) to scan your code for vulnerabilities—such as open S3 buckets or overly permissive firewall rules—before they ever hit production. This is "Shift-Left" security in action.</p>
+        <p>Furthermore, IaC enables <strong>Static Analysis</strong>. Before you deploy, you can run security tools (like <code>tfsec</code> or <code>checkov</code>) to scan your code for vulnerabilities, such as open S3 buckets or overly permissive firewall rules, before they ever hit production. This is "Shift-Left" security in action.</p>
 
         <h2>4. Best Practices Checklist</h2>
         <p>To operate at an enterprise level, adhere to these four pillars:</p>

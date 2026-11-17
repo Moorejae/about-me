@@ -3,19 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Eyeno — a prompt architect that trains itself - Agu Chiedozie</title>
+    <title>Eyeno: a prompt architect that trains itself - Agu Chiedozie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Eyeno diagnoses prompts before they run and keeps its knowledge in an Obsidian vault on GitHub, with key rotation and model fallback keeping it alive." />
     <meta name="keywords" content="Eyeno, prompt engineering, Obsidian, knowledge graph, Gemini, key rotation, fallback" />
     <meta name="author" content="Agu Chiedozie" />
 
-    <meta property="og:title" content="Eyeno — a prompt architect that trains itself"/>
+    <meta property="og:title" content="Eyeno: a prompt architect that trains itself"/>
     <meta property="og:image" content="images/project-eyeno.png"/>
     <meta property="og:url" content="https://victormoore.online/story-eyeno.html"/>
     <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
     <meta property="og:description" content="Eyeno diagnoses prompts before they run and keeps its knowledge in an Obsidian vault on GitHub, with key rotation and model fallback keeping it alive."/>
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Eyeno — a prompt architect that trains itself" />
+    <meta name="twitter:title" content="Eyeno: a prompt architect that trains itself" />
     <meta name="twitter:image" content="images/project-eyeno.png" />
 
     <link rel="shortcut icon" href="favicon.ico">
@@ -41,7 +41,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219,.18) 0%, rgba(0,0,0,0) 65%);
+            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219.18) 0%, rgba(0,0,0,0) 65%);
         }
         .story-hero .container { position: relative; z-index: 2; }
         .story-kicker {
@@ -74,7 +74,7 @@
             flex-wrap: wrap;
             gap: 34px;
             padding-top: 26px;
-            border-top: 1px solid rgba(255,255,255,.18);
+            border-top: 1px solid rgba(255,255,255.18);
         }
         .story-meta div { min-width: 150px; }
         .story-meta .k {
@@ -113,7 +113,7 @@
             margin: 34px 0 6px;
         }
         .story-body p { margin-bottom: 20px; }
-        .story-body ul, .story-body ol { margin: 0 0 22px 22px; }
+        .story-body ul.story-body ol { margin: 0 0 22px 22px; }
         .story-body li { margin-bottom: 10px; }
         .story-body strong { color: #16131f; }
         .story-body code {
@@ -124,7 +124,7 @@
             padding: 2px 6px;
             border-radius: 3px;
         }
-        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184,.35); }
+        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184.35); }
 
         .stat-strip {
             display: flex;
@@ -239,10 +239,10 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #e6e2ee;
-            box-shadow: 0 22px 50px rgba(38,26,64,.14);
+            box-shadow: 0 22px 50px rgba(38,26,64.14);
         }
         .story-banner img { width: 100%; display: block; }
-        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0,.5); }
+        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0.5); }
         .story-figure-note {
             font-size: 13px;
             color: #8b8499;
@@ -370,8 +370,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <span class="story-kicker">AI system · prompt engineering</span>
-                        <h1>Eyeno — the prompt architect that trains itself</h1>
-                        <p class="story-lede">A workspace that diagnoses a prompt before it runs, backed by a knowledge vault you can read, version and correct — then commits what it learns back to GitHub.</p>
+                        <h1>Eyeno: the prompt architect that trains itself</h1>
+                        <p class="story-lede">A workspace that diagnoses a prompt before it runs, backed by a knowledge vault you can read, version and correct, then commits what it learns back to GitHub.</p>
                         <div class="story-meta"><div><span class="k">Role</span><span class="v">Design, backend, build</span></div><div><span class="k">Core idea</span><span class="v">Knowledge you can inspect</span></div><div><span class="k">Vault</span><span class="v">Obsidian Markdown on GitHub</span></div></div>
                     </div>
                 </div>
@@ -383,27 +383,27 @@
                 <div class="col-md-12">
                     <div class="story-body">
                         <figure class="story-banner">
-                            <img src="images/project-eyeno.png" alt="Eyeno — the prompt architect that trains itself">
+                            <img src="images/project-eyeno.png" alt="Eyeno, the prompt architect that trains itself">
                         </figure>
                         <h2>The flaw in most prompt workflows</h2>
                         <p>Most AI systems have no memory of how you think. You start a chat, train it with your guidelines, and the moment that session closes the context is gone. Eyeno is an attempt to build a permanent, compounding layer instead of a better single prompt.</p>
 
                         <h2>Part one: the Prompt Architect</h2>
-                        <p>The workspace takes a raw, ambiguous request &mdash; "make me a react component" &mdash; and runs it through a diagnostic pipeline. It rates the draft across prompt-engineering dimensions:</p>
+                        <p>The workspace takes a raw, ambiguous request, "make me a react component", and runs it through a diagnostic pipeline. It rates the draft across prompt-engineering dimensions:</p>
                         <ul>
-                            <li><strong>Role and persona</strong> &mdash; who the model is acting as, and whether the draft says it.</li>
-                            <li><strong>Objectives and delimiters</strong> &mdash; what success looks like, and where the input stops being input.</li>
-                            <li><strong>Variables</strong> &mdash; what must be filled in before the prompt is allowed to run.</li>
-                            <li><strong>Alignment</strong> &mdash; four questions asked back to the user before synthesis, not after.</li>
+                            <li><strong>Role and persona</strong>: who the model is acting as, and whether the draft says it.</li>
+                            <li><strong>Objectives and delimiters</strong>: what success looks like, and where the input stops being input.</li>
+                            <li><strong>Variables</strong>: what must be filled in before the prompt is allowed to run.</li>
+                            <li><strong>Alignment</strong>: four questions asked back to the user before synthesis, not after.</li>
                         </ul>
                         <p>Only then does it write the final system prompt, formatted in the structure the task actually needs rather than one house style.</p>
 
                         <h2>Part two: the vault</h2>
-                        <p>Instead of relying on model defaults, the Architect queries <strong>Eyeno</strong> &mdash; a live semantic database held as an Obsidian Markdown vault on GitHub. It is seeded with specific mental models and boundaries, each a node with double-bracket links, so the behaviour is inspectable rather than buried in a weights file. If a rule is wrong, I can read it, diff it and fix it.</p>
+                        <p>Instead of relying on model defaults, the Architect queries <strong>Eyeno</strong>, a live semantic database held as an Obsidian Markdown vault on GitHub. It is seeded with specific mental models and boundaries, each a node with double-bracket links, so the behaviour is inspectable rather than buried in a weights file. If a rule is wrong, I can read it, diff it and fix it.</p>
                         <p>In parallel with any prompt query, the backend runs a semantic check against the vault. If the prompt touches a known boundary, the relevant principles are pulled and merged into the output before the user ever sees it.</p>
 
                         <h2>Part three: the loop that makes it compound</h2>
-                        <p>When a prompt is finalised and returned, the backend launches an asynchronous distillation job. A model reads the finished prompt, extracts the reusable pattern &mdash; formatting technique, domain context, structural choice &mdash; writes it as a clean Markdown node with wikilinks, and commits it to the vault repository.</p>
+                        <p>When a prompt is finalised and returned, the backend launches an asynchronous distillation job. A model reads the finished prompt, extracts the reusable pattern, formatting technique, domain context, structural choice, writes it as a clean Markdown node with wikilinks, and commits it to the vault repository.</p>
                         <div class="pull">The brain does not live in the container. It lives in a repository that outlives the container.</div>
 
                         <h2>Keeping it alive when the provider is not</h2>
@@ -420,7 +420,7 @@
                         <p class="story-figure-note">Pipeline overview: the prompt checks and the vault nodes they query.</p>
 
                         <h2>What it taught me</h2>
-                        <p>Prompt quality is a systems problem. The useful move was not writing better prompts &mdash; it was building the loop that captures what made a prompt good and keeps it. That is the same instinct behind the memory layer in REZMO, applied to a single person's working style instead of a user's whole history.</p>
+                        <p>Prompt quality is a systems problem. The useful move was not writing better prompts, it was building the loop that captures what made a prompt good and keeps it. That is the same instinct behind the memory layer in REZMO, applied to a single person's working style instead of a user's whole history.</p>
                         <h2>Stack</h2>
                         <div class="chips"><span>Node.js / Express</span><span>Gemini</span><span>Obsidian Markdown</span><span>GitHub REST API</span><span>Render</span><span>Key rotation</span><span>Model fallback</span></div>
                     </div>

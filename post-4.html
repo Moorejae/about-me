@@ -34,7 +34,7 @@
         
 
         <h2>The Architecture of High-Throughput Ingestion</h2>
-        <p>At the scale of hundreds of thousands of records, you cannot send logs directly to Elasticsearch. You need a buffer. The industry standard is to place a messaging queue—typically <strong>Apache Kafka</strong> or <strong>Redis</strong>—between your application and Logstash.</p>
+        <p>At the scale of hundreds of thousands of records, you cannot send logs directly to Elasticsearch. You need a buffer. The industry standard is to place a messaging queue, typically <strong>Apache Kafka</strong> or <strong>Redis</strong>, between your application and Logstash.</p>
         
         <h3>1. The Ingestion Pipeline</h3>
         <p>Logstash acts as the processing engine, where normalization happens. By using structured logging (JSON format) at the source, you reduce the CPU overhead on Logstash because it no longer needs to run complex Regex-based parsing (Grok filters) to structure the data. <strong>Never store unstructured data if you can avoid it.</strong></p>
@@ -66,12 +66,12 @@ filter {
         <p>Monitoring tells you when a system is down (the CPU is high, the server is unresponsive). Observability tells you <em>why</em>. To achieve true observability, you must augment your logs with metadata. Every log entry should be decorated with:</p>
         <ul>
             <li><code>correlation_id</code>: Essential for tracing a single request across multiple microservices.</li>
-            <li><code>environment_tag</code>: (e.g., prod, staging, dev) to filter dashboards.</li>
+            <li><code>environment_tag</code>: (e.g. prod, staging, dev) to filter dashboards.</li>
             <li><code>node_id</code>: Identifying exactly which container or instance generated the log.</li>
         </ul>
 
         <h2>4. Handling Pipeline Failure</h2>
-        <p>What happens when the pipeline breaks? You need an "Error Index." Logstash configuration should include a <code>dead_letter_queue</code> (DLQ). If an event fails to index in Elasticsearch (due to a mapping conflict, such as a field being sent as a string instead of an integer), it is dropped into the DLQ. We then monitor this DLQ with an alert—if it grows, we know our application schema is out of sync with our Elasticsearch mapping.</p>
+        <p>What happens when the pipeline breaks? You need an "Error Index." Logstash configuration should include a <code>dead_letter_queue</code> (DLQ). If an event fails to index in Elasticsearch (due to a mapping conflict, such as a field being sent as a string instead of an integer), it is dropped into the DLQ. We then monitor this DLQ with an alert, if it grows, we know our application schema is out of sync with our Elasticsearch mapping.</p>
 
         <h2>Conclusion</h2>
         <p>Scaling the ELK stack is a discipline of resource management and schema enforcement. By treating your logs as data, buffering your ingress, and aggressively managing your index lifecycle, you transform your logging cluster from a storage dump into a powerful diagnostic tool that provides deep insights into the health of your production systems.</p>

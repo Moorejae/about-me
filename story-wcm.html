@@ -3,19 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>WCM — a spec-driven live pricing model for football.com - Agu Chiedozie</title>
+    <title>WCM: a spec-driven live pricing model for football.com - Agu Chiedozie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="WCM v7.3 is a live betting workflow: closing-line priors, a shrunk model probability, and a checkpoint dataset that logs the bets it skips so the model can be calibrated." />
     <meta name="keywords" content="WCM, betting model, calibration, gamma-Poisson, lambda shrink, football.com, Python, spec-driven development" />
     <meta name="author" content="Agu Chiedozie" />
 
-    <meta property="og:title" content="WCM — a spec-driven live pricing model for football.com"/>
+    <meta property="og:title" content="WCM: a spec-driven live pricing model for football.com"/>
     <meta property="og:image" content="images/project-wcm.png"/>
     <meta property="og:url" content="https://victormoore.online/story-wcm.html"/>
     <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
     <meta property="og:description" content="WCM v7.3 is a live betting workflow: closing-line priors, a shrunk model probability, and a checkpoint dataset that logs the bets it skips so the model can be calibrated."/>
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="WCM — a spec-driven live pricing model for football.com" />
+    <meta name="twitter:title" content="WCM: a spec-driven live pricing model for football.com" />
     <meta name="twitter:image" content="images/project-wcm.png" />
 
     <link rel="shortcut icon" href="favicon.ico">
@@ -41,7 +41,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219,.18) 0%, rgba(0,0,0,0) 65%);
+            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219.18) 0%, rgba(0,0,0,0) 65%);
         }
         .story-hero .container { position: relative; z-index: 2; }
         .story-kicker {
@@ -74,7 +74,7 @@
             flex-wrap: wrap;
             gap: 34px;
             padding-top: 26px;
-            border-top: 1px solid rgba(255,255,255,.18);
+            border-top: 1px solid rgba(255,255,255.18);
         }
         .story-meta div { min-width: 150px; }
         .story-meta .k {
@@ -113,7 +113,7 @@
             margin: 34px 0 6px;
         }
         .story-body p { margin-bottom: 20px; }
-        .story-body ul, .story-body ol { margin: 0 0 22px 22px; }
+        .story-body ul.story-body ol { margin: 0 0 22px 22px; }
         .story-body li { margin-bottom: 10px; }
         .story-body strong { color: #16131f; }
         .story-body code {
@@ -124,7 +124,7 @@
             padding: 2px 6px;
             border-radius: 3px;
         }
-        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184,.35); }
+        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184.35); }
 
         .stat-strip {
             display: flex;
@@ -239,10 +239,10 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #e6e2ee;
-            box-shadow: 0 22px 50px rgba(38,26,64,.14);
+            box-shadow: 0 22px 50px rgba(38,26,64.14);
         }
         .story-banner img { width: 100%; display: block; }
-        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0,.5); }
+        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0.5); }
         .story-figure-note {
             font-size: 13px;
             color: #8b8499;
@@ -370,8 +370,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <span class="story-kicker">Live system · pricing and calibration</span>
-                        <h1>WCM — price first, decide second</h1>
-                        <p class="story-lede">A live pricing workflow for football.com. The hard part is not the formula — it is refusing to bet when the formula does not agree.</p>
+                        <h1>WCM: price first, decide second</h1>
+                        <p class="story-lede">A live pricing workflow for football.com. The hard part is not the formula, it is refusing to bet when the formula does not agree.</p>
                         <div class="story-meta"><div><span class="k">Role</span><span class="v">Model, feed, dataset, operations</span></div><div><span class="k">Version</span><span class="v">WCM v7.3</span></div><div><span class="k">Proof</span><span class="v">145 tests against the spec and the live API</span></div></div>
                     </div>
                 </div>
@@ -383,39 +383,39 @@
                 <div class="col-md-12">
                     <div class="story-body">
                         <figure class="story-banner">
-                            <img src="images/project-wcm.png" alt="WCM — price first, decide second">
+                            <img src="images/project-wcm.png" alt="WCM, price first, decide second">
                         </figure>
                         <h2>What it is</h2>
-                        <p>WCM is a live pricing model for two markets on football.com: <strong>basketball full-time totals</strong> and <strong>football half totals</strong>. It is built from a written specification &mdash; <code>wcm.py</code> implements WCM v7.3, and the test suite asserts every worked example printed in that spec, so the code and the document cannot quietly drift apart.</p>
+                        <p>WCM is a live pricing model for two markets on football.com: <strong>basketball full-time totals</strong> and <strong>football half totals</strong>. It is built from a written specification, <code>wcm.py</code> implements WCM v7.3, and the test suite asserts every worked example printed in that spec, so the code and the document cannot quietly drift apart.</p>
                         <p>It is also the project that taught me the most about restraint, and that story is worth telling honestly rather than hiding.</p>
 
                         <h2>The two-phase prior</h2>
                         <p>The spec refuses to guess a prior, which forces a workflow most people skip. Basketball needs the <strong>closing</strong> total; football needs the de-vigged <code>P(over 2.5)</code>. Both must be read <em>before kick-off</em>.</p>
-                        <p>A live line cannot substitute for either. Using the current live number as the prior double-counts the information the model is meant to update from &mdash; the model would be "predicting" a line that already contains the score. So every match is worked in two passes:</p>
+                        <p>A live line cannot substitute for either. Using the current live number as the prior double-counts the information the model is meant to update from, the model would be "predicting" a line that already contains the score. So every match is worked in two passes:</p>
                         <ol>
-                            <li><strong>Phase A &mdash; capture the prior.</strong> Open the event page in the final minutes before kick-off and read the closing line. A price read hours early is an early price, not the closing one, and the card is only as good as that number.</li>
-                            <li><strong>Phase B &mdash; monitor live.</strong> At checkpoints during the match, the model prices the remaining total from score, clock and the prior, then compares that against the live quote.</li>
+                            <li><strong>Phase A: capture the prior.</strong> Open the event page in the final minutes before kick-off and read the closing line. A price read hours early is an early price, not the closing one, and the card is only as good as that number.</li>
+                            <li><strong>Phase B: monitor live.</strong> At checkpoints during the match, the model prices the remaining total from score, clock and the prior, then compares that against the live quote.</li>
                         </ol>
 
                         <h2>Shrinking toward the market on purpose</h2>
                         <p>The final probability is not the model's own opinion. It is the model blended with the book's de-vigged probability:</p>
                         <pre><code>p* = p_mkt + &lambda; (p_model - p_mkt)&nbsp;&nbsp;&nbsp;with &lambda; = 0.5</code></pre>
-                        <p>That half-weight is not humility theatre. It is a starting assumption that has to be <em>earned away</em>. After <strong>150 settled checkpoints</strong>, &lambda; can be fitted from data instead of assumed &mdash; which turns the question the spec calls unanswerable, <em>"does the fair value actually beat the live line?"</em>, into a measurement rather than an argument.</p>
+                        <p>That half-weight is not humility theatre. It is a starting assumption that has to be <em>earned away</em>. After <strong>150 settled checkpoints</strong>, &lambda; can be fitted from data instead of assumed, which turns the question the spec calls unanswerable, <em>"does the fair value actually beat the live line?"</em>, into a measurement rather than an argument.</p>
                         <div class="pull">A model that only records its winners cannot be calibrated.</div>
 
                         <h2>The dataset is the real product</h2>
-                        <p>Every checkpoint the model evaluates is written to <code>data/wcm_dataset.csv</code>, whether or not it became a bet: the live line, the book's implied probability, the model's probability, the shrunk probability, the decision, and &mdash; once the match resolves &mdash; the actual result.</p>
+                        <p>Every checkpoint the model evaluates is written to <code>data/wcm_dataset.csv</code>, whether or not it became a bet: the live line, the book's implied probability, the model's probability, the shrunk probability, the decision, and, once the match resolves, the actual result.</p>
                         <p>Most rows are <code>PASS</code>. That is the point. Section 7 of the spec requires logging the checkpoints you skip, because a dataset of placed bets only tells you how the bankroll moved, while a dataset of every checkpoint tells you whether the probability is honest.</p>
 
                         <h2>Refusing the fixtures that cannot be modelled</h2>
-                        <p>The football model was fitted on <strong>31,026 real matches</strong>. A Simulated Reality League outcome is generated by the bookmaker, so there is nothing to model &mdash; the model has no edge because there is no underlying process. So <code>is_simulated()</code> refuses SRL, vFootball, eFootball, Esoccer and anything with "virtual" in the competition name, and it is enforced on every path that could price or log a fixture. On one night, six of the ten covered football fixtures were SRL. All six were refused.</p>
+                        <p>The football model was fitted on <strong>31,026 real matches</strong>. A Simulated Reality League outcome is generated by the bookmaker, so there is nothing to model, the model has no edge because there is no underlying process. So <code>is_simulated()</code> refuses SRL, vFootball, eFootball, Esoccer and anything with "virtual" in the competition name, and it is enforced on every path that could price or log a fixture. On one night, six of the ten covered football fixtures were SRL. All six were refused.</p>
                         <div class="callout"><span class="t">Principle</span>If the process generating the outcome is not the process the model was trained on, the model is not predicting anything. Refuse, do not adjust.</div>
 
                         <h2>The night it lost, and what was actually wrong</h2>
-                        <p>On 17 November 2026 the project lost <strong>NGN 495</strong> &mdash; the whole allocation. The interesting part is that the formula was not the problem.</p>
-                        <p>The scanner priced both sides of every rung and let the biggest gap between model and market win. When the live ladder sits above fair value, every rung shows a fat UNDER gap &mdash; so it emitted UNDER regardless of what the model thought. On three of the four bets booked that night, the tool took the <em>opposite</em> side to the formula's own verdict, and all three of those games finished over. The formula's direction was right on three of four.</p>
+                        <p>On 17 November 2026 the project lost <strong>NGN 495</strong>, the whole allocation. The interesting part is that the formula was not the problem.</p>
+                        <p>The scanner priced both sides of every rung and let the biggest gap between model and market win. When the live ladder sits above fair value, every rung shows a fat UNDER gap, so it emitted UNDER regardless of what the model thought. On three of the four bets booked that night, the tool took the <em>opposite</em> side to the formula's own verdict, and all three of those games finished over. The formula's direction was right on three of four.</p>
                         <p>There was a second failure behind it: a consistency rule that was supposed to require more than one snapshot before acting had never been wired up, so every bet was a single reading.</p>
-                        <p>Both are fixed, and both are now guarded by regression tests &mdash; including the worst case the old code could produce: <code>UNDER 200.5</code> on a game whose fair value was 144.</p>
+                        <p>Both are fixed, and both are now guarded by regression tests, including the worst case the old code could produce: <code>UNDER 200.5</code> on a game whose fair value was 144.</p>
                         <div class="stat-strip">
                             <div class="s"><span class="n">3 of 4</span><span class="l">Bets that contradicted the formula's own verdict</span></div>
                             <div class="s"><span class="n">145</span><span class="l">Tests, each asserting something the spec or live API actually says</span></div>
@@ -423,17 +423,17 @@
                         </div>
 
                         <h2>The rule that came out of it</h2>
-                        <p><strong>The scanner must never choose a side.</strong> The verdict comes from the formula &mdash; fair value against the closing line &mdash; and only then does the workflow look for a live rung on that side whose price clears the minimum. Searching for the best-looking gap is how a tool ends up arguing with the thing it is supposed to implement.</p>
+                        <p><strong>The scanner must never choose a side.</strong> The verdict comes from the formula, fair value against the closing line, and only then does the workflow look for a live rung on that side whose price clears the minimum. Searching for the best-looking gap is how a tool ends up arguing with the thing it is supposed to implement.</p>
                         <p>That is a general lesson, not a betting one: when a system has a decision and an execution layer, the execution layer must not be allowed to re-decide. The same instinct is why my agents have a deterministic gate in front of the model instead of asking the model to police itself.</p>
 
                         <h2>Before WCM: the V6.1 evaluation engine</h2>
-                        <p>WCM came after an earlier body of work &mdash; the <strong>V6.1 football engine</strong> &mdash; which scored fixtures from raw kinetic and tactical data with three weighted pillars, versioned framework patches, and a diagnostic autopsy on every settled result. It reported a 70&ndash;80% success rate and its discipline carried straight into WCM: remove the shortcut, make abstention explicit, and audit before you adjust.</p>
+                        <p>WCM came after an earlier body of work, the <strong>V6.1 football engine</strong>, which scored fixtures from raw kinetic and tactical data with three weighted pillars, versioned framework patches, and a diagnostic autopsy on every settled result. It reported a 70&ndash;80% success rate and its discipline carried straight into WCM: remove the shortcut, make abstention explicit, and audit before you adjust.</p>
                         <h2>Stack</h2>
                         <div class="chips"><span>Python</span><span>Spec-driven development</span><span>Gamma-Poisson model</span><span>Lambda calibration</span><span>football.com JSON API</span><span>CSV checkpoint dataset</span><span>unittest</span><span>Automated feed</span></div>
                     </div>
                     <div class="story-foot">
                         <div class="next">
-<a href="story-forchi.html"><span class="k">Previous story</span><span class="n">ForChi — one agent, three jobs</span></a>
+<a href="story-forchi.html"><span class="k">Previous story</span><span class="n">ForChi, one agent, three jobs</span></a>
 <a href="story-youtube.html"><span class="k">Next story</span><span class="n">An automated YouTube channel</span></a>
 <a href="work.html"><span class="k">Index</span><span class="n">All projects &amp; case studies</span></a>
                         </div>
