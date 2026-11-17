@@ -1,0 +1,531 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>WCM — a spec-driven live pricing model for football.com - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="WCM v7.3 is a live betting workflow: closing-line priors, a shrunk model probability, and a checkpoint dataset that logs the bets it skips so the model can be calibrated." />
+    <meta name="keywords" content="WCM, betting model, calibration, gamma-Poisson, lambda shrink, football.com, Python, spec-driven development" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <meta property="og:title" content="WCM — a spec-driven live pricing model for football.com"/>
+    <meta property="og:image" content="images/project-wcm.png"/>
+    <meta property="og:url" content="https://victormoore.online/story-wcm.html"/>
+    <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
+    <meta property="og:description" content="WCM v7.3 is a live betting workflow: closing-line priors, a shrunk model probability, and a checkpoint dataset that logs the bets it skips so the model can be calibrated."/>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WCM — a spec-driven live pricing model for football.com" />
+    <meta name="twitter:image" content="images/project-wcm.png" />
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .metallic-violet { color: #9370DB !important; }
+
+        /* ---------- Story page ---------- */
+        .story-hero {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 160px 0 90px;
+        }
+        .story-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219,.18) 0%, rgba(0,0,0,0) 65%);
+        }
+        .story-hero .container { position: relative; z-index: 2; }
+        .story-kicker {
+            display: inline-block;
+            font-size: 12px;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #b9a2ee;
+            margin-bottom: 18px;
+        }
+        .story-hero h1 {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 68px;
+            line-height: 1.05;
+            font-weight: 700;
+            margin: 0 0 18px;
+            color: #fff;
+            max-width: 900px;
+        }
+        .story-hero .story-lede {
+            font-size: 21px;
+            line-height: 1.6;
+            color: #ded7ea;
+            max-width: 720px;
+            margin-bottom: 34px;
+        }
+        .story-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 34px;
+            padding-top: 26px;
+            border-top: 1px solid rgba(255,255,255,.18);
+        }
+        .story-meta div { min-width: 150px; }
+        .story-meta .k {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #9d93b5;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        .story-meta .v { font-size: 15px; color: #f2eefb; line-height: 1.45; }
+
+        .story-body {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 90px 0 40px;
+            font-size: 17px;
+            line-height: 1.78;
+            color: #2f2c38;
+        }
+        .story-body h2 {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #16131f;
+            margin: 62px 0 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e6e2ee;
+        }
+        .story-body h2:first-child { margin-top: 0; }
+        .story-body h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #16131f;
+            margin: 34px 0 6px;
+        }
+        .story-body p { margin-bottom: 20px; }
+        .story-body ul, .story-body ol { margin: 0 0 22px 22px; }
+        .story-body li { margin-bottom: 10px; }
+        .story-body strong { color: #16131f; }
+        .story-body code {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+            background: #f2eff8;
+            color: #7b3fb8;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184,.35); }
+
+        .stat-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin: 30px 0 34px;
+        }
+        .stat-strip .s {
+            flex: 1 1 150px;
+            background: #f7f5fc;
+            border: 1px solid #e8e3f2;
+            border-radius: 10px;
+            padding: 18px 20px;
+        }
+        .stat-strip .n {
+            font-size: 27px;
+            font-weight: 700;
+            color: #4b2a7b;
+            letter-spacing: -.01em;
+            display: block;
+        }
+        .stat-strip .l {
+            font-size: 13px;
+            color: #6c6579;
+            line-height: 1.4;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .pull {
+            margin: 36px 0;
+            padding: 4px 0 4px 26px;
+            border-left: 3px solid #9370DB;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 23px;
+            line-height: 1.5;
+            color: #3a3346;
+            font-style: italic;
+        }
+
+        .callout {
+            background: #f4f0ff;
+            border: 1px solid #e2d9f7;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 30px 0;
+            font-size: 16px;
+            line-height: 1.65;
+        }
+        .callout .t {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #7b3fb8;
+            margin-bottom: 8px;
+        }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 10px; }
+        .chips span {
+            font-size: 13px;
+            background: #f2eff8;
+            border: 1px solid #e4ddf2;
+            color: #4e4262;
+            border-radius: 999px;
+            padding: 6px 13px;
+        }
+
+        .story-foot {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 20px 0 90px;
+        }
+        .story-foot .next {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            border-top: 1px solid #e6e2ee;
+            padding-top: 30px;
+        }
+        .story-foot .next a {
+            flex: 1 1 260px;
+            text-decoration: none;
+            border: 1px solid #e6e2ee;
+            border-radius: 10px;
+            padding: 18px 20px;
+            color: #2f2c38;
+            transition: border-color .2s, background .2s;
+        }
+        .story-foot .next a:hover { border-color: #9370DB; background: #faf8ff; }
+        .story-foot .next .k {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #9a92a8;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .story-foot .next .n { font-size: 17px; font-weight: 600; }
+
+        .story-video {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+            margin: 26px 0 8px;
+            background: #000;
+        }
+        .story-banner {
+            margin: 0 0 46px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e6e2ee;
+            box-shadow: 0 22px 50px rgba(38,26,64,.14);
+        }
+        .story-banner img { width: 100%; display: block; }
+        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0,.5); }
+        .story-figure-note {
+            font-size: 13px;
+            color: #8b8499;
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        /* ---------- Dark mode ---------- */
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode .story-body { color: #cfc9d9; }
+        body.dark-mode .story-body h2,
+        body.dark-mode .story-body h3,
+        body.dark-mode .story-body strong { color: #ffffff !important; }
+        body.dark-mode .story-body h2 { border-bottom-color: #333; }
+        body.dark-mode .story-body code { background: #24202e; color: #c9a3ff; }
+        body.dark-mode .story-body a { color: #c9a3ff; }
+        body.dark-mode .stat-strip .s { background: #1a1822; border-color: #2d2938; }
+        body.dark-mode .stat-strip .n { color: #c9a3ff; }
+        body.dark-mode .stat-strip .l { color: #a49eb1; }
+        body.dark-mode .pull { color: #e6e0f0; }
+        body.dark-mode .callout { background: #1b1824; border-color: #322c42; }
+        body.dark-mode .callout .t { color: #c9a3ff; }
+        body.dark-mode .chips span { background: #1d1a26; border-color: #322c42; color: #c8c2d6; }
+        body.dark-mode .story-foot .next a { color: #e6e0f0; border-color: #322c42; }
+        body.dark-mode .story-foot .next a:hover { background: #1d1a26; }
+        body.dark-mode .story-foot .next .k { color: #8e8699; }
+        body.dark-mode .story-figure-note { color: #8e8699; }
+        body.dark-mode .colorlib-navbar-brand a { color: #fff !important; }
+        body.dark-mode .colorlib-nav-toggle i,
+        body.dark-mode .colorlib-nav-toggle i::before,
+        body.dark-mode .colorlib-nav-toggle i::after { background: #fff !important; }
+        body.dark-mode #colorlib-main-nav { background: #1a1a1a !important; }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-left: 20px;
+        }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+
+        @media screen and (max-width: 991px) {
+            .story-hero { padding: 120px 0 60px; }
+            .story-hero h1 { font-size: 44px; }
+            .story-hero .story-lede { font-size: 18px; }
+            .story-body { padding-top: 60px; font-size: 16px; }
+            .story-body h2 { font-size: 27px; margin-top: 48px; }
+            .pull { font-size: 19px; }
+        }
+        @media screen and (max-width: 767px) {
+            .story-hero h1 { font-size: 34px; }
+            .story-meta { gap: 20px; }
+            .story-meta div { min-width: 120px; }
+        }
+    </style>
+
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+    <nav id="colorlib-main-nav" role="navigation">
+        <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle active"><i></i></a>
+        <div class="js-fullheight colorlib-table">
+            <div class="colorlib-table-cell js-fullheight">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li class="active"><a href="work.html">Work</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="head-title">Featured Projects</h2>
+                        <a href="images/project-rezmo.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/project-rezmo-wide.jpg);">
+                            <span><i class="icon-search3"></i></span>
+                        </a>
+                        <a href="images/project-forchi.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-forchi.png);">
+                            <span><i class="icon-search3"></i></span>
+                        </a>
+                        <a href="images/project-v61.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-v61.png);">
+                            <span><i class="icon-search3"></i></span>
+                        </a>
+                        <a href="images/project-youtube.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-youtube.png);">
+                            <span><i class="icon-search3"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="colorlib-page">
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="colorlib-navbar-brand">
+                            <a class="colorlib-logo" href="index.html"><span>Ag</span><span>u</span></a>
+                        </div>
+                        <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+                        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="story-hero" style="background: radial-gradient(900px 520px at 82% 8%, #4FD1C54d 0%, rgba(16,12,24,0) 70%), linear-gradient(160deg, #17111f 0%, #221a30 48%, #100c18 100%);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="story-kicker">Live system · pricing and calibration</span>
+                        <h1>WCM — price first, decide second</h1>
+                        <p class="story-lede">A live pricing workflow for football.com. The hard part is not the formula — it is refusing to bet when the formula does not agree.</p>
+                        <div class="story-meta"><div><span class="k">Role</span><span class="v">Model, feed, dataset, operations</span></div><div><span class="k">Version</span><span class="v">WCM v7.3</span></div><div><span class="k">Proof</span><span class="v">145 tests against the spec and the live API</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="story-body">
+                        <figure class="story-banner">
+                            <img src="images/project-wcm.png" alt="WCM — price first, decide second">
+                        </figure>
+                        <h2>What it is</h2>
+                        <p>WCM is a live pricing model for two markets on football.com: <strong>basketball full-time totals</strong> and <strong>football half totals</strong>. It is built from a written specification &mdash; <code>wcm.py</code> implements WCM v7.3, and the test suite asserts every worked example printed in that spec, so the code and the document cannot quietly drift apart.</p>
+                        <p>It is also the project that taught me the most about restraint, and that story is worth telling honestly rather than hiding.</p>
+
+                        <h2>The two-phase prior</h2>
+                        <p>The spec refuses to guess a prior, which forces a workflow most people skip. Basketball needs the <strong>closing</strong> total; football needs the de-vigged <code>P(over 2.5)</code>. Both must be read <em>before kick-off</em>.</p>
+                        <p>A live line cannot substitute for either. Using the current live number as the prior double-counts the information the model is meant to update from &mdash; the model would be "predicting" a line that already contains the score. So every match is worked in two passes:</p>
+                        <ol>
+                            <li><strong>Phase A &mdash; capture the prior.</strong> Open the event page in the final minutes before kick-off and read the closing line. A price read hours early is an early price, not the closing one, and the card is only as good as that number.</li>
+                            <li><strong>Phase B &mdash; monitor live.</strong> At checkpoints during the match, the model prices the remaining total from score, clock and the prior, then compares that against the live quote.</li>
+                        </ol>
+
+                        <h2>Shrinking toward the market on purpose</h2>
+                        <p>The final probability is not the model's own opinion. It is the model blended with the book's de-vigged probability:</p>
+                        <pre><code>p* = p_mkt + &lambda; (p_model - p_mkt)&nbsp;&nbsp;&nbsp;with &lambda; = 0.5</code></pre>
+                        <p>That half-weight is not humility theatre. It is a starting assumption that has to be <em>earned away</em>. After <strong>150 settled checkpoints</strong>, &lambda; can be fitted from data instead of assumed &mdash; which turns the question the spec calls unanswerable, <em>"does the fair value actually beat the live line?"</em>, into a measurement rather than an argument.</p>
+                        <div class="pull">A model that only records its winners cannot be calibrated.</div>
+
+                        <h2>The dataset is the real product</h2>
+                        <p>Every checkpoint the model evaluates is written to <code>data/wcm_dataset.csv</code>, whether or not it became a bet: the live line, the book's implied probability, the model's probability, the shrunk probability, the decision, and &mdash; once the match resolves &mdash; the actual result.</p>
+                        <p>Most rows are <code>PASS</code>. That is the point. Section 7 of the spec requires logging the checkpoints you skip, because a dataset of placed bets only tells you how the bankroll moved, while a dataset of every checkpoint tells you whether the probability is honest.</p>
+
+                        <h2>Refusing the fixtures that cannot be modelled</h2>
+                        <p>The football model was fitted on <strong>31,026 real matches</strong>. A Simulated Reality League outcome is generated by the bookmaker, so there is nothing to model &mdash; the model has no edge because there is no underlying process. So <code>is_simulated()</code> refuses SRL, vFootball, eFootball, Esoccer and anything with "virtual" in the competition name, and it is enforced on every path that could price or log a fixture. On one night, six of the ten covered football fixtures were SRL. All six were refused.</p>
+                        <div class="callout"><span class="t">Principle</span>If the process generating the outcome is not the process the model was trained on, the model is not predicting anything. Refuse, do not adjust.</div>
+
+                        <h2>The night it lost, and what was actually wrong</h2>
+                        <p>On 17 November 2026 the project lost <strong>NGN 495</strong> &mdash; the whole allocation. The interesting part is that the formula was not the problem.</p>
+                        <p>The scanner priced both sides of every rung and let the biggest gap between model and market win. When the live ladder sits above fair value, every rung shows a fat UNDER gap &mdash; so it emitted UNDER regardless of what the model thought. On three of the four bets booked that night, the tool took the <em>opposite</em> side to the formula's own verdict, and all three of those games finished over. The formula's direction was right on three of four.</p>
+                        <p>There was a second failure behind it: a consistency rule that was supposed to require more than one snapshot before acting had never been wired up, so every bet was a single reading.</p>
+                        <p>Both are fixed, and both are now guarded by regression tests &mdash; including the worst case the old code could produce: <code>UNDER 200.5</code> on a game whose fair value was 144.</p>
+                        <div class="stat-strip">
+                            <div class="s"><span class="n">3 of 4</span><span class="l">Bets that contradicted the formula's own verdict</span></div>
+                            <div class="s"><span class="n">145</span><span class="l">Tests, each asserting something the spec or live API actually says</span></div>
+                            <div class="s"><span class="n">0</span><span class="l">Tolerance for a tool that disagrees with its model</span></div>
+                        </div>
+
+                        <h2>The rule that came out of it</h2>
+                        <p><strong>The scanner must never choose a side.</strong> The verdict comes from the formula &mdash; fair value against the closing line &mdash; and only then does the workflow look for a live rung on that side whose price clears the minimum. Searching for the best-looking gap is how a tool ends up arguing with the thing it is supposed to implement.</p>
+                        <p>That is a general lesson, not a betting one: when a system has a decision and an execution layer, the execution layer must not be allowed to re-decide. The same instinct is why my agents have a deterministic gate in front of the model instead of asking the model to police itself.</p>
+
+                        <h2>Before WCM: the V6.1 evaluation engine</h2>
+                        <p>WCM came after an earlier body of work &mdash; the <strong>V6.1 football engine</strong> &mdash; which scored fixtures from raw kinetic and tactical data with three weighted pillars, versioned framework patches, and a diagnostic autopsy on every settled result. It reported a 70&ndash;80% success rate and its discipline carried straight into WCM: remove the shortcut, make abstention explicit, and audit before you adjust.</p>
+                        <h2>Stack</h2>
+                        <div class="chips"><span>Python</span><span>Spec-driven development</span><span>Gamma-Poisson model</span><span>Lambda calibration</span><span>football.com JSON API</span><span>CSV checkpoint dataset</span><span>unittest</span><span>Automated feed</span></div>
+                    </div>
+                    <div class="story-foot">
+                        <div class="next">
+<a href="story-forchi.html"><span class="k">Previous story</span><span class="n">ForChi — one agent, three jobs</span></a>
+<a href="story-youtube.html"><span class="k">Next story</span><span class="n">An automated YouTube channel</span></a>
+<a href="work.html"><span class="k">Index</span><span class="n">All projects &amp; case studies</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 col-pb-sm">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h2>Let's Talk</h2>
+                                    <p>Building agentic systems that ship, and the infrastructure under them.</p>
+                                    <p><a href="mailto:aguchiedoxie@gmail.com">aguchiedoxie@gmail.com</a></p>
+                                    <p class="colorlib-social-icons">
+                                        <a href="https://www.linkedin.com/in/aguchiedoxie/"><i class="icon-linkedin"></i></a>
+                                        <a href="https://github.com/Moorejae"><i class="icon-github"></i></a>
+                                        <a href="https://www.upwork.com/freelancers/~0147c70614cf9a49e2?mp_source=share"><i class="icon-briefcase"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-pb-sm">
+                            <h2>Recent Insights</h2>
+                            <div class="f-entry">
+                                <a href="post-16.html" class="featured-img" style="background-image: url(images/project-argon.png);"></a>
+                                <div class="desc">
+                                    <span>November 2026</span>
+                                    <h3><a href="post-16.html">Gemini 4 Argon</a></h3>
+                                </div>
+                            </div>
+                            <div class="f-entry">
+                                <a href="post-13.html" class="featured-img" style="background-image: url(images/project-rezmo-wide.jpg);"></a>
+                                <div class="desc">
+                                    <span>October 2026</span>
+                                    <h3><a href="post-13.html">REZMO Memory Layer</a></h3>
+                                </div>
+                            </div>
+                            <div class="f-entry">
+                                <a href="post-12.html" class="featured-img" style="background-image: url(images/project-forchi.png);"></a>
+                                <div class="desc">
+                                    <span>October 2026</span>
+                                    <h3><a href="post-12.html">ForChi: Three Workflows</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-pb-sm">
+                            <h2>Newsletter</h2>
+                            <p>Insights on applied AI, agents and the infrastructure that carries them.</p>
+                            <div class="subscribe text-center">
+                                <div class="form-group">
+                                    <input type="text" class="form-control text-center" placeholder="Enter Email address">
+                                    <input type="submit" value="Subscribe" class="btn btn-primary btn-custom">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>
+                                &copy; <script>document.write(new Date().getFullYear());</script> Agu Chiedozie. All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+    <script src="js/main.js"></script>
+
+    </body>
+</html>

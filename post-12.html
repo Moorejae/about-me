@@ -48,7 +48,7 @@
         <h2>The three workflows</h2>
         <table>
             <tr><th>Workflow</th><th>What it does</th><th>Cadence</th></tr>
-            <tr><td>Social</td><td>Writes and publishes posts to Facebook and LinkedIn</td><td>5× per day</td></tr>
+            <tr><td>Social</td><td>Writes copy via Vertex AI, generates the image on a Hugging Face model, publishes to Facebook and LinkedIn</td><td>5× per day</td></tr>
             <tr><td>Video</td><td>Scripts, voices and assembles YouTube uploads</td><td>up to 2 per day</td></tr>
             <tr><td>Jobs</td><td>Scans boards, scores each role against my profile, applies through Lever and Ashby</td><td>every 30 minutes</td></tr>
         </table>
@@ -76,9 +76,9 @@ run_job_workflow(params.data)            # only now does the LLM get involved
         </pre>
 
         <h2>The model stack</h2>
-        <p>Judgement calls — matching a posting to my actual experience, writing copy in my voice, picking a video angle — run on Gemini. Gemini's free tier is generous but not guaranteed, so the stack degrades instead of dying: a Qwen2.5-7B model I host on Hugging Face takes over as fallback.</p>
+        <p>Judgement calls — matching a posting to my actual experience, writing copy in my voice, picking a video angle — run on Gemini through the Vertex AI API. Gemini's free tier is generous but not guaranteed, so the stack degrades instead of dying: a Qwen2.5-7B model I host on Hugging Face takes over as fallback.</p>
         <p>That split matters operationally. The workflows are not allowed to depend on a single provider being up, and the fallback is a model I control, not another company's quota.</p>
-        <p>Hugging Face carries more than the fallback model. ForChi also uses an image Space for post visuals and two voice Spaces (F5-TTS and Higgs TTS 3) to generate the narration for the video pipeline, so the whole content stack can be rebuilt from components I control.</p>
+        <p>Hugging Face carries more than the fallback model. ForChi also uses an image Space to generate the visual for each social post and two voice Spaces (F5-TTS and Higgs TTS 3) for the video narration, so the whole content stack can be rebuilt from components I control — copy, image, voice and publish each have an owner, and none of them is a vendor I have to wait on.</p>
 
         <h2>Running on free tiers without babysitting</h2>
         <p>ForChi runs on Render and Hugging Face free tiers, which means it has to survive cold starts, sleeping dynos and credential expiry without me noticing. Two decisions carried most of that weight:</p>
@@ -107,13 +107,18 @@ GET https://forchi.onrender.com/
         </ol>
 
         <hr>
+                <h3>Project story</h3>
+        <ul>
+            <li><a href="story-forchi.html">Read the full ForChi story</a></li>
+        </ul>
+
         <h3>Related</h3>
         <ul>
             <li><a href="post-13.html">REZMO: Memory That Outlives the Chat</a></li>
             <li><a href="post-1.html">Agentic AI: Building LLM Systems with Function Calling</a></li>
-            <li><a href="post-14.html">Honk and the V6.1 Football Engine</a></li>
+            <li><a href="post-14.html">Inside the V6.1 Football Engine</a></li>
         </ul>
-        <p><strong>Author:</strong> Agu Chiedozie | Cloud &amp; AI Systems Engineer</p>
+        <p><strong>Author:</strong> Agu Chiedozie | Applied AI Engineer</p>
     </div>
 
     <script>

@@ -3,9 +3,9 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Work - Agu Chiedozie - Cloud &amp; AI Systems Engineer</title>
+    <title>Work - Agu Chiedozie - Applied AI Engineer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Production systems built by Agu Chiedozie: REZMO, ForChi and the V6.1 football engine, plus archived builds." />
+    <meta name="description" content="Every system built by Agu Chiedozie: REZMO, ForChi, WCM, an automated YouTube channel, client websites, and the infrastructure behind them." />
     <meta name="keywords" content="Cloud Engineering, AI Agents, MCP, RAG, Contabo, Cloudflare, Docker, Python, TypeScript" />
     <meta name="author" content="Agu Chiedozie" />
 
@@ -13,7 +13,7 @@
     <meta property="og:image" content="images/project-rezmo.jpg"/>
     <meta property="og:url" content="https://victormoore.online"/>
     <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
-    <meta property="og:description" content="Cloud & AI Systems Engineer: production agents, AI memory layers and prediction engines."/>
+    <meta property="og:description" content="Applied AI Engineer: production agents, AI memory layers and prediction engines."/>
     <meta name="twitter:title" content="" />
     <meta name="twitter:image" content="" />
     <meta name="twitter:url" content="" />
@@ -177,7 +177,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="https://rezmo.online" class="work-img" style="background-image: url(images/project-rezmo-wide.jpg);">
+                            <a href="story-rezmo.html" class="work-img" style="background-image: url(images/project-rezmo-wide.jpg);">
                                 <div class="display-t">
                                     <div class="work-name">
                                         <h2 class="metallic-violet">REZMO &mdash; Portable AI Memory Layer</h2>
@@ -189,7 +189,7 @@
                                     <p>A user's conversations and files live in their own Google Drive, and any connected model picks up the same context. Claude and Grok both connect through an MCP server I built.</p>
                                     <p>The API, Postgres 17 and Redis run as containers on one Contabo host behind Cloudflare, with the frontend on a Cloudflare Worker. Moving the database next to the API cut the round trip from about 112 ms to about 5 ms.</p>
                                     <p>Covered by 2,000+ backend tests and 480+ frontend tests, with live payments shipped through Paystack.</p>
-                                    <p class="read"><a href="https://rezmo.online">Visit rezmo.online</a></p>
+                                    <p class="read"><a href="story-rezmo.html">Read the full story</a> &nbsp;&middot;&nbsp; <a href="https://rezmo.online">Visit rezmo.online</a></p>
                                 </div>
                             </div>
                             <div class="col-md-8 col-md-offset-2">
@@ -203,7 +203,7 @@
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="post-12.html" class="work-img" style="background-image: url(images/project-forchi.png);">
+                            <a href="story-forchi.html" class="work-img" style="background-image: url(images/project-forchi.png);">
                                 <div class="display-t">
                                     <div class="work-name">
                                         <h2 class="metallic-violet">ForChi &mdash; Telegram Automation Agent</h2>
@@ -212,10 +212,10 @@
                             </a>
                             <div class="col-md-4 col-md-offset-4">
                                 <div class="desc">
-                                    <p>Three workflows in parallel: social posts to Facebook and LinkedIn five times a day, a YouTube video pipeline of up to two videos a day, and a job-application workflow that scans every 30 minutes, scores roles with Gemini and applies through Lever and Ashby.</p>
+                                    <p>Three workflows in parallel: social posts to Facebook and LinkedIn five times a day (copy written through Vertex AI, images generated on a Hugging Face model), a YouTube video pipeline of up to two videos a day, and a job-application workflow that scans every 30 minutes, scores roles with Gemini and applies through Lever and Ashby.</p>
                                     <p>A deterministic trigger layer (regex gate, then a Zod-schema extractor) keeps casual chat from ever firing a workflow. The LLM stack is Gemini with a Qwen2.5-7B model I host on Hugging Face as fallback.</p>
                                     <p>It runs on free tiers (Render, Hugging Face) and cut the manual time I spent on these tasks by about 99.9%.</p>
-                                    <p class="read"><a href="post-12.html">Read the build notes</a></p>
+                                    <p class="read"><a href="story-forchi.html">Read the full story</a></p>
                                 </div>
                             </div>
                             <div class="col-md-8 col-md-offset-2">
@@ -229,33 +229,26 @@
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="post-14.html" class="work-img" style="background-image: url(images/project-v61.png);">
+                            <a href="story-wcm.html" class="work-img" style="background-image: url(images/project-wcm.png);">
                                 <div class="display-t">
                                     <div class="work-name">
-                                        <h2 class="metallic-violet">Honk &mdash; V6.1 Football Engine</h2>
+                                        <h2 class="metallic-violet">WCM &mdash; Live Pricing Model</h2>
                                     </div>
                                 </div>
                             </a>
-                            <div class="col-md-4 col-md-offset-4">
-                                <div class="desc">
-                                    <p>Honk is a sports prediction system that reports a 70&ndash;80% success rate. The engine underneath it is bookmaker-independent: it never reads odds, lines or market movement, scoring fixtures instead from raw kinetic and tactical match data.</p>
-                                    <p>Three structural pillars &mdash; kinetic velocity, defensive elasticity and structural integrity &mdash; feed a set of hard-coded framework patches, guarded by a market-decoupling veto and a virtual-fixture kill switch.</p>
-                                    <p>On finished fixtures it runs a Diagnostic Recurrence Analysis to autopsy why a prediction hit or missed, so the framework tunes from evidence rather than opinion.</p>
-                                    <p class="read"><a href="post-14.html">Read the build notes</a></p>
-                                </div>
-                            </div>
                             <div class="col-md-8 col-md-offset-2">
-                                <video class="project-video" controls preload="none" poster="images/poster-honk.jpg">
-                                    <source src="videos/honk-v61.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <p class="video-note">Engine overview &mdash; the three pillars and the framework patches that guard them.</p>
+                                <div class="desc">
+                                    <p>WCM is a live pricing model for football.com: closing-line priors, a probability shrunk toward the market, and a checkpoint dataset that logs every bet it skips so the model can be calibrated instead of argued about.</p>
+                                    <p>Built from a written specification, with 145 tests asserting every worked example and every behaviour the live API actually has &mdash; including the regression that came out of the night it lost a full allocation by letting the scanner pick a side the formula disagreed with.</p>
+                                    <p>The predecessor was the <strong>V6.1 football engine</strong>, which scored fixtures from raw kinetic and tactical data with three weighted pillars, versioned framework patches and a diagnostic autopsy on every settled result.</p>
+                                    <p class="read"><a href="story-wcm.html">Read the full story</a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="post-10.html" class="work-img" style="background-image: url(images/project-cloudvoid.png);">
+                            <a href="story-cloudvoid.html" class="work-img" style="background-image: url(images/project-cloudvoid.png);">
                                 <div class="display-t">
                                     <div class="work-name">
                                         <h2 class="metallic-violet">CloudVoid &mdash; Archived Build</h2>
@@ -267,7 +260,7 @@
                                     <p>A non-custodial multi-chain wallet covering 15 chains, now decommissioned. It stays in this portfolio as an archived build: it is where I worked out key custody, encrypted transport and runtime hardening.</p>
                                     <p>Private keys never left the device, and the backend only saw public addresses through an encrypted envelope (P-256 ECDH, HKDF-SHA256, AES-256-GCM) with the master key held on a separate server.</p>
                                     <p>The operational patterns from that build &mdash; PM2 monitoring, iptables hardening, automated return-to-source &mdash; now protect the systems I run today.</p>
-                                    <p class="read"><a href="post-10.html">Read the security retrospective</a></p>
+                                    <p class="read"><a href="story-cloudvoid.html">Read the full story</a></p>
                                 </div>
                             </div>
                             <div class="col-md-8 col-md-offset-2">
@@ -305,7 +298,7 @@
                 <div class="row" id="websites">
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="videos/bem-africa.mp4" class="work-img" style="background-image: url(images/poster-bem-africa.jpg);">
+                            <a href="story-bem.html" class="work-img" style="background-image: url(images/poster-bem-africa.jpg);">
                                 <div class="display-t">
                                     <div class="work-name">
                                         <h2 class="metallic-violet">BEM Africa &mdash; Fashion House Site &amp; Admin</h2>
@@ -321,13 +314,14 @@
                                         Your browser does not support the video tag.
                                     </video>
                                     <p class="video-note">Walkthrough of the public site and the admin console. Preview build &mdash; no public domain yet.</p>
+                                    <p class="read"><a href="story-bem.html">Read the full story</a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="videos/mind-renewal-care.mp4" class="work-img" style="background-image: url(images/poster-mind-renewal-care.jpg);">
+                            <a href="story-mindrenewal.html" class="work-img" style="background-image: url(images/poster-mind-renewal-care.jpg);">
                                 <div class="display-t">
                                     <div class="work-name">
                                         <h2 class="metallic-violet">Mind Renewal Care &mdash; Therapy NGO Website</h2>
@@ -353,13 +347,14 @@
                                         </div>
                                     </div>
                                     <p class="video-note">Desktop and mobile walkthroughs. Preview build &mdash; no public domain yet.</p>
+                                    <p class="read"><a href="story-mindrenewal.html">Read the full story</a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="work-entry animate-box">
-                            <a href="post-11.html" class="work-img" style="background-image: url(images/poster-eyeno.jpg);">
+                            <a href="story-eyeno.html" class="work-img" style="background-image: url(images/poster-eyeno.jpg);">
                                 <div class="display-t">
                                     <div class="work-name">
                                         <h2 class="metallic-violet">Eyeno &mdash; Prompt Architect Workspace</h2>
@@ -375,9 +370,61 @@
                                         Your browser does not support the video tag.
                                     </video>
                                     <p class="video-note">Pipeline overview &mdash; the prompt checks and the vault nodes they query.</p>
+                                    <p class="read"><a href="story-eyeno.html">Read the full story</a></p>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="row text-center" style="margin-top: 70px;">
+                    <div class="col-md-12 col-md-offset-0 text-center animate-box intro-heading">
+                        <span>More Stories</span>
+                        <h2>Systems, Builds &amp; Client Work</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 animate-box">
+                        <a href="story-youtube.html" class="work-img" style="background-image: url(images/project-youtube.png); display:block; height:320px; border-radius:10px;">
+                            <div class="display-t">
+                                <div class="work-name">
+                                    <h2 class="metallic-violet">Automated YouTube Channel</h2>
+                                </div>
+                            </div>
+                        </a>
+                        <p style="margin-top:16px;">Script to upload with no human in the loop &mdash; and the Google sensitive-scope verification that made it legitimate to publish. <a href="story-youtube.html">Read the story</a></p>
+                    </div>
+                    <div class="col-md-6 animate-box">
+                        <a href="story-cryptobank.html" class="work-img" style="background-image: url(images/project-cryptobank.png); display:block; height:320px; border-radius:10px;">
+                            <div class="display-t">
+                                <div class="work-name">
+                                    <h2 class="metallic-violet">A Bank Front End in 5 MB</h2>
+                                </div>
+                            </div>
+                        </a>
+                        <p style="margin-top:16px;">Oracle Cloud Always Free container work: static NGINX production tier, non-root runtime, multi-stage isolation. <a href="story-cryptobank.html">Read the story</a></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 animate-box">
+                        <a href="story-linkedin.html" class="work-img" style="background-image: url(images/project-linkedin.png); display:block; height:320px; border-radius:10px;">
+                            <div class="display-t">
+                                <div class="work-name">
+                                    <h2 class="metallic-violet">A Publishing Agent That Never Stops</h2>
+                                </div>
+                            </div>
+                        </a>
+                        <p style="margin-top:16px;">Key rotation, dual-axis model fallback and a memory that survives redeploys by committing to GitHub. <a href="story-linkedin.html">Read the story</a></p>
+                    </div>
+                    <div class="col-md-6 animate-box">
+                        <a href="story-dexa.html" class="work-img" style="background-image: url(images/about-2.jpg); display:block; height:320px; border-radius:10px;">
+                            <div class="display-t">
+                                <div class="work-name">
+                                    <h2 class="metallic-violet">200 Students in Two Weeks</h2>
+                                </div>
+                            </div>
+                        </a>
+                        <p style="margin-top:16px;">Marketing lead at leanwithdexa.com: outreach scripts, in-person pitching and a WhatsApp funnel that converted. <a href="story-dexa.html">Read the story</a></p>
                     </div>
                 </div>
 
@@ -392,12 +439,14 @@
                         <div class="services">
                             <h3>Crypto Bank Platform &mdash; OCI</h3>
                             <p>A containerised banking front end deployed on Oracle Cloud's Always Free tier. In production the heavy Node runtime is dropped for a static NGINX delivery layer, cutting live memory to under 5&nbsp;MB. The image is multi-stage, so <code>node_modules</code> and build scripts never reach the running node, and the backend steps down from root to the <code>node</code> user. Kubernetes manifests live alongside the app.</p>
+                            <p class="read"><a href="story-cryptobank.html">Read the full story</a></p>
                         </div>
                     </div>
                     <div class="col-md-6 animate-box">
                         <div class="services">
                             <h3>LinkedIn AI Agent &mdash; Resilience Layer</h3>
                             <p>The publishing agent behind the social workflow: a key-rotation engine pools API credentials and rotates on quota or invalid-key errors instead of crashing, while a dual-axis fallback cascades between models when a provider degrades. Memory is committed straight to GitHub over the REST API, because the host's disk is ephemeral.</p>
+                            <p class="read"><a href="story-linkedin.html">Read the full story</a></p>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,512 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>A bank front end that fits in 5 MB — OCI container work - Agu Chiedozie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Deploying a containerised banking front end on Oracle Cloud Always Free: static NGINX production tier under 5 MB, non-root runtime, multi-stage isolation." />
+    <meta name="keywords" content="Oracle Cloud, OCI, Docker, NGINX, multi-stage build, Kubernetes, container hardening" />
+    <meta name="author" content="Agu Chiedozie" />
+
+    <meta property="og:title" content="A bank front end that fits in 5 MB — OCI container work"/>
+    <meta property="og:image" content="images/project-cryptobank.png"/>
+    <meta property="og:url" content="https://victormoore.online/story-cryptobank.html"/>
+    <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
+    <meta property="og:description" content="Deploying a containerised banking front end on Oracle Cloud Always Free: static NGINX production tier under 5 MB, non-root runtime, multi-stage isolation."/>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="A bank front end that fits in 5 MB — OCI container work" />
+    <meta name="twitter:image" content="images/project-cryptobank.png" />
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .metallic-violet { color: #9370DB !important; }
+
+        /* ---------- Story page ---------- */
+        .story-hero {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 160px 0 90px;
+        }
+        .story-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(1200px 600px at 20% 110%, rgba(147,112,219,.18) 0%, rgba(0,0,0,0) 65%);
+        }
+        .story-hero .container { position: relative; z-index: 2; }
+        .story-kicker {
+            display: inline-block;
+            font-size: 12px;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #b9a2ee;
+            margin-bottom: 18px;
+        }
+        .story-hero h1 {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 68px;
+            line-height: 1.05;
+            font-weight: 700;
+            margin: 0 0 18px;
+            color: #fff;
+            max-width: 900px;
+        }
+        .story-hero .story-lede {
+            font-size: 21px;
+            line-height: 1.6;
+            color: #ded7ea;
+            max-width: 720px;
+            margin-bottom: 34px;
+        }
+        .story-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 34px;
+            padding-top: 26px;
+            border-top: 1px solid rgba(255,255,255,.18);
+        }
+        .story-meta div { min-width: 150px; }
+        .story-meta .k {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #9d93b5;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        .story-meta .v { font-size: 15px; color: #f2eefb; line-height: 1.45; }
+
+        .story-body {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 90px 0 40px;
+            font-size: 17px;
+            line-height: 1.78;
+            color: #2f2c38;
+        }
+        .story-body h2 {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #16131f;
+            margin: 62px 0 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e6e2ee;
+        }
+        .story-body h2:first-child { margin-top: 0; }
+        .story-body h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #16131f;
+            margin: 34px 0 6px;
+        }
+        .story-body p { margin-bottom: 20px; }
+        .story-body ul, .story-body ol { margin: 0 0 22px 22px; }
+        .story-body li { margin-bottom: 10px; }
+        .story-body strong { color: #16131f; }
+        .story-body code {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+            background: #f2eff8;
+            color: #7b3fb8;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .story-body a { color: #7b3fb8; border-bottom: 1px solid rgba(123,63,184,.35); }
+
+        .stat-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin: 30px 0 34px;
+        }
+        .stat-strip .s {
+            flex: 1 1 150px;
+            background: #f7f5fc;
+            border: 1px solid #e8e3f2;
+            border-radius: 10px;
+            padding: 18px 20px;
+        }
+        .stat-strip .n {
+            font-size: 27px;
+            font-weight: 700;
+            color: #4b2a7b;
+            letter-spacing: -.01em;
+            display: block;
+        }
+        .stat-strip .l {
+            font-size: 13px;
+            color: #6c6579;
+            line-height: 1.4;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .pull {
+            margin: 36px 0;
+            padding: 4px 0 4px 26px;
+            border-left: 3px solid #9370DB;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 23px;
+            line-height: 1.5;
+            color: #3a3346;
+            font-style: italic;
+        }
+
+        .callout {
+            background: #f4f0ff;
+            border: 1px solid #e2d9f7;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 30px 0;
+            font-size: 16px;
+            line-height: 1.65;
+        }
+        .callout .t {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #7b3fb8;
+            margin-bottom: 8px;
+        }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 10px; }
+        .chips span {
+            font-size: 13px;
+            background: #f2eff8;
+            border: 1px solid #e4ddf2;
+            color: #4e4262;
+            border-radius: 999px;
+            padding: 6px 13px;
+        }
+
+        .story-foot {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 20px 0 90px;
+        }
+        .story-foot .next {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            border-top: 1px solid #e6e2ee;
+            padding-top: 30px;
+        }
+        .story-foot .next a {
+            flex: 1 1 260px;
+            text-decoration: none;
+            border: 1px solid #e6e2ee;
+            border-radius: 10px;
+            padding: 18px 20px;
+            color: #2f2c38;
+            transition: border-color .2s, background .2s;
+        }
+        .story-foot .next a:hover { border-color: #9370DB; background: #faf8ff; }
+        .story-foot .next .k {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #9a92a8;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .story-foot .next .n { font-size: 17px; font-weight: 600; }
+
+        .story-video {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+            margin: 26px 0 8px;
+            background: #000;
+        }
+        .story-banner {
+            margin: 0 0 46px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e6e2ee;
+            box-shadow: 0 22px 50px rgba(38,26,64,.14);
+        }
+        .story-banner img { width: 100%; display: block; }
+        body.dark-mode .story-banner { border-color: #322c42; box-shadow: 0 22px 50px rgba(0,0,0,.5); }
+        .story-figure-note {
+            font-size: 13px;
+            color: #8b8499;
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        /* ---------- Dark mode ---------- */
+        body.dark-mode { background-color: #121212; color: #e0e0e0; }
+        body.dark-mode .story-body { color: #cfc9d9; }
+        body.dark-mode .story-body h2,
+        body.dark-mode .story-body h3,
+        body.dark-mode .story-body strong { color: #ffffff !important; }
+        body.dark-mode .story-body h2 { border-bottom-color: #333; }
+        body.dark-mode .story-body code { background: #24202e; color: #c9a3ff; }
+        body.dark-mode .story-body a { color: #c9a3ff; }
+        body.dark-mode .stat-strip .s { background: #1a1822; border-color: #2d2938; }
+        body.dark-mode .stat-strip .n { color: #c9a3ff; }
+        body.dark-mode .stat-strip .l { color: #a49eb1; }
+        body.dark-mode .pull { color: #e6e0f0; }
+        body.dark-mode .callout { background: #1b1824; border-color: #322c42; }
+        body.dark-mode .callout .t { color: #c9a3ff; }
+        body.dark-mode .chips span { background: #1d1a26; border-color: #322c42; color: #c8c2d6; }
+        body.dark-mode .story-foot .next a { color: #e6e0f0; border-color: #322c42; }
+        body.dark-mode .story-foot .next a:hover { background: #1d1a26; }
+        body.dark-mode .story-foot .next .k { color: #8e8699; }
+        body.dark-mode .story-figure-note { color: #8e8699; }
+        body.dark-mode .colorlib-navbar-brand a { color: #fff !important; }
+        body.dark-mode .colorlib-nav-toggle i,
+        body.dark-mode .colorlib-nav-toggle i::before,
+        body.dark-mode .colorlib-nav-toggle i::after { background: #fff !important; }
+        body.dark-mode #colorlib-main-nav { background: #1a1a1a !important; }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-left: 20px;
+        }
+        body.dark-mode .theme-toggle { background: #eee; color: #333; }
+
+        @media screen and (max-width: 991px) {
+            .story-hero { padding: 120px 0 60px; }
+            .story-hero h1 { font-size: 44px; }
+            .story-hero .story-lede { font-size: 18px; }
+            .story-body { padding-top: 60px; font-size: 16px; }
+            .story-body h2 { font-size: 27px; margin-top: 48px; }
+            .pull { font-size: 19px; }
+        }
+        @media screen and (max-width: 767px) {
+            .story-hero h1 { font-size: 34px; }
+            .story-meta { gap: 20px; }
+            .story-meta div { min-width: 120px; }
+        }
+    </style>
+
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+    <nav id="colorlib-main-nav" role="navigation">
+        <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle active"><i></i></a>
+        <div class="js-fullheight colorlib-table">
+            <div class="colorlib-table-cell js-fullheight">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li class="active"><a href="work.html">Work</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="head-title">Featured Projects</h2>
+                        <a href="images/project-rezmo.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/project-rezmo-wide.jpg);">
+                            <span><i class="icon-search3"></i></span>
+                        </a>
+                        <a href="images/project-forchi.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-forchi.png);">
+                            <span><i class="icon-search3"></i></span>
+                        </a>
+                        <a href="images/project-v61.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-v61.png);">
+                            <span><i class="icon-search3"></i></span>
+                        </a>
+                        <a href="images/project-youtube.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-youtube.png);">
+                            <span><i class="icon-search3"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="colorlib-page">
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="colorlib-navbar-brand">
+                            <a class="colorlib-logo" href="index.html"><span>Ag</span><span>u</span></a>
+                        </div>
+                        <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+                        <button class="theme-toggle" onclick="toggleDarkMode()">Toggle Theme</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="story-hero" style="background: radial-gradient(900px 520px at 82% 8%, #2DD4BF4d 0%, rgba(16,12,24,0) 70%), linear-gradient(160deg, #17111f 0%, #221a30 48%, #100c18 100%);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="story-kicker">Platform work · container hardening</span>
+                        <h1>A bank front end in 5 MB</h1>
+                        <p class="story-lede">Oracle Cloud's Always Free tier makes memory the real budget. The production image drops the Node runtime entirely.</p>
+                        <div class="story-meta"><div><span class="k">Host</span><span class="v">Oracle Cloud (OCI)</span></div><div><span class="k">Role</span><span class="v">Container and deployment work</span></div><div><span class="k">Constraint</span><span class="v">Always Free compute</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="story-body">
+                        <figure class="story-banner">
+                            <img src="images/project-cryptobank.png" alt="A bank front end in 5 MB">
+                        </figure>
+                        <h2>The constraint</h2>
+                        <p>Always Free compute is generous until it is not. A Node server idling at a few hundred megabytes is fine on a paid instance and a liability on a free one, especially next to anything else running on the same host. The job was to make a banking front end fit without making it fragile.</p>
+
+                        <h2>What changed</h2>
+                        <h3>Split the runtime from the artefact</h3>
+                        <p>In production the heavy runtime is discarded for a static <strong>NGINX</strong> delivery layer. Node exists during the build and does not exist at runtime, which drops live memory to <strong>under 5 MB</strong> and removes an entire class of server-side vulnerability surface along with it.</p>
+                        <h3>Multi-stage isolation</h3>
+                        <p>The image is built in stages, so <code>node_modules</code>, build scripts and source maps never reach the final layer. What ships is compiled output and a web server &mdash; nothing to execute, nothing to mine.</p>
+                        <h3>Drop privileges</h3>
+                        <p>The container runs as <code>USER node</code> rather than root. A breakout that succeeds against a non-privileged process is a much smaller problem than one that lands on root.</p>
+                        <h3>Thin the dependency tree</h3>
+                        <p>Production installs use <code>npm ci --only=production</code>, so developer tooling is never part of the deployed artefact in the first place.</p>
+
+                        <div class="stat-strip">
+                            <div class="s"><span class="n">&lt;5 MB</span><span class="l">Live memory for the production container</span></div>
+                            <div class="s"><span class="n">Non-root</span><span class="l">Runtime user, privileges dropped</span></div>
+                            <div class="s"><span class="n">0</span><span class="l">Dev dependencies in production</span></div>
+                        </div>
+
+                        <h2>Orchestration</h2>
+                        <p>Kubernetes manifests live alongside the application, so the deployment is described rather than performed by hand. That matters more on a free tier, not less: when the only affordable host is a small one, being able to rebuild it exactly is the difference between an outage and an inconvenience.</p>
+
+                        <h2>What transfers</h2>
+                        <p>Most "optimise the container" advice is about making the image smaller for its own sake. The useful version is this: <strong>separate the thing you build with from the thing you run</strong>, then give the runtime the least privilege it can survive on. That principle is why the ForChi and REZMO deployments are also cheap to operate.</p>
+                        <h2>Stack</h2>
+                        <div class="chips"><span>Docker</span><span>Multi-stage builds</span><span>NGINX</span><span>Node.js</span><span>Oracle Cloud (OCI)</span><span>Kubernetes</span><span>Linux hardening</span></div>
+                    </div>
+                    <div class="story-foot">
+                        <div class="next">
+<a href="story-linkedin.html"><span class="k">Previous story</span><span class="n">A bot that never stops</span></a>
+<a href="story-dexa.html"><span class="k">Next story</span><span class="n">200 students in two weeks</span></a>
+<a href="work.html"><span class="k">Index</span><span class="n">All projects &amp; case studies</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 col-pb-sm">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h2>Let's Talk</h2>
+                                    <p>Building agentic systems that ship, and the infrastructure under them.</p>
+                                    <p><a href="mailto:aguchiedoxie@gmail.com">aguchiedoxie@gmail.com</a></p>
+                                    <p class="colorlib-social-icons">
+                                        <a href="https://www.linkedin.com/in/aguchiedoxie/"><i class="icon-linkedin"></i></a>
+                                        <a href="https://github.com/Moorejae"><i class="icon-github"></i></a>
+                                        <a href="https://www.upwork.com/freelancers/~0147c70614cf9a49e2?mp_source=share"><i class="icon-briefcase"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-pb-sm">
+                            <h2>Recent Insights</h2>
+                            <div class="f-entry">
+                                <a href="post-16.html" class="featured-img" style="background-image: url(images/project-argon.png);"></a>
+                                <div class="desc">
+                                    <span>November 2026</span>
+                                    <h3><a href="post-16.html">Gemini 4 Argon</a></h3>
+                                </div>
+                            </div>
+                            <div class="f-entry">
+                                <a href="post-13.html" class="featured-img" style="background-image: url(images/project-rezmo-wide.jpg);"></a>
+                                <div class="desc">
+                                    <span>October 2026</span>
+                                    <h3><a href="post-13.html">REZMO Memory Layer</a></h3>
+                                </div>
+                            </div>
+                            <div class="f-entry">
+                                <a href="post-12.html" class="featured-img" style="background-image: url(images/project-forchi.png);"></a>
+                                <div class="desc">
+                                    <span>October 2026</span>
+                                    <h3><a href="post-12.html">ForChi: Three Workflows</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-pb-sm">
+                            <h2>Newsletter</h2>
+                            <p>Insights on applied AI, agents and the infrastructure that carries them.</p>
+                            <div class="subscribe text-center">
+                                <div class="form-group">
+                                    <input type="text" class="form-control text-center" placeholder="Enter Email address">
+                                    <input type="submit" value="Subscribe" class="btn btn-primary btn-custom">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>
+                                &copy; <script>document.write(new Date().getFullYear());</script> Agu Chiedozie. All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+    <script src="js/main.js"></script>
+
+    </body>
+</html>
