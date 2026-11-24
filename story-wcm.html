@@ -3,22 +3,23 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>WCM: a spec-driven live pricing model for football.com - Agu Chiedozie</title>
+    <title>WCM: a spec-driven forecasting model for match totals - Agu Chiedozie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="WCM v7.3 is a live betting workflow: closing-line priors, a shrunk model probability, and a checkpoint dataset that logs the bets it skips so the model can be calibrated." />
-    <meta name="keywords" content="WCM, betting model, calibration, gamma-Poisson, lambda shrink, football.com, Python, spec-driven development" />
+    <meta name="description" content="WCM v7.3 is a forecasting experiment on live match totals: a market-anchored prior, a shrunk model probability, and a checkpoint dataset that logs every case it declines so the model can be calibrated." />
+    <meta name="keywords" content="WCM, forecasting model, calibration, gamma-Poisson, lambda shrink, football.com, Python, spec-driven development" />
     <meta name="author" content="Agu Chiedozie" />
 
-    <meta property="og:title" content="WCM: a spec-driven live pricing model for football.com"/>
-    <meta property="og:image" content="images/project-wcm.png"/>
+    <meta property="og:title" content="WCM: a spec-driven forecasting model for match totals"/>
+    <meta property="og:image" content="https://victormoore.online/images/project-wcm.png"/>
     <meta property="og:url" content="https://victormoore.online/story-wcm.html"/>
     <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
-    <meta property="og:description" content="WCM v7.3 is a live betting workflow: closing-line priors, a shrunk model probability, and a checkpoint dataset that logs the bets it skips so the model can be calibrated."/>
+    <meta property="og:description" content="WCM v7.3 is a forecasting experiment on live match totals: a market-anchored prior, a shrunk model probability, and a checkpoint dataset that logs every case it declines so the model can be calibrated."/>
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="WCM: a spec-driven live pricing model for football.com" />
-    <meta name="twitter:image" content="images/project-wcm.png" />
+    <meta name="twitter:title" content="WCM: a spec-driven forecasting model for match totals" />
+    <meta name="twitter:image" content="https://victormoore.online/images/project-wcm.png" />
 
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.svg">
 
     <style>
         body {
@@ -369,9 +370,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <span class="story-kicker">Live system · pricing and calibration</span>
+                        <span class="story-kicker">Forecasting experiment &middot; pricing and calibration</span>
                         <h1>WCM: price first, decide second</h1>
-                        <p class="story-lede">A live pricing workflow for football.com. The hard part is not the formula, it is refusing to bet when the formula does not agree.</p>
+                        <p class="story-lede">A live forecasting workflow on match totals. The hard part is not the formula, it is refusing to act when the formula and the market disagree.</p>
                         <div class="story-meta"><div><span class="k">Role</span><span class="v">Model, feed, dataset, operations</span></div><div><span class="k">Version</span><span class="v">WCM v7.3</span></div><div><span class="k">Proof</span><span class="v">145 tests against the spec and the live API</span></div></div>
                     </div>
                 </div>
@@ -386,7 +387,7 @@
                             <img src="images/project-wcm.png" alt="WCM, price first, decide second">
                         </figure>
                         <h2>What it is</h2>
-                        <p>WCM is a live pricing model for two markets on football.com: <strong>basketball full-time totals</strong> and <strong>football half totals</strong>. It is built from a written specification, <code>wcm.py</code> implements WCM v7.3, and the test suite asserts every worked example printed in that spec, so the code and the document cannot quietly drift apart.</p>
+                        <p>WCM is a live forecasting model for two markets on football.com: <strong>basketball full-time totals</strong> and <strong>football half totals</strong>. It started as a personal research project, never client work. It is built from a written specification, <code>wcm.py</code> implements WCM v7.3, and the test suite asserts every worked example printed in that spec, so the code and the document cannot quietly drift apart.</p>
                         <p>It is also the project that taught me the most about restraint, and that story is worth telling honestly rather than hiding.</p>
 
                         <h2>The two-phase prior</h2>
@@ -485,14 +486,9 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-pb-sm">
-                            <h2>Newsletter</h2>
-                            <p>Notes on AI operations, support workflows and the systems behind them.</p>
-                            <div class="subscribe text-center">
-                                <div class="form-group">
-                                    <input type="text" class="form-control text-center" placeholder="Enter Email address">
-                                    <input type="submit" value="Subscribe" class="btn btn-primary btn-custom">
-                                </div>
-                            </div>
+                            <h2>Get New Notes</h2>
+                            <p>Notes on AI operations, support workflows and the systems behind them, sent by email when I publish. No form, no tracking, just mail.</p>
+                            <p><a href="mailto:aguchiedoxie@gmail.com?subject=Subscribe%20to%20new%20notes" class="btn btn-primary btn-outline">Email to subscribe</a></p>
                         </div>
                     </div>
                     <div class="row">

@@ -3,23 +3,24 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Work - Agu Chiedozie - AI Operations &amp; Technical Solutions</title>
+    <title>Work - Agu Chiedozie | AI Workflow &amp; Operations</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Every project built by Agu Chiedozie: REZMO, ForChi, WCM, an automated YouTube channel, client websites, and the support, documentation and workflows behind them." />
-    <meta name="keywords" content="AI Operations, Technical Solutions, Product Support, AI Workflows, Evaluations, Onboarding, MCP, APIs, Cloudflare, Client Websites" />
+    <meta name="keywords" content="AI Operations, AI Automation, AI QA, Evaluations, Onboarding, Technical Documentation, MCP, APIs, Client Websites" />
     <meta name="author" content="Agu Chiedozie" />
 
     <meta property="og:title" content="Work - Agu Chiedozie"/>
-    <meta property="og:image" content="images/project-rezmo.jpg"/>
+    <meta property="og:image" content="https://victormoore.online/images/project-rezmo.jpg"/>
     <meta property="og:url" content="https://victormoore.online"/>
     <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
     <meta property="og:description" content="Work that solved a real user or client problem, from AI memory and workflow automation to client websites."/>
-    <meta name="twitter:title" content="" />
-    <meta name="twitter:image" content="" />
-    <meta name="twitter:url" content="" />
-    <meta name="twitter:card" content="" />
+    <meta name="twitter:title" content="Work - Agu Chiedozie" />
+    <meta name="twitter:image" content="https://victormoore.online/images/project-rezmo.jpg" />
+    <meta name="twitter:url" content="https://victormoore.online" />
+    <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="shortcut icon" href="favicon.svg">
 
     <style>
         body {
@@ -123,16 +124,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="head-title">Featured Projects</h2>
-                        <a href="images/work-1.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/work-1.jpg);">
+                        <a href="images/project-rezmo.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-rezmo.png);">
                             <span><i class="icon-search3"></i></span>
                         </a>
-                        <a href="images/work-2.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/work-2.jpg);">
+                        <a href="images/project-forchi.png" class="gallery image-popup-link text-center" style="background-image: url(images/project-forchi.png);">
                             <span><i class="icon-search3"></i></span>
                         </a>
-                        <a href="images/work-3.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/work-3.jpg);">
+                        <a href="images/poster-bem-africa.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/poster-bem-africa.jpg);">
                             <span><i class="icon-search3"></i></span>
                         </a>
-                        <a href="images/work-4.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/work-4.jpg);">
+                        <a href="images/poster-mind-renewal-care.jpg" class="gallery image-popup-link text-center" style="background-image: url(images/poster-mind-renewal-care.jpg);">
                             <span><i class="icon-search3"></i></span>
                         </a>
                     </div>
@@ -208,10 +209,11 @@
                             </div>
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="desc">
-                                    <p><strong>Outcome:</strong> automated three parallel business processes, content pipelines, social distribution and applicant screening, and cut the manual time they took by about 99.9%.</p>
+                                    <p><strong>Outcome:</strong> automated three parallel business processes, content pipelines, social distribution and applicant screening, and removed almost all of the manual time they used to take.</p>
                                     <p>Three workflows run unattended: social posts to Facebook and LinkedIn five times a day (copy written through Vertex AI, images generated on a Hugging Face model), a YouTube video pipeline of up to two videos a day, and a job-application workflow that scans every 30 minutes, scores roles with Gemini and applies through Lever and Ashby.</p>
+                                    <p class="scope-note">Scope: this is my own job search running on my own accounts with my own profile. It applies only on my behalf, never for a client or for anyone else.</p>
                                     <p>A deterministic trigger layer (regex gate, then a Zod-schema extractor) keeps casual chat from ever firing a workflow. The LLM stack is Gemini with a Qwen2.5-7B model I host on Hugging Face as fallback.</p>
-                                    <p>It runs on free tiers (Render, Hugging Face) and cut the manual time I spent on these tasks by about 99.9%.</p>
+                                    <p>It runs on free tiers (Render, Hugging Face) and replaced the posting, editing and applying I used to do by hand.</p>
                                     <p class="read"><a href="story-forchi.html">Read the full story</a></p>
                                 </div>
                             </div>
@@ -228,12 +230,12 @@
                         <div class="work-entry animate-box">
                             <a href="story-wcm.html" class="work-img" style="background-image: url(images/project-wcm.png)"></a>
                             <div class="work-caption">
-                                <h2 class="metallic-violet">WCM: Live Pricing Model</h2>
+                                <h2 class="metallic-violet">WCM: Forecast Model &amp; Calibration Log</h2>
                             </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
-                                    <p><strong>Outcome:</strong> turned an ambiguous modelling problem into a strict, testable specification, with skipped edge cases logged and prediction accuracy audited after every settled result.</p>
-                                    <p>WCM is a live pricing model for football.com: closing-line priors, a probability shrunk toward the market, and a checkpoint dataset that logs every bet it skips so the model can be calibrated instead of argued about.</p>
+                                    <p><strong>Outcome:</strong> a forecasting experiment where the log of declined cases matters more than the hits, because it is the only way to calibrate the model afterwards.</p>
+                                    <p>WCM is a live forecasting model for match totals on football.com. It starts from the market price, shrinks its own estimate toward it, and records every case it declines in a checkpoint dataset, so it can be calibrated instead of argued about. Personal research project, not client work.</p>
                                     <p>Built from a written specification, with 145 tests asserting every worked example and every behaviour the live API actually has, including the regression that came out of the night it lost a full allocation by letting the scanner pick a side the formula disagreed with.</p>
                                     <p>The predecessor was the <strong>V6.1 football engine</strong>, which scored fixtures from raw kinetic and tactical data with three weighted pillars, versioned framework patches and a diagnostic autopsy on every settled result.</p>
                                     <p class="read"><a href="story-wcm.html">Read the full story</a></p>
@@ -487,14 +489,9 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-pb-sm">
-                            <h2>Newsletter</h2>
-                            <p>Notes on AI operations, support workflows and the systems behind them.</p>
-                            <div class="subscribe text-center">
-                                <div class="form-group">
-                                    <input type="text" class="form-control text-center" placeholder="Enter Email address">
-                                    <input type="submit" value="Subscribe" class="btn btn-primary btn-custom">
-                                </div>
-                            </div>
+                            <h2>Get New Notes</h2>
+                            <p>Notes on AI operations, support workflows and the systems behind them, sent by email when I publish. No form, no tracking, just mail.</p>
+                            <p><a href="mailto:aguchiedoxie@gmail.com?subject=Subscribe%20to%20new%20notes" class="btn btn-primary btn-outline">Email to subscribe</a></p>
                         </div>
                     </div>
                     <div class="row">

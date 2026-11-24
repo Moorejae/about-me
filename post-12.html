@@ -8,6 +8,16 @@
     <meta name="description" content="How ForChi runs three autonomous workflows from one Telegram bot: social publishing, a YouTube pipeline, and a job-application engine." />
     <meta name="keywords" content="AI Agents, Telegram Bot, Gemini, Zod, Automation, Render, Hugging Face, Python" />
     <meta name="author" content="Agu Chiedozie" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="ForChi: A Telegram Agent With Three Jobs - Agu Chiedozie"/>
+    <meta property="og:description" content="How ForChi runs three autonomous workflows from one Telegram bot: social publishing, a YouTube pipeline, and a job-application engine."/>
+    <meta property="og:image" content="https://victormoore.online/images/project-forchi.png"/>
+    <meta property="og:url" content="https://victormoore.online/post-12.html"/>
+    <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ForChi: A Telegram Agent With Three Jobs - Agu Chiedozie" />
+    <meta name="twitter:image" content="https://victormoore.online/images/project-forchi.png" />
+
 
     <style>
         body { font-family: system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; line-height: 1.7; color: #333; }
@@ -53,7 +63,9 @@
             <tr><td>Jobs</td><td>Scans boards, scores each role against my profile, applies through Lever and Ashby</td><td>every 30 minutes</td></tr>
         </table>
 
-        <p>Together those three loops used to eat most of a working day. Running them as one agent cut the manual time I spent on them by roughly 99.9%.</p>
+        <p class="scope-note">Scope: this is my own job search, on my own accounts, with my own profile. It applies only on my behalf and is never run for a client or anyone else.</p>
+
+        <p>Together those three loops used to eat most of a working day. Running them as one agent replaced the posting, editing and applying I did by hand.</p>
 
         <h2>The hard part: deciding when <em>not</em> to act</h2>
         <p>The failure mode of an always-on agent is not that it is dumb; it is that it is eager. If a casual "hey, how's the job hunt going?" can trigger an application run, the agent is dangerous, and you will spend more time supervising it than doing the work yourself.</p>
@@ -86,10 +98,7 @@ run_job_workflow(params.data)            # only now does the LLM get involved
             <li><strong>Long polling instead of webhooks.</strong> No public callback to keep registered, no tunnel to maintain, and the bot recovers on its own after a restart.</li>
             <li><strong>A real health endpoint.</strong> <code>/</code> returns a cheap status document and <code>/status</code> reports workflow state, so an external keep-alive ping is enough to know the process is alive and to wake it when it is not.</li>
         </ul>
-        <pre>
-GET https://forchi.onrender.com/
-{"status": "healthy", "bot": "ForChi", "mode": "long-polling"}
-        </pre>
+        <p>There is no public URL on this page: the bot runs on my own account and the endpoints are not something to hand out.</p>
 
         <h2>Scheduling three workflows in one process</h2>
         <p>Each workflow has its own interval and its own failure blast radius. A YouTube render that takes forty minutes must not block the job scan that runs every thirty, and a failed social post must not take down the scheduler.</p>
@@ -118,7 +127,7 @@ GET https://forchi.onrender.com/
             <li><a href="post-1.html">Agentic AI: Building LLM Systems with Function Calling</a></li>
             <li><a href="post-14.html">Inside the V6.1 Football Engine</a></li>
         </ul>
-        <p><strong>Author:</strong> Agu Chiedozie | AI Operations &amp; Technical Solutions</p>
+        <p><strong>Author:</strong> Agu Chiedozie | AI Workflow &amp; Operations</p>
     </div>
 
     <script>
