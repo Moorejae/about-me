@@ -1536,3 +1536,27 @@ input[type="text"] {
 		opacity: 0;
 	}
 }
+
+.client-quote {
+	margin: 18px 0 0;
+	padding: 16px 18px;
+	border-left: 2px solid #9370DB;
+	background: rgba(147, 112, 219, .06);
+	border-radius: 0 6px 6px 0;
+	font-size: 15px;
+	line-height: 1.7;
+	font-style: italic;
+	color: #4a4a4a;
+	span {
+		display: block;
+		margin-top: 10px;
+		font-style: normal;
+		font-size: 13px;
+		letter-spacing: .04em;
+		color: #777;
+	}
+	body.dark-mode & {
+		background: rgba(147, 112, 219, .12);
+		color: #ddd;
+	}
+}

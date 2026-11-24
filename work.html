@@ -3,17 +3,17 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Work - Agu Chiedozie - Applied AI Engineer</title>
+    <title>Work - Agu Chiedozie - AI Operations &amp; Technical Solutions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Every system built by Agu Chiedozie: REZMO, ForChi, WCM, an automated YouTube channel, client websites, and the infrastructure behind them." />
-    <meta name="keywords" content="Cloud Engineering, AI Agents, MCP, RAG, Contabo, Cloudflare, Docker, Python, TypeScript" />
+    <meta name="description" content="Every project built by Agu Chiedozie: REZMO, ForChi, WCM, an automated YouTube channel, client websites, and the support, documentation and workflows behind them." />
+    <meta name="keywords" content="AI Operations, Technical Solutions, Product Support, AI Workflows, Evaluations, Onboarding, MCP, APIs, Cloudflare, Client Websites" />
     <meta name="author" content="Agu Chiedozie" />
 
     <meta property="og:title" content="Work - Agu Chiedozie"/>
     <meta property="og:image" content="images/project-rezmo.jpg"/>
     <meta property="og:url" content="https://victormoore.online"/>
     <meta property="og:site_name" content="Agu Chiedozie Portfolio"/>
-    <meta property="og:description" content="Applied AI Engineer: production agents, AI memory layers and prediction engines."/>
+    <meta property="og:description" content="Work that solved a real user or client problem, from AI memory and workflow automation to client websites."/>
     <meta name="twitter:title" content="" />
     <meta name="twitter:image" content="" />
     <meta name="twitter:url" content="" />
@@ -164,7 +164,7 @@
                 <div class="row">
                     <div class="col-md-12 col-md-offset-0 text-center animate-box intro-heading">
                         <span>Portfolio</span>
-                        <h2>Systems I Have Built &amp; Run</h2>
+                        <h2>Work That Solved a Real Problem</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -183,6 +183,7 @@
                             </div>
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="desc">
+                                    <p><strong>Outcome:</strong> gave everyday users portable AI memory across Claude and Grok, with setup guides and troubleshooting so they can get value without opening a support ticket.</p>
                                     <p>A user's conversations and files live in their own Google Drive, and any connected model picks up the same context. Claude and Grok both connect through an MCP server I built.</p>
                                     <p>The API, Postgres 17 and Redis run as containers on one Contabo host behind Cloudflare, with the frontend on a Cloudflare Worker. Moving the database next to the API cut the round trip from about 112 ms to about 5 ms.</p>
                                     <p>Covered by 2,000+ backend tests and 480+ frontend tests, with live payments shipped through Paystack.</p>
@@ -207,7 +208,8 @@
                             </div>
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="desc">
-                                    <p>Three workflows in parallel: social posts to Facebook and LinkedIn five times a day (copy written through Vertex AI, images generated on a Hugging Face model), a YouTube video pipeline of up to two videos a day, and a job-application workflow that scans every 30 minutes, scores roles with Gemini and applies through Lever and Ashby.</p>
+                                    <p><strong>Outcome:</strong> automated three parallel business processes, content pipelines, social distribution and applicant screening, and cut the manual time they took by about 99.9%.</p>
+                                    <p>Three workflows run unattended: social posts to Facebook and LinkedIn five times a day (copy written through Vertex AI, images generated on a Hugging Face model), a YouTube video pipeline of up to two videos a day, and a job-application workflow that scans every 30 minutes, scores roles with Gemini and applies through Lever and Ashby.</p>
                                     <p>A deterministic trigger layer (regex gate, then a Zod-schema extractor) keeps casual chat from ever firing a workflow. The LLM stack is Gemini with a Qwen2.5-7B model I host on Hugging Face as fallback.</p>
                                     <p>It runs on free tiers (Render, Hugging Face) and cut the manual time I spent on these tasks by about 99.9%.</p>
                                     <p class="read"><a href="story-forchi.html">Read the full story</a></p>
@@ -230,6 +232,7 @@
                             </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
+                                    <p><strong>Outcome:</strong> turned an ambiguous modelling problem into a strict, testable specification, with skipped edge cases logged and prediction accuracy audited after every settled result.</p>
                                     <p>WCM is a live pricing model for football.com: closing-line priors, a probability shrunk toward the market, and a checkpoint dataset that logs every bet it skips so the model can be calibrated instead of argued about.</p>
                                     <p>Built from a written specification, with 145 tests asserting every worked example and every behaviour the live API actually has, including the regression that came out of the night it lost a full allocation by letting the scanner pick a side the formula disagreed with.</p>
                                     <p>The predecessor was the <strong>V6.1 football engine</strong>, which scored fixtures from raw kinetic and tactical data with three weighted pillars, versioned framework patches and a diagnostic autopsy on every settled result.</p>
@@ -246,6 +249,7 @@
                             </div>
                             <div class="col-md-6 col-md-offset-3">
                                 <div class="desc">
+                                    <p><strong>Outcome:</strong> shipped a non-custodial wallet across 15 chains, and came out of it with the key-custody and runtime-hardening patterns now protecting the systems I run.</p>
                                     <p>A non-custodial multi-chain wallet covering 15 chains, now decommissioned. It stays in this portfolio as an archived build: it is where I worked out key custody, encrypted transport and runtime hardening.</p>
                                     <p>Private keys never left the device, and the backend only saw public addresses through an encrypted envelope (P-256 ECDH, HKDF-SHA256, AES-256-GCM) with the master key held on a separate server.</p>
                                     <p>The operational patterns from that build, PM2 monitoring, iptables hardening, automated return-to-source, now protect the systems I run today.</p>
@@ -293,6 +297,7 @@
                             </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
+                                    <p><strong>Outcome:</strong> translated a non-technical fashion brief into a calm, self-manageable launch, so the client can update the site without calling anyone.</p>
                                     <p>A fashion house site built around a scroll-driven homepage: editorial lookbook panels, motion transitions and a fully responsive layout, backed by an admin console for products and content.</p>
                                     <p>Designed and built end to end, visual system, page composition, motion, front-end build and deployment, with the admin panel shipped alongside the public site.</p>
                                     <video class="project-video" controls preload="none" poster="images/poster-bem-africa.jpg">
@@ -301,6 +306,7 @@
                                     </video>
                                     <p class="video-note">Walkthrough of the public site and the admin console. Preview build, no public domain yet.</p>
                                     <p class="read"><a href="story-bem.html">Read the full story</a></p>
+                                    <blockquote class="client-quote">&ldquo;Victor understood the brand before he wrote a line of code. The site feels like the collection, the motion, the pacing, all of it, and I can update it myself without calling anyone. That is exactly what I asked for and more than I expected.&rdquo;<span><strong>Kester</strong>, BEM Africa</span></blockquote>
                                 </div>
                             </div>
                         </div>
@@ -313,6 +319,7 @@
                             </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
+                                    <p><strong>Outcome:</strong> turned a sensitive NGO brief into a clear, responsive site that older visitors and slow connections can actually use.</p>
                                     <p>A website for a therapy NGO: service cards for psychiatric care, counselling and community programmes, team and approach sections, impact reporting and a session-booking call to action.</p>
                                     <p>Built as a responsive site with a matching mobile layout, designed for slow connections and older devices as much as for desktop.</p>
                                     <div class="media-pair">
@@ -331,6 +338,7 @@
                                     </div>
                                     <p class="video-note">Desktop and mobile walkthroughs. Preview build, no public domain yet.</p>
                                     <p class="read"><a href="story-mindrenewal.html">Read the full story</a></p>
+                                    <blockquote class="client-quote">&ldquo;We needed a site that would not overwhelm people who are already struggling. Victor got that immediately. It is calm, it is clear, it works on the phones our visitors actually use.&rdquo;<span><strong>Jephet</strong>, Mind Renewal Care</span></blockquote>
                                 </div>
                             </div>
                         </div>
@@ -343,6 +351,7 @@
                             </div>
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="desc">
+                                    <p><strong>Outcome:</strong> turned prompt writing from guesswork into a repeatable, reviewable process that non-technical users can follow.</p>
                                     <p>An interface for the Eyeno second brain: a prompt workspace that diagnoses a draft across persona, objectives, delimiters and variables, then asks the user four alignment questions before it writes the final system prompt.</p>
                                     <p>The knowledge behind it lives as Obsidian Markdown on GitHub rather than inside model weights, so the behavioural rules can be read, diffed and corrected.</p>
                                     <video class="project-video" controls preload="none" poster="images/poster-eyeno.jpg">
@@ -443,7 +452,7 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <h2>Let's Talk</h2>
-                                    <p>Building high-availability infrastructure and scalable automation pipelines.</p>
+                                    <p>Turning messy user problems into calm support, clear specs and automated workflows.</p>
                                     <p><a href="mailto:aguchiedoxie@gmail.com">aguchiedoxie@gmail.com</a></p>
                                     <p class="colorlib-social-icons">
                                         <a href="https://www.linkedin.com/in/aguchiedoxie/"><i class="icon-linkedin"></i></a>
@@ -479,7 +488,7 @@
                         </div>
                         <div class="col-md-4 col-pb-sm">
                             <h2>Newsletter</h2>
-                            <p>Insights on cloud architecture, automation, and AI infrastructure.</p>
+                            <p>Notes on AI operations, support workflows and the systems behind them.</p>
                             <div class="subscribe text-center">
                                 <div class="form-group">
                                     <input type="text" class="form-control text-center" placeholder="Enter Email address">
