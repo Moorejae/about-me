@@ -1358,3 +1358,11 @@ body.dark-mode .work-caption h2 { color: #9370DB !important; }
     letter-spacing: .04em;
     color: #777; }
 body.dark-mode .client-quote { background: rgba(147, 112, 219, .12); color: #ddd; }
+
+.hero-tagline {
+  font-size: 19px;
+  line-height: 1.65;
+  color: #3d3d3d;
+  margin: 0 0 26px; }
+  @media screen and (max-width: 767px) {
+    .hero-tagline { font-size: 17px; } }
