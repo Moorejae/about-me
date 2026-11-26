@@ -1423,3 +1423,10 @@ body.dark-mode .client-quote { background: rgba(147, 112, 219, .12); color: #ddd
   body.dark-mode .archive-list li { border-bottom-color: rgba(255, 255, 255, .12); }
   @media screen and (max-width: 767px) {
     .archive-date { display: block; min-width: 0; margin-bottom: 4px; } }
+
+.about-desc h2.identity span {
+  font-size: 40px; }
+  @media screen and (max-width: 991px) {
+    .about-desc h2.identity span { font-size: 32px; } }
+  @media screen and (max-width: 767px) {
+    .about-desc h2.identity span { font-size: 26px; } }
